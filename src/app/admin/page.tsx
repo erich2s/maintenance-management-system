@@ -8,7 +8,7 @@ export default function page() {
       <div>admin dashboard</div>
       <Button
         onClick={() => {
-          signOut({ callbackUrl: "/" });
+          signOut();
         }}
         className="bg-red-500 hover:bg-red-600"
       >

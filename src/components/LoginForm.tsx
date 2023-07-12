@@ -6,7 +6,6 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import Image from "next/image";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
@@ -48,7 +47,6 @@ const item = {
 
 // 注册表单的卡片容器
 export default function LoginForm() {
-
   return (
     <Card className="relative py-16 w-full lg:w-[500px]  bg-opacity-50 bg-white backdrop-blur-xl  space-y-6">
       <CardHeader>
@@ -77,7 +75,7 @@ export default function LoginForm() {
 
       <CardContent>
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <UserAuthForm/>
+          <UserAuthForm />
         </div>
       </CardContent>
       <motion.div
@@ -87,21 +85,8 @@ export default function LoginForm() {
       >
         <CardFooter>
           <p className="px-8 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our{" "}
-            <Link
-              href="/terms"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Terms of Service
-            </Link>{" "}
-            and{" "}
-            <Link
-              href="/privacy"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Privacy Policy
-            </Link>
-            .
+            By clicking continue, you agree to our <span>Terms of Service</span>{" "}
+            and <span>Privacy Policy .</span>
           </p>
         </CardFooter>
       </motion.div>
@@ -111,13 +96,11 @@ export default function LoginForm() {
 
 // 表单验证
 const formSchema = z.object({
-  username: z.string().min(4, { message: "学号/邮箱长度不足" }),
+  username: z.string().min(2, { message: "学号/邮箱长度不足" }),
   password: z.string().min(4, { message: "密码长度不足" }),
 });
 // 表单组件
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
-
-}
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
@@ -134,17 +117,15 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     signIn("credentials", {
       username: values.username,
       password: values.password,
-      redirect: false
+      redirect: false,
     }).then((res) => {
       if (res?.error) {
         toast.error(res.error);
         setIsLoading(false);
-      }
-      else{
+      } else {
         setIsLoading(false);
-        router.push("/")
+        router.push("/login");
       }
-
     });
   }
 
