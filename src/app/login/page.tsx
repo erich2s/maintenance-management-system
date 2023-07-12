@@ -3,15 +3,24 @@ import Image from "next/image";
 import illustration from "./assets/Admin-Control-Panel.svg";
 import bg from "./assets/bg.png";
 import LoginForm from "@/components/LoginForm";
-
-
-
-export default function page() {
+// import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+import { redirect } from "next/navigation";
+import { RedirectType } from "next/dist/client/components/redirect";
+export default async function page() {
+  const session = await getServerSession(authOptions);
+  if (session) {
+    if (session.user.role === "ADMIN") {
+      redirect("/admin");
+    }
+    redirect("/");
+  }
   return (
     <>
-      <div className="container relative h-screen  flex-col items-center justify-center flex md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="container relative h-screen  flex-col items-center justify-center flex md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
         {/* 左边的装饰栏目 */}
-        <div className="relative hidden h-full flex-col p-10 text-black dark:border-r lg:flex justify-center ">
+        <div className="relative hidden h-full flex-col p-10 text-black dark:border-r lg:flex justify-center select-none">
           <div className="relative z-20 flex items-center text-lg ">
             <Image
               src={illustration}

@@ -16,6 +16,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import React from "react";
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -24,7 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "react-hot-toast";
-
+import { signIn } from "next-auth/react";
 // 动画
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -47,6 +48,7 @@ const item = {
 
 // 注册表单的卡片容器
 export default function LoginForm() {
+
   return (
     <Card className="relative py-16 w-full lg:w-[500px]  bg-opacity-50 bg-white backdrop-blur-xl  space-y-6">
       <CardHeader>
@@ -75,13 +77,13 @@ export default function LoginForm() {
 
       <CardContent>
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <UserAuthForm />
+          <UserAuthForm/>
         </div>
       </CardContent>
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ delay: 0.3  }}
+        transition={{ delay: 0.3 }}
       >
         <CardFooter>
           <p className="px-8 text-center text-sm text-muted-foreground">
@@ -113,9 +115,12 @@ const formSchema = z.object({
   password: z.string().min(4, { message: "密码长度不足" }),
 });
 // 表单组件
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
+
+}
 function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -126,11 +131,21 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   //   登录提交
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    toast.success("登录成功");
-    console.log(values);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    signIn("credentials", {
+      username: values.username,
+      password: values.password,
+      redirect: false
+    }).then((res) => {
+      if (res?.error) {
+        toast.error(res.error);
+        setIsLoading(false);
+      }
+      else{
+        setIsLoading(false);
+        router.push("/")
+      }
+
+    });
   }
 
   return (
