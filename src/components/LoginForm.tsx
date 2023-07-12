@@ -5,12 +5,10 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-// import { UserAuthForm } from "@/components/user-auth-form";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-// import { Icons } from "@/components/icons"
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Spinner } from "./Spinner";

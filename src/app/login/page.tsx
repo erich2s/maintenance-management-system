@@ -4,10 +4,7 @@ import illustration from "./assets/Admin-Control-Panel.svg";
 import bg from "./assets/bg.png";
 import LoginForm from "@/components/LoginForm";
 
-export const metadata: Metadata = {
-  title: "宿舍报修系统",
-  description: "广西大学行健文理学院宿舍报修系统",
-};
+
 
 export default function page() {
   return (
