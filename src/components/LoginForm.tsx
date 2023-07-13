@@ -48,49 +48,54 @@ const item = {
 // 注册表单的卡片容器
 export default function LoginForm() {
   return (
-    <Card className="relative py-16 w-full lg:w-[500px]  bg-opacity-50 bg-white backdrop-blur-xl  space-y-6">
-      <CardHeader>
-        <div className="flex flex-col items-center space-y-2 text-center">
-          <Image
-            src="/school-logo-purple.png"
-            alt="广西大学行健文理学院logo"
-            width={100}
-            height={100}
-            className="rounded-full inset-0 mb-1"
-          />
-          <motion.ul variants={container} initial="hidden" animate="visible">
-            <motion.li variants={item}>
-              <h1 className="text-2xl font-semibold tracking-tight">
-                广西大学行健学院宿舍后勤服务
-              </h1>
-            </motion.li>
-            <motion.li variants={item}>
-              <p className="text-sm text-muted-foreground">
-                输入学号和密码以登录
-              </p>
-            </motion.li>
-          </motion.ul>
-        </div>
-      </CardHeader>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
+      <Card className="relative py-16 w-full lg:w-[500px]  bg-opacity-50 bg-white backdrop-blur-xl  space-y-6">
+        <CardHeader>
+          <div className="flex flex-col items-center space-y-2 text-center">
+            <Image
+              src="/school-logo-purple.png"
+              alt="广西大学行健文理学院logo"
+              width={100}
+              height={100}
+              className="rounded-full inset-0 mb-1"
+            />
+            <motion.ul variants={container} initial="hidden" animate="visible">
+              <motion.li variants={item}>
+                <h1 className="text-2xl font-semibold tracking-tight">
+                  广西大学行健学院宿舍后勤服务
+                </h1>
+              </motion.li>
+              <motion.li variants={item}>
+                <p className="text-sm text-muted-foreground">
+                  输入学号和密码以登录
+                </p>
+              </motion.li>
+            </motion.ul>
+          </div>
+        </CardHeader>
 
-      <CardContent>
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <UserAuthForm />
-        </div>
-      </CardContent>
-      <motion.div
-        initial={{ opacity: 0, y: 20, scale: 0 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ delay: 0.3 }}
-      >
-        <CardFooter>
-          <p className="px-8 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our <span>Terms of Service</span>{" "}
-            and <span>Privacy Policy .</span>
-          </p>
-        </CardFooter>
-      </motion.div>
-    </Card>
+        <CardContent>
+          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+            <UserAuthForm />
+          </div>
+        </CardContent>
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <CardFooter>
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              By clicking continue, you agree to our{" "}
+              <span>Terms of Service</span> and <span>Privacy Policy .</span>
+            </p>
+          </CardFooter>
+        </motion.div>
+      </Card>
+    </motion.div>
   );
 }
 
@@ -124,7 +129,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         setIsLoading(false);
       } else {
         setIsLoading(false);
-        router.push("/login");
+        router.push("/");
       }
     });
   }

@@ -15,15 +15,15 @@ export async function middleware(req: NextRequest) {
         );
         return NextResponse.redirect(new URL("/404", req.url));
       }
-      // 管理员身份只有在非移动端才能访问admin管理页面，不然跳转到首页
+      // 管理员身份只有在非移动端才能访问admin管理页面，不然跳转到client页面
       if (isMobile(req)) {
-        return NextResponse.redirect(new URL("/", req.url));
+        return NextResponse.redirect(new URL("/client", req.url));
       }
     }
     return NextResponse.next();
   }
   console.log("中间件：没有登录，跳转到登录页面");
-  const loginUrl = new URL("/login", req.url);
+  const loginUrl = new URL("/", req.url);
   return NextResponse.redirect(loginUrl);
 }
 function isMobile(req: NextRequest) {
@@ -31,5 +31,5 @@ function isMobile(req: NextRequest) {
 }
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/", "/admin"],
+  matcher: ["/admin","/client"],
 };
