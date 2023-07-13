@@ -19,8 +19,8 @@ export default async function page() {
     <>
       <div className="container relative h-screen  flex-col items-center justify-center flex md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
         {/* 左边的装饰栏目 */}
-        <div className="relative hidden h-full flex-col p-10 text-black dark:border-r lg:flex justify-center select-none">
-          <div className="relative z-20 flex items-center text-lg ">
+        <div className="relative hidden h-full flex-col p-0 text-black dark:border-r lg:flex justify-center select-none ">
+          <div className="relative z-20 flex items-center text-lg  w-full h-full">
             <Image
               src={illustration}
               alt="宿舍报修系统"
