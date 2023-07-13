@@ -1,16 +1,27 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
+import { Spinner } from "@/components/Spinner";
 export default function Home() {
   const { data: session } = useSession();
   return (
     <>
+      <TestComponent />
+    </>
+  );
+}
+
+function TestComponent() {
+  const { data: session } = useSession();
+  return (
+    <>
       <div className=" animate-pulse">高校宿舍报修系统</div>
-      <span>
-        username: {session?.user.username} role: {session?.user.role}
+      <span className="flex">
+        username: {session?.user.username || <Spinner />} role:{" "}
+        {session?.user.role || <Spinner />}
       </span>
       <Button
-        onClick={ () => {
+        onClick={() => {
           signOut();
         }}
         className="bg-red-500 hover:bg-red-600"

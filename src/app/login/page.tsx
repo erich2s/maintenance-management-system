@@ -17,7 +17,7 @@ export default async function page() {
   }
   return (
     <>
-      <div className="container relative h-screen  flex-col items-center justify-center flex md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
+      <div className="container relative h-screen flex-col items-center justify-center flex md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
         {/* 左边的装饰栏目 */}
         <div className="relative hidden h-full flex-col p-0 text-black dark:border-r lg:flex justify-center select-none ">
           <div className="relative z-20 flex items-center text-lg  w-full h-full">
@@ -35,7 +35,7 @@ export default async function page() {
           />
         </div>
         {/* 右边的登录表单 */}
-        <div className="lg:p-8 flex items-center justify-center h-full">
+        <div className="lg:p-8 flex items-center justify-center h-full overflow-y-hidden">
           <LoginForm />
         </div>
       </div>

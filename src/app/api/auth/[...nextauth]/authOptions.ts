@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import bcrypt from "bcrypt";
 import { AuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-export const authOptions:AuthOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -69,5 +69,6 @@ export const authOptions:AuthOptions = {
      * 但当使用database adapter的时候默认开启“database”
      */
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30天过期
   },
 };
