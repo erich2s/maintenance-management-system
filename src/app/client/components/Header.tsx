@@ -17,7 +17,7 @@ export default function Header() {
         />
       </header>
       {/* 占位用 */}
-      <div className="h-14 px-5 py-8"></div>
+      <div className="h-14 px-6 py-8"></div>
     </>
   );
 }

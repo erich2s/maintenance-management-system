@@ -12,18 +12,18 @@ export default function NavBar({ className }: { className?: string }) {
     <>
       <nav
         className={cn(
-          "fixed bottom-0 flex h-14  w-full items-center justify-evenly border-t bg-white/80 backdrop-blur backdrop-saturate-200 ",
+          "fixed bottom-0 flex h-20 min-h-[] w-full items-center justify-evenly border-t bg-white/80 backdrop-blur backdrop-saturate-200 ",
           className,
         )}
       >
         {links.map((link) => (
-          <Link href={link.href} key={link.href}>
+          <Link href={link.href} key={link.href} className="mb-6 ">
             {link.href === path && "*"}
             {link.label}
           </Link>
         ))}
       </nav>
-      <div className="h-14  w-full "></div>
+      <div className="h-20  w-full "></div>
     </>
   );
 }
