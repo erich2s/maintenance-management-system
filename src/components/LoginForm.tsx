@@ -48,11 +48,8 @@ const item = {
 // 注册表单的卡片容器
 export default function LoginForm() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-    >
-      <Card className="relative py-16 w-full lg:w-[500px]  bg-opacity-50 bg-white backdrop-blur-xl  space-y-6">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <Card className="relative w-full space-y-6 py-16 lg:w-[500px]">
         <CardHeader>
           <div className="flex flex-col items-center space-y-2 text-center">
             <Image
@@ -60,7 +57,7 @@ export default function LoginForm() {
               alt="广西大学行健文理学院logo"
               width={100}
               height={100}
-              className="rounded-full inset-0 mb-1"
+              className="inset-0 mb-1 rounded-full"
             />
             <motion.ul variants={container} initial="hidden" animate="visible">
               <motion.li variants={item}>
@@ -173,7 +170,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 <motion.li variants={item}>
                   <Button
                     disabled={isLoading}
-                    className="w-full mb-5"
+                    className="mb-5 w-full"
                     type="submit"
                   >
                     <AnimatePresence>
@@ -183,7 +180,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                         >
-                          <Spinner className="animate-spin mx-2" />
+                          <Spinner className="mx-2 animate-spin" />
                         </motion.div>
                       ) : (
                         <motion.span
@@ -207,7 +204,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <div className="absolute  inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
-            <div className="relative flex justify-center text-xs uppercase w-fit">
+            <div className="relative flex w-fit justify-center text-xs uppercase">
               <span className="bg-background   px-2 text-muted-foreground">
                 Or continue with
               </span>

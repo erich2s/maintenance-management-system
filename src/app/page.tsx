@@ -2,11 +2,9 @@ import Image from "next/image";
 import illustration from "@/assets/Admin-Control-Panel.svg";
 import bg from "@/assets/bg.png";
 import LoginForm from "@/components/LoginForm";
-// import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/authOptions";
 import { redirect } from "next/navigation";
-import { PageWrapper } from "@/components/PageWrapper";
 export default async function page() {
   const session = await getServerSession(authOptions);
   if (session) {
@@ -17,10 +15,23 @@ export default async function page() {
   }
   return (
     <>
-      <div className="container relative h-screen flex-col items-center justify-center flex md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
+      <div className="container relative  flex h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
+        <button className="absolute right-8 top-5 z-20 w-7">
+          <a href="https://github.com/erich2s/maintenance-management-system">
+            <svg
+              role="img"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              className="fill-current text-gray-500 transition-all duration-300 ease-out hover:text-gray-800"
+            >
+              <title>GitHub</title>
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+            </svg>
+          </a>
+        </button>
         {/* 左边的装饰栏目 */}
-        <div className="relative hidden h-full flex-col p-0 text-black dark:border-r lg:flex justify-center select-none ">
-          <div className="relative z-20 flex items-center text-lg  w-full h-full">
+        <div className="relative hidden h-full select-none flex-col justify-center p-0 text-black dark:border-r lg:flex ">
+          <div className="relative z-20 flex h-full w-full  items-center text-lg">
             <Image
               src={illustration}
               alt="宿舍报修系统"
@@ -31,11 +42,11 @@ export default async function page() {
             src={bg}
             alt="背景"
             // className="fixed -z-10  h-full left-0 bottom-0 opacity-95 inset-0"
-            className="absolute -z-10 w-full  h-full left-0 bottom-0 opacity-95 inset-0"
+            className="absolute inset-0 bottom-0  left-0 -z-10 h-full w-full opacity-95"
           />
         </div>
         {/* 右边的登录表单 */}
-        <div className="lg:p-8 flex items-center justify-center h-full overflow-y-hidden">
+        <div className="flex h-full items-center justify-center overflow-hidden lg:p-8">
           <LoginForm />
         </div>
       </div>

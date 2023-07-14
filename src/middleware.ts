@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
       if (token.role !== "ADMIN") {
         // 非管理员跳转到404页面
         console.log(
-          `username: ${token.username} role:${token.role} is not admin`
+          `username: ${token.username} role:${token.role} is not admin`,
         );
         return NextResponse.redirect(new URL("/404", req.url));
       }
@@ -31,5 +31,5 @@ function isMobile(req: NextRequest) {
 }
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/admin","/client"],
+  matcher: ["/admin", "/client"],
 };

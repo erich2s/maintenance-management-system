@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "prisma generate && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -36,6 +36,8 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/node": "20.4.1",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.4.0",
     "prisma": "^5.0.0",
     "ts-node": "^10.9.1",
     "typescript": "5.1.6"

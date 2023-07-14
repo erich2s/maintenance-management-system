@@ -1,12 +1,12 @@
 "use client";
-import { PageWrapper } from "@/components/PageWrapper";
+import PageTransition from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 
 export default function page() {
   return (
     <>
-      <PageWrapper>
+      <PageTransition>
         <div>admin dashboard</div>
         <Button
           onClick={() => {
@@ -16,7 +16,7 @@ export default function page() {
         >
           sign out
         </Button>
-      </PageWrapper>
+      </PageTransition>
     </>
   );
 }

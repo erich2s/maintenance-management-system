@@ -14,7 +14,13 @@ export const metadata: Metadata = {
       name: "Eric Huang",
       url: "https://instagram.com/eric.h2s?igshid=OGQ5ZDc2ODk2ZA==",
     },
+    {
+      name: "黄士崧",
+      url: "https://instagram.com/eric.h2s?igshid=OGQ5ZDc2ODk2ZA==",
+    },
   ],
+  viewport:
+    "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
 };
 
 export default function RootLayout({
