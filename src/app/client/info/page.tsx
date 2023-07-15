@@ -2,6 +2,7 @@
 import PageTransition from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
+import ReactPullToRefresh from "react-pull-to-refresh/index";
 
 export default function page() {
   return (

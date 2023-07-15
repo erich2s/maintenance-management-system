@@ -31,5 +31,5 @@ function isMobile(req: NextRequest) {
 }
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/admin", "/client"],
+  matcher: ["/admin/:path*", "/client/:path*"],
 };

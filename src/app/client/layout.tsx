@@ -1,3 +1,4 @@
+import { NavLinksProvider } from "@/context/NavLinksProvider";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 
@@ -8,11 +9,11 @@ export default function layout({
 }) {
   return (
     <>
-      {/* <div className="relative h-screen"> */}
-      <Header />
-      <main className="container ">{children}</main>
-      <NavBar />
-      {/* </div> */}
+      <NavLinksProvider>
+        <Header />
+        <main className="container ">{children}</main>
+        <NavBar />
+      </NavLinksProvider>
     </>
   );
 }

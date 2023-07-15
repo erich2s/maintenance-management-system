@@ -2,6 +2,7 @@
 import { Spinner } from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
 export default function Test() {
   const { data: session } = useSession();
@@ -19,6 +20,14 @@ export default function Test() {
         }}
       >
         sign out
+      </Button>
+      <br />
+      <Button
+        onClick={() => {
+          toast.success("hello");
+        }}
+      >
+        click
       </Button>
     </>
   );

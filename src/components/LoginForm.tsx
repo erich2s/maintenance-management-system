@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import { Eye, EyeOff } from "lucide-react";
 // 动画
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -105,12 +106,13 @@ const formSchema = z.object({
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      username: "eric",
+      password: "123456",
     },
   });
   //   登录提交
@@ -160,8 +162,28 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input placeholder="password" {...field} />
+                          <div className="relative flex items-center overflow-hidden">
+                            <div
+                              onClick={() => {
+                                setPasswordVisible(!passwordVisible);
+                              }}
+                              className="absolute  right-0 flex h-9 w-9 cursor-pointer select-none items-center justify-center border-l opacity-50 hover:opacity-100"
+                            >
+                              {passwordVisible ? (
+                                <Eye size={20} />
+                              ) : (
+                                <EyeOff size={20} />
+                              )}
+                            </div>
+
+                            <Input
+                              type={passwordVisible ? "text" : "password"}
+                              placeholder="password"
+                              {...field}
+                            />
+                          </div>
                         </FormControl>
+
                         <FormMessage />
                       </FormItem>
                     )}
