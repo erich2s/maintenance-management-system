@@ -11,7 +11,7 @@ export default function layout({
     <>
       <NavLinksProvider>
         <Header />
-        <main className="container ">{children}</main>
+        <main className="container max-w-[50rem] ">{children}</main>
         <NavBar />
       </NavLinksProvider>
     </>
