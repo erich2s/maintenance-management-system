@@ -9,16 +9,16 @@ export default function Header() {
   return (
     <>
       <header
-        className="fixed top-0 flex h-14 w-full justify-center   border-b bg-white/80  px-6 py-8 backdrop-blur-sm backdrop-saturate-200
+        className="fixed  top-0 z-20 flex h-14 w-full justify-center   bg-white/80  px-6 py-8 backdrop-blur-sm backdrop-saturate-200
       "
       >
-        <div className="z-20 flex w-full max-w-[75rem] items-center justify-between">
+        <div className="flex w-full max-w-[75rem] items-center justify-between">
           <motion.h1
             key={currentLink?.href}
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="text text-2xl font-bold  text-foreground"
+            className="text-2xl font-bold  text-foreground"
           >
             {currentLink?.label}
           </motion.h1>

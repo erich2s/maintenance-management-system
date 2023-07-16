@@ -49,7 +49,7 @@ export default function NavBar({ className }: { className?: string }) {
           })}
         </nav>
         <div className="h-[5.5rem] w-full "></div>
-        <SheetContent side={"bottom"} className="h-5/6 rounded-t-3xl">
+        <SheetContent side={"bottom"} className="h-1/3  rounded-t-3xl">
           <SheetHeader>
             <SheetTitle>Are you sure absolutely sure?</SheetTitle>
             <SheetDescription>
