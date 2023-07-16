@@ -7,7 +7,7 @@ self.addEventListener("activate", function (event) {
 self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(MAINTENANCE_MANAGEMENT_SYSTEM_CACHE).then(function (cache) {
-      return cache.addAll(["/", "/school-logo-purple.png"]);
+      return cache.addAll([]);
     }),
   );
 });
