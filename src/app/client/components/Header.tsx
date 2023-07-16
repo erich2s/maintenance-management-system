@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <>
       <header
-        className="fixed  top-0 z-20 flex h-14 w-full justify-center   bg-white/80  px-6 py-8 backdrop-blur-sm backdrop-saturate-200
+        className="fixed  top-0 z-20 flex h-14 w-full justify-center bg-white/80  px-6 py-8 backdrop-blur-sm backdrop-saturate-200
       "
       >
         <div className="flex w-full max-w-[75rem] items-center justify-between">
@@ -17,8 +17,9 @@ export default function Header() {
             key={currentLink?.href}
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            transition={{ type: "spring", stiffness: 200 }}
             className="text-2xl font-bold  text-foreground"
+            exit={{ opacity: 0, x: -10 }}
           >
             {currentLink?.label}
           </motion.h1>
@@ -31,7 +32,7 @@ export default function Header() {
         </div>
       </header>
       {/* 占位用 */}
-      <div className="h-14 px-6 py-8"></div>
+      <div className="mb-4 h-14 px-6 py-8 "></div>
     </>
   );
 }
