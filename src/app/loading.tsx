@@ -6,8 +6,8 @@ export default function Loading() {
       <div className="relative flex h-screen flex-col items-center justify-center">
         <Image
           src="/school-logo-purple.png"
-          width={120}
-          height={120}
+          width={80}
+          height={80}
           alt="school logo"
           className="mb-4"
         />
