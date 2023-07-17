@@ -1,11 +1,5 @@
 "use client";
-import {
-  Home,
-  PlusCircle,
-  PlusCircleIcon,
-  PlusSquare,
-  User2,
-} from "lucide-react";
+import { Home, PlusCircle, User2 } from "lucide-react";
 import { ReactNode, createContext, useState } from "react";
 
 interface Link {
@@ -29,7 +23,7 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
   const links = [
     {
       href: "/client",
-      label: "Home",
+      label: "首页",
       icon: <Home size={26} />,
       iconSelected: <Home size={26} strokeWidth={2.5} />,
     },
@@ -40,7 +34,7 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
     },
     {
       href: "/client/info",
-      label: "Profile",
+      label: "个人信息",
       icon: <User2 size={26} />,
       iconSelected: <User2 size={26} strokeWidth={2.5} />,
     },

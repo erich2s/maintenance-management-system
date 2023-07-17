@@ -6,22 +6,37 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { User2 } from "lucide-react";
 import Image from "next/image";
-export default function InfoCard() {
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+
+type props = {
+  name: string; //姓名
+  username: string; //学号
+  phone: string; //手机号
+};
+export default function InfoCard({ name, username, phone }: props) {
   return (
     <>
-      <Card className="mb-9  bg-transparent bg-gradient-to-br from-[#e96443]/80 to-[#904e95]/90   text-card drop-shadow-xl  backdrop-blur-lg backdrop-filter">
-        <CardHeader>
-          <CardTitle className="text-base">Card Title</CardTitle>
+      <Card className="mb-9  bg-gradient-to-br  from-[#e96443]/80 to-[#904e95]/90 text-card   shadow-xl  shadow-[#904e95]/50">
+        <CardHeader className="py-4">
+          <CardTitle className="flex text-lg">校 园 卡</CardTitle>
         </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
+        <CardContent className="mx-0 my-1 flex items-center justify-around py-0">
+          <div className="flex  h-24  w-[70px]  translate-y-3 scale-[1.3] items-center justify-center overflow-hidden  rounded-xl bg-white/20 opacity-80 ">
+            <User2 size={60} />
+          </div>
+          <div className="space-y-1 font-medium ">
+            <p>姓名：{name}</p>
+            <p>学号：{username}</p>
+            <p>手机：{phone}</p>
+          </div>
         </CardContent>
-        <CardFooter className="flex justify-end ">
+        <CardFooter className="flex justify-end  pb-3 ">
           <Image
             src="/school-logo-fill.png"
-            width={60}
-            height={60}
+            width={50}
+            height={50}
             alt="school logo"
             className="rounded-full bg-white/90"
           />

@@ -47,9 +47,7 @@ export const authOptions: AuthOptions = {
       //这个user是从authorize函数返回的
       //在这个函数中将数据库中获取到的user信息添加到token中（自定义）
       if (user) {
-        token.id = user.id;
-        token.username = user.username;
-        token.role = user.role;
+        return { ...token, ...user };
       }
       //别把密码返回去了
       return token;

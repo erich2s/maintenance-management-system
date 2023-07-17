@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 
 export default function Test() {
   const { data: session } = useSession();
+  // session?.user.
   return (
     <>
       <div className=" animate-pulse">高校宿舍报修系统</div>

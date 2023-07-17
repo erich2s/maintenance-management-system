@@ -12,30 +12,31 @@ datasource db {
 
 // 用户
 model User {
-  id       Int    @id @default(autoincrement())
+  id       Int      @id @default(autoincrement())
   // 学号
-  username String @unique
+  username String   @unique
   // 姓名
   name     String
-  email    String 
+  email    String
+  phone    String   @unique
   // hashed密码
   password String
-  role     Role   @default(USER)
+  role     Role     @default(USER)
   // 报修单
   repairs  Repair[]
 }
 
 // 报修单
 model Repair {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   // 报修单状态
-  status      Status  @default(PENDING)
+  status      Status   @default(PENDING)
   // 报修单内容
   content     String
   // 报修单提交时间
   createdAt   DateTime @default(now())
   // 报修单提交人
-  createdBy   User    @relation(fields: [createdById], references: [id])
+  createdBy   User     @relation(fields: [createdById], references: [id])
   createdById Int
 }
 
