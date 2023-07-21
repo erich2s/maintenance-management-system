@@ -13,9 +13,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 type props = {
   name: string; //姓名
   username: string; //学号
-  phone: string; //手机号
 };
-export default function InfoCard({ name, username, phone }: props) {
+export default function InfoCard({ name, username }: props) {
   return (
     <>
       <Card className="mb-9  bg-gradient-to-br  from-[#e96443]/80 to-[#904e95]/90 text-card   shadow-xl  ">

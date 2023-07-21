@@ -8,7 +8,7 @@ import { Accordion } from "@/components/ui/accordion";
 
 export default async function page() {
   const session = await getServerSession(authOptions);
-  const { name, username, phone } = session?.user!;
+  const { name, username } = session?.user!;
   const repairs = [
     {
       id: "1",
@@ -75,7 +75,7 @@ export default async function page() {
   ];
   return (
     <>
-      <InfoCard name={name} username={username} phone={phone} />
+      <InfoCard name={name} username={username} />
       <PageTransition>
         <h2 className="text-[1.25rem] font-bold">最近活动</h2>
         <Accordion type="single" defaultValue="1" collapsible>
