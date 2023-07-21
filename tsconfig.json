@@ -30,7 +30,7 @@
     ".next/types/**/*.ts",
     "src/app/api/auth/[...nextauth]/route.ts",
     "src/app/api/auth/[...nextauth]/authOptions.ts",
-    "src/components/PageTransitiontsx"
+    "src/components/PageTransition.tsx"
   ],
   "exclude": ["node_modules"]
 }

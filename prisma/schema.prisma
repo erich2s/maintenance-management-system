@@ -18,7 +18,6 @@ model User {
   // 姓名
   name     String
   email    String
-  phone    String   @unique
   // hashed密码
   password String
   role     Role     @default(USER)
@@ -31,13 +30,20 @@ model Repair {
   id          Int      @id @default(autoincrement())
   // 报修单状态
   status      Status   @default(PENDING)
-  // 报修单内容
-  content     String
   // 报修单提交时间
   createdAt   DateTime @default(now())
   // 报修单提交人
   createdBy   User     @relation(fields: [createdById], references: [id])
   createdById Int
+
+  // 报修类型
+  type    String
+  // 所留电话
+  phone   String
+  // 报修地点
+  address String
+  // 报修单内容
+  content String
 }
 
 // 用户角色
@@ -48,7 +54,8 @@ enum Role {
 
 // 报修单状态
 enum Status {
-  PENDING
-  ACCEPTED
-  REJECTED
+  PENDING // 待处理，黄色
+  ACCEPTED // 已接受并派工，紫色
+  REJECTED // 已拒绝，红色
+  FINISHED // 已完成，绿色
 }

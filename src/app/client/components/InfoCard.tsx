@@ -29,7 +29,6 @@ export default function InfoCard({ name, username, phone }: props) {
           <div className="space-y-1 font-medium ">
             <p>姓名：{name}</p>
             <p>学号：{username}</p>
-            <p>手机：{phone}</p>
           </div>
         </CardContent>
         <CardFooter className="flex justify-end  pb-3 ">
