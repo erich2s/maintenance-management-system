@@ -18,12 +18,12 @@ type props = {
 export default function InfoCard({ name, username, phone }: props) {
   return (
     <>
-      <Card className="mb-9  bg-gradient-to-br  from-[#e96443]/80 to-[#904e95]/90 text-card   shadow-xl  shadow-[#904e95]/50">
+      <Card className="mb-9  bg-gradient-to-br  from-[#e96443]/80 to-[#904e95]/90 text-card   shadow-xl  ">
         <CardHeader className="py-4">
           <CardTitle className="flex text-lg">校 园 卡</CardTitle>
         </CardHeader>
         <CardContent className="mx-0 my-1 flex items-center justify-around py-0">
-          <div className="flex  h-24  w-[70px]  translate-y-3 scale-[1.3] items-center justify-center overflow-hidden  rounded-xl bg-white/20 opacity-80 ">
+          <div className="flex  h-24  w-[70px]  translate-y-3 scale-[1.3] items-center justify-center overflow-hidden  rounded-xl bg-white/50 opacity-80 ">
             <User2 size={60} />
           </div>
           <div className="space-y-1 font-medium ">

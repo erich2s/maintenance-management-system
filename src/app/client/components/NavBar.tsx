@@ -7,12 +7,11 @@ import { NavLinksContext } from "@/context/NavLinksProvider";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
+import ReportForm from "./ReportForm";
 export default function NavBar({ className }: { className?: string }) {
   const path = usePathname();
   const { links, setCurrentLink } = useContext(NavLinksContext);
@@ -49,14 +48,13 @@ export default function NavBar({ className }: { className?: string }) {
           })}
         </nav>
         <div className="h-[5.5rem] w-full "></div>
-        <SheetContent side={"bottom"} className="h-1/3  rounded-t-3xl">
-          <SheetHeader>
-            <SheetTitle>Are you sure absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </SheetDescription>
+        <SheetContent side={"bottom"} className="  rounded-t-3xl">
+          <SheetHeader className="mb-2">
+            <SheetTitle className="text-xl tracking-wide">
+              填写报修单
+            </SheetTitle>
           </SheetHeader>
+          <ReportForm />
         </SheetContent>
       </Sheet>
     </>
