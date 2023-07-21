@@ -2,13 +2,7 @@ import { ReactNode } from "react";
 import Header from "./components/Header";
 import NavSideBar from "./components/NavSideBar";
 
-export default function layout({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export default function layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex">
       <NavSideBar />
