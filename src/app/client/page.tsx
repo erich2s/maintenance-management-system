@@ -1,6 +1,6 @@
 import PageTransition from "@/components/PageTransition";
-import InfoCard from "./components/InfoCard";
-import ReportItem from "./components/ReportItem";
+import InfoCard from "@/components/client/InfoCard";
+import ReportItem from "@/components/client/ReportItem";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { Accordion } from "@/components/ui/accordion";

@@ -14,7 +14,7 @@ export default function NavSideBar() {
   return (
     <aside className="flex h-screen  w-64 flex-col items-center border-r px-2 py-1">
       {/* Logo */}
-      <div className="flex h-14  w-[100%]  items-center justify-center text-xl font-bold">
+      <div className="flex h-14  w-[100%]  select-none items-center justify-center text-xl font-bold">
         <div>
           <Image
             src="/school-logo-purple.png"

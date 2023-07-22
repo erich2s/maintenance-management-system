@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import Header from "./components/Header";
-import NavSideBar from "./components/NavSideBar";
+import Header from "@/components/admin/Header";
+import NavSideBar from "@/components/admin/NavSideBar";
 
 export default function layout({ children }: { children: ReactNode }) {
   return (

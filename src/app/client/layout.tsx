@@ -1,5 +1,5 @@
-import Header from "./components/Header";
-import NavBar from "./components/NavBar";
+import Header from "@/components/client/Header";
+import NavBar from "@/components/client/NavBar";
 
 export default function layout({
   children, // will be a page or nested layout

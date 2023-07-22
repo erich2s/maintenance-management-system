@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { User2 } from "lucide-react";
 import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 type props = {
   name: string; //姓名

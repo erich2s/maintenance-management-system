@@ -1,6 +1,6 @@
 "use client";
 import PageTransition from "@/components/PageTransition";
-import Test from "../components/Test";
+import Test from "@/components/client/Test";
 
 export default function page() {
   return (
