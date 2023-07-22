@@ -1,6 +1,6 @@
 import PageTransition from "@/components/PageTransition";
 import InfoCard from "./components/InfoCard";
-import ActivityItem from "./components/ActivityItem";
+import ReportItem from "./components/ReportItem";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { Accordion } from "@/components/ui/accordion";
@@ -80,7 +80,7 @@ export default async function page() {
         <h2 className="text-[1.25rem] font-bold">最近活动</h2>
         <Accordion type="single" defaultValue="1" collapsible>
           {repairs.map((repair) => (
-            <ActivityItem
+            <ReportItem
               key={repair.id}
               id={repair.id}
               type={repair.type}

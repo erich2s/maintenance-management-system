@@ -25,26 +25,28 @@ export default function NavBar({ className }: { className?: string }) {
           )}
         >
           {links.map((link) => {
-            if (link.label === "Add") {
+            if (link.href.startsWith("/client")) {
+              if (link.label === "Add") {
+                return (
+                  <SheetTrigger
+                    key={link.label}
+                    className=" mb-9  flex cursor-pointer flex-col items-center  rounded-xl  bg-opacity-40 px-4 py-2"
+                  >
+                    {link.icon}
+                  </SheetTrigger>
+                );
+              }
               return (
-                <SheetTrigger
+                <Link
+                  href={link.href}
                   key={link.label}
-                  className=" mb-9  flex cursor-pointer flex-col items-center  rounded-xl  bg-opacity-40 px-4 py-2"
+                  onClick={() => setCurrentLink!(link)}
+                  className="mb-9 flex flex-col items-center  rounded-xl bg-opacity-40 px-4 py-2"
                 >
-                  {link.icon}
-                </SheetTrigger>
+                  {path === link.href ? link.iconSelected : link.icon}
+                </Link>
               );
             }
-            return (
-              <Link
-                href={link.href}
-                key={link.label}
-                onClick={() => setCurrentLink!(link)}
-                className="mb-9 flex flex-col items-center  rounded-xl bg-opacity-40 px-4 py-2"
-              >
-                {path === link.href ? link.iconSelected : link.icon}
-              </Link>
-            );
           })}
         </nav>
         <div className="h-[5.5rem] w-full "></div>

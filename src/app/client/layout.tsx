@@ -1,4 +1,3 @@
-import { NavLinksProvider } from "@/context/NavLinksProvider";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 
@@ -9,11 +8,9 @@ export default function layout({
 }) {
   return (
     <>
-      <NavLinksProvider>
-        <Header />
-        <main className="container max-w-[50rem]">{children}</main>
-        <NavBar />
-      </NavLinksProvider>
+      <Header />
+      <main className="container max-w-[50rem]">{children}</main>
+      <NavBar />
     </>
   );
 }

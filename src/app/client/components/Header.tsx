@@ -1,11 +1,7 @@
-"use client";
 import Image from "next/image";
 import avatar from "@/assets/avatar.jpg";
-import { useContext } from "react";
-import { NavLinksContext } from "@/context/NavLinksProvider";
-import { motion } from "framer-motion";
+import MotionHeaderLabel from "@/components/MotionHeaderLabel";
 export default function Header() {
-  const { currentLink } = useContext(NavLinksContext);
   return (
     <>
       <header
@@ -13,16 +9,7 @@ export default function Header() {
       "
       >
         <div className="flex w-full max-w-[75rem] items-center justify-between">
-          <motion.h1
-            key={currentLink?.href}
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ type: "spring", stiffness: 200 }}
-            className="text-2xl font-bold  text-foreground"
-            exit={{ opacity: 0, x: -10 }}
-          >
-            {currentLink?.label}
-          </motion.h1>
+          <MotionHeaderLabel />
           <Image
             src={avatar}
             alt="avatar"

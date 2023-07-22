@@ -12,16 +12,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import MotionHeaderLabel from "@/components/MotionHeaderLabel";
 export default function Header({ className }: { className?: string }) {
   const { data: session } = useSession();
   return (
     <div
       className={cn(
-        "flex h-14 w-full items-center justify-between border-b bg-white px-10",
+        "flex h-16  w-full items-center justify-between border-b bg-white px-10",
         className,
       )}
     >
-      <div>logo</div>
+      <MotionHeaderLabel />
       <DropdownMenu>
         <DropdownMenuTrigger className="select-none outline-none">
           <div className="flex  items-center justify-around  rounded-full  p-1">

@@ -1,6 +1,7 @@
 "use client";
 import { Home, PlusCircle, User2 } from "lucide-react";
-import { ReactNode, createContext, useState } from "react";
+import { usePathname } from "next/navigation";
+import { ReactNode, createContext, useEffect, useState } from "react";
 
 interface Link {
   href: string;
@@ -20,7 +21,8 @@ export const NavLinksContext = createContext<LinksContextValue>(
 );
 
 export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
-  const links = [
+  // 在这里配置路由链接供导航栏使用
+  const links: Link[] = [
     {
       href: "/client",
       label: "首页",
@@ -28,7 +30,8 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
       iconSelected: <Home size={26} strokeWidth={2.5} />,
     },
     {
-      href: "/client",
+      // 其实这个add的href没用，因为add是一个modal，不是一个页面
+      href: "/client/add",
       label: "Add",
       icon: <PlusCircle size={30} strokeWidth={1.8} />,
     },
@@ -38,8 +41,30 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
       icon: <User2 size={26} />,
       iconSelected: <User2 size={26} strokeWidth={2.5} />,
     },
+    {
+      href: "/admin",
+      label: "主页",
+      icon: <User2 size={26} />,
+      iconSelected: <User2 size={26} strokeWidth={2.5} />,
+    },
+    {
+      href: "/admin/test",
+      label: "测试",
+      icon: <User2 size={26} />,
+      iconSelected: <User2 size={26} strokeWidth={2.5} />,
+    },
   ];
   const [currentLink, setCurrentLink] = useState<Link>(links[0]);
+  const path = usePathname();
+  let currentLinkFound = false;
+  useEffect(() => {
+    links.forEach((link) => {
+      if (link.href === path && !currentLinkFound) {
+        setCurrentLink!(link);
+        currentLinkFound = true;
+      }
+    });
+  }, [path]);
   return (
     <NavLinksContext.Provider value={{ links, currentLink, setCurrentLink }}>
       {children}

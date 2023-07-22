@@ -8,7 +8,7 @@ export default function layout({ children }: { children: ReactNode }) {
       <NavSideBar />
       <div className="flex h-full w-full flex-col">
         <Header />
-        <main className="h-[calc(100vh_-_3.5rem)] overflow-y-scroll bg-gray-300/20 ">
+        <main className="h-[calc(100vh_-_4rem)] w-full overflow-y-scroll bg-gray-300/20 ">
           {children}
         </main>
       </div>
