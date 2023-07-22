@@ -26,6 +26,13 @@ import {
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { Eye, EyeOff } from "lucide-react";
+
+import { Yuji_Mai } from "next/font/google";
+const yujiMai = Yuji_Mai({
+  weight: "400",
+  subsets: ["latin"],
+});
+
 // 动画
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -50,7 +57,7 @@ const item = {
 export default function LoginForm() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <Card className="relative w-full space-y-6 py-16 lg:w-[500px]">
+      <Card className="relative w-full space-y-3 py-16 lg:w-[500px]">
         <CardHeader>
           <div className="flex flex-col items-center space-y-2 text-center">
             <Image
@@ -62,7 +69,12 @@ export default function LoginForm() {
             />
             <motion.ul variants={container} initial="hidden" animate="visible">
               <motion.li variants={item}>
-                <h1 className="text-2xl font-semibold tracking-tight">
+                <h1
+                  className={cn(
+                    "mb-2 text-3xl font-semibold tracking-tight",
+                    yujiMai.className,
+                  )}
+                >
                   广西大学行健学院宿舍后勤服务
                 </h1>
               </motion.li>
@@ -76,7 +88,7 @@ export default function LoginForm() {
         </CardHeader>
 
         <CardContent>
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+          <div className="mx-auto flex w-full flex-col justify-center sm:w-[350px]">
             <UserAuthForm />
           </div>
         </CardContent>

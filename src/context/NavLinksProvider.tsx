@@ -43,15 +43,13 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
     },
     {
       href: "/admin",
-      label: "主页",
-      icon: <User2 size={26} />,
-      iconSelected: <User2 size={26} strokeWidth={2.5} />,
+      label: "首页",
+      icon: <Home size={20} />,
     },
     {
       href: "/admin/test",
       label: "测试",
-      icon: <User2 size={26} />,
-      iconSelected: <User2 size={26} strokeWidth={2.5} />,
+      icon: <User2 size={20} />,
     },
   ];
   const [currentLink, setCurrentLink] = useState<Link>(links[0]);
