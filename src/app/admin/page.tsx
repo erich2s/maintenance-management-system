@@ -1,9 +1,8 @@
 "use client";
-/// <reference path="@uiw/react-amap-types" />
 import PageTransition from "@/components/PageTransition";
 import Map from "@/components/admin/Map";
 import UnreadBox from "@/components/admin/UnreadBox";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function page() {
   const [height, setHeight] = useState(0);
