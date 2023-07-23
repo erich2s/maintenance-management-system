@@ -16,7 +16,6 @@ export default function PageWrapper({
   children: ReactNode;
   className?: string;
   direction?: "bottom" | "top" | "left" | "right";
-  scale?: boolean;
 }) {
   const pathname = usePathname();
   const variants = {

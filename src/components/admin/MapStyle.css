@@ -1,0 +1,13 @@
+/*  去掉高德logo */
+.BMap_cpyCtrl {
+  display: none;
+}
+.anchorBL {
+  display: none;
+}
+.amap-logo img {
+  display: none;
+}
+.amap-copyright {
+  opacity: 0;
+}

@@ -26,7 +26,7 @@ export default function NavSideBar() {
         <div className={cn(yujiMai.className, "ml-2")}>西大行健学院</div>
       </div>
       {/* NavLinks */}
-      <nav className="mt-2 flex w-full flex-col items-center justify-center px-1 text-[15px]">
+      <nav className="mt-3 flex w-full flex-col items-center justify-center px-1 text-[15px]">
         {links.map((link) => {
           if (link.href.startsWith("/admin")) {
             let activeStyle = "";
