@@ -2,11 +2,11 @@
 /// <reference path="@uiw/react-amap-types" />
 import PageTransition from "@/components/PageTransition";
 import Map from "@/components/admin/Map";
+import UnreadBox from "@/components/admin/UnreadBox";
 import React, { useEffect, useState } from "react";
 
 export default function page() {
   const [height, setHeight] = useState(0);
-
   // 监听窗口大小变化
   useEffect(() => {
     function handleResize() {
@@ -16,12 +16,13 @@ export default function page() {
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
   return (
     <>
       <PageTransition>
         <div className="flex h-full w-full">
-          <div className="w-[40%]">box</div>
+          <div className="h-full w-[40%]">
+            <UnreadBox />
+          </div>
           <div className="h-full w-[60%]">
             <Map height={height} />
           </div>

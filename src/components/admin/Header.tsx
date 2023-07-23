@@ -13,8 +13,11 @@ import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import MotionHeaderLabel from "@/components/MotionHeaderLabel";
+import { useState } from "react";
+import { Spinner } from "../Spinner";
 export default function Header({ className }: { className?: string }) {
   const { data: session } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div
       className={cn(
@@ -41,12 +44,15 @@ export default function Header({ className }: { className?: string }) {
           <DropdownMenuSeparator />
           <Button
             variant={"destructive"}
-            onClick={() => {
-              signOut();
+            onClick={async () => {
+              setIsLoading(true);
+              signOut().then(() => {
+                setIsLoading(false);
+              });
             }}
             className="h-8 w-full"
           >
-            signout
+            {isLoading ? <Spinner /> : "注销"}
           </Button>
         </DropdownMenuContent>
       </DropdownMenu>

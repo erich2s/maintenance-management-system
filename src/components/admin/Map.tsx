@@ -26,19 +26,12 @@ export interface MapConfigureInter {
 export default function Map({ height }: { height: number }) {
   const mapRef = useRef<HTMLDivElement>(null);
   let map: MapConfigureInter;
-  // 注入高德地图安全码
-  //   useEffect(() => {
-  //     const script = document.createElement("script");
-  //     script.type = "text/javascript";
-  //     script.textContent = `window._AMapSecurityConfig = {securityJsCode:"3741a106252939f5dbc7076539dc79fb"}`;
 
-  //     document.head.appendChild(script);
-  //     return () => {
-  //       document.head.removeChild(script);
-  //     };
-  //   }, []);
   // 加载高德地图
   useEffect(() => {
+    (window as any)._AMapSecurityConfig = {
+      securityJsCode: "3741a106252939f5dbc7076539dc79fb",
+    };
     AMapLoader.load({
       key: "4f77082b3a2e028ff3c03d0fe2742b78",
       version: "2.0",
@@ -46,18 +39,16 @@ export default function Map({ height }: { height: number }) {
     })
       .then((AMap) => {
         map = new AMap.Map(mapRef.current, {
-          mapstyle: "amap://styles/dark",
           zoom: 17,
-          pitch: 50,
+          pitch: 45,
           viewMode: "3D",
-          center: [108.288966, 22.85242],
+          center: [108.29, 22.85242],
           resizeEnable: true,
-          // 地图模式
-          expandZoomRange: true,
           skyColor: "#f9f6ee",
         });
+        map.setMapStyle("amap://styles/520502358523cd64bd082a98087e4c10");
         map.addControl!(new AMap.ToolBar({ position: "LT" }));
-        map.addControl!(new AMap.ControlBar({ position: "LB" }));
+        map.addControl!(new AMap.ControlBar({ position: "RB" }));
       })
       .catch((e) => {
         console.log(e);
