@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "prisma generate && next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -26,9 +26,9 @@
     "bcrypt": "^5.1.0",
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
-    "framer-motion": "^10.13.0",
+    "framer-motion": "^10.13.1",
     "lucide-react": "^0.259.0",
-    "next": "13.4.10",
+    "next": "13.4.12",
     "next-auth": "^4.22.3",
     "postcss": "8.4.25",
     "react": "18.2.0",

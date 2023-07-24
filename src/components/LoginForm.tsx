@@ -24,7 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "react-hot-toast";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { Eye, EyeOff } from "lucide-react";
 
 import { Yuji_Mai } from "next/font/google";
@@ -140,7 +140,8 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         setIsLoading(false);
       } else {
         setIsLoading(false);
-        router.push("/");
+        // router.push("/");
+        router.refresh();
       }
     });
   }
@@ -187,7 +188,6 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                                 <EyeOff size={20} />
                               )}
                             </div>
-
                             <Input
                               type={passwordVisible ? "text" : "password"}
                               placeholder="password"
@@ -195,7 +195,6 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                             />
                           </div>
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
