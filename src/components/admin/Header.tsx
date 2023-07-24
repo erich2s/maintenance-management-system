@@ -37,14 +37,25 @@ export default function Header({ className }: { className?: string }) {
             />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel className="text-md text-center">
-            @{session?.user.name}
+        <DropdownMenuContent className="mx-8 p-2">
+          <DropdownMenuLabel className="flex items-center gap-4 ">
+            <Image
+              src={avatar}
+              alt="avatar"
+              width={50}
+              className="rounded-full saturate-150"
+            />
+            <div>
+              <div className="text-base">{session?.user.name}</div>
+              <div className="font-light text-gray-500  ">
+                @{session?.user.username}
+              </div>
+            </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <Button
-            variant={"destructive"}
-            onClick={async () => {
+            variant={"outline"}
+            onClick={() => {
               setIsLoading(true);
               signOut().then(() => {
                 setIsLoading(false);
