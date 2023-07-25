@@ -15,13 +15,14 @@ import { cn } from "@/lib/utils";
 import MotionHeaderLabel from "@/components/MotionHeaderLabel";
 import { useState } from "react";
 import { Spinner } from "../Spinner";
+import { LogOut } from "lucide-react";
 export default function Header({ className }: { className?: string }) {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   return (
     <div
       className={cn(
-        "flex h-16  w-full items-center justify-between border-b bg-white px-10",
+        "flex h-16  w-full items-center justify-between border-b bg-white px-5",
         className,
       )}
     >
@@ -32,12 +33,12 @@ export default function Header({ className }: { className?: string }) {
             <Image
               src={avatar}
               alt="avatar"
-              width={42}
-              className="rounded-full border p-[1px] saturate-150"
+              width={48}
+              className="rounded-full border  p-[3px] saturate-150"
             />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="mx-8 p-2">
+        <DropdownMenuContent className="mx-4 p-2">
           <DropdownMenuLabel className="flex items-center gap-4 ">
             <Image
               src={avatar}
@@ -63,7 +64,14 @@ export default function Header({ className }: { className?: string }) {
             }}
             className="h-8 w-full"
           >
-            {isLoading ? <Spinner /> : "注销"}
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <div className="flex items-center justify-center">
+                <LogOut width={16} className="mr-2" />
+                <span>注销</span>
+              </div>
+            )}
           </Button>
         </DropdownMenuContent>
       </DropdownMenu>
