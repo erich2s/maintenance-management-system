@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "prisma generate && next dev",
-    "build": "prisma generate && next build",
+    "dev": "dotenv -e .env.development -- prisma generate && next dev",
+    "build": "dotenv -e .env.production -- prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate:dev": "dotenv -e .env.development -- pnpx prisma migrate dev",
+    "migrate:prod": "dotenv -e .env.production -- pnpx prisma migrate deploy"
   },
   "dependencies": {
     "@heycar/amap-jsapi-loader": "^1.0.1",
@@ -17,6 +19,7 @@
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-scroll-area": "^1.0.4",
     "@radix-ui/react-select": "^1.2.2",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",

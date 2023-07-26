@@ -9,11 +9,11 @@ export default function page() {
   return (
     <>
       <PageTransition>
-        <div className="relative flex h-full w-full bg-white">
-          <div className="h-full flex-1 ">
+        <div className="flex h-full w-full bg-white ">
+          <div className="bg-cyan h-[calc(100vh_-_4rem)] w-[40%]">
             <UnreadBox />
           </div>
-          <div className="h-full w-[52vw]">
+          <div className="h-full w-[60%]">
             <Map />
           </div>
         </div>

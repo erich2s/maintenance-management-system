@@ -22,11 +22,11 @@ model User {
   password String
   role     Role     @default(USER)
   // 报修单
-  repairs  Repair[]
+  reports  Report[]
 }
 
 // 报修单
-model Repair {
+model Report {
   id          Int      @id @default(autoincrement())
   // 报修单状态
   status      Status   @default(PENDING)
