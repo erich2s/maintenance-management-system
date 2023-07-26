@@ -56,6 +56,7 @@ export default function Header({ className }: { className?: string }) {
           <DropdownMenuSeparator />
           <Button
             variant={"outline"}
+            disabled={isLoading}
             onClick={() => {
               setIsLoading(true);
               signOut().then(() => {

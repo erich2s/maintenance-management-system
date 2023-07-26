@@ -37,13 +37,15 @@ model Report {
   createdById Int
 
   // 报修类型
-  type    String
+  type     String
   // 所留电话
-  phone   String
+  phone    String
   // 报修地点
-  address String
+  location String
+  // 报修单房间号
+  room     String
   // 报修单内容
-  content String
+  content  String
 }
 
 // 用户角色

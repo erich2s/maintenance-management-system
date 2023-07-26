@@ -11,3 +11,16 @@
 .amap-copyright {
   opacity: 0;
 }
+.amap-maps {
+  cursor: grab;
+}
+.amap-maps:active {
+  cursor: grabbing;
+}
+.amap-toolbar {
+  background-color: rgba(255, 255, 255, 0.676);
+  @apply overflow-hidden rounded-2xl;
+}
+.amap-controlbar {
+  scale: 0.8;
+}
