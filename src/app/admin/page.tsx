@@ -9,7 +9,7 @@ export default function page() {
   return (
     <>
       <PageTransition>
-        <div className="flex h-full w-full bg-white ">
+        <div className="flex h-full w-full bg-white">
           <div className="bg-cyan h-[calc(100vh_-_4rem)] w-[40%]">
             <UnreadBox />
           </div>

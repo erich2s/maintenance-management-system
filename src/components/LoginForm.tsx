@@ -131,8 +131,8 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     signIn("credentials", {
-      username: values.username,
-      password: values.password,
+      username: values.username.trim(),
+      password: values.password.trim(),
       redirect: false,
     }).then((res) => {
       if (res?.error) {
