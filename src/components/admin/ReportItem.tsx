@@ -8,15 +8,24 @@ import {
   Package,
 } from "lucide-react";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import "./ReportItemStyle.css";
+import { useState } from "react";
+import { Spinner } from "../Spinner";
+import { toast } from "react-hot-toast";
 export enum Status {
   PENDING, // 待处理，紫色
   ACCEPTED, // 已接受并派工，黄色
@@ -50,8 +59,18 @@ export default function ReportItem({
   content,
 }: ReportProps) {
   const color = statusColor[status || Status.PENDING];
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  async function handleAccept() {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setLoading(false);
+    setOpen(false);
+    toast.success("派工成功");
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="relative my-3 flex items-center justify-between rounded-xl border  py-2 pl-8 pr-14 transition-all duration-150 ease-linear hover:cursor-pointer hover:bg-gray-100 ">
           <div
@@ -86,8 +105,10 @@ export default function ReportItem({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>报修单详情</DialogTitle>
-          <DialogDescription>
-            <table className="my-4 w-full border border-slate-400">
+        </DialogHeader>
+        <div className="text-sm text-muted-foreground">
+          <table className="mb-4 w-full border border-slate-400">
+            <tbody>
               <tr>
                 <th>报修类型</th>
                 <td>{type}</td>
@@ -116,23 +137,49 @@ export default function ReportItem({
                 <th>报修内容</th>
                 <td>{content}</td>
               </tr>
-            </table>
-            <div className="flex  w-full justify-between ">
+            </tbody>
+          </table>
+          <div className="flex  w-full justify-between ">
+            <Button
+              variant={"secondary"}
+              className="h-10 hover:bg-rose-100 hover:text-rose-500"
+            >
+              <Ban width={16} className="mr-1" />
+              拒绝
+            </Button>
+            <div className="flex">
+              <Select>
+                <SelectTrigger
+                  disabled={loading}
+                  className="w-[200px]  rounded-r-none border-r-0 focus:ring-0"
+                >
+                  <SelectValue placeholder="选择师傅" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">黄师傅 18029375921</SelectItem>
+                  <SelectItem value="2">王师傅 12429346921</SelectItem>
+                  <SelectItem value="3">邓师傅 18245336921</SelectItem>
+                </SelectContent>
+              </Select>
               <Button
-                variant={"secondary"}
-                className="h-10 hover:bg-rose-100 hover:text-rose-500"
-                // className="mr-2  bg-rose-500 text-white hover:bg-rose-600 hover:text-white"
+                onClick={handleAccept}
+                disabled={loading}
+                className="h-10 w-20 rounded-l-none border-l-0"
               >
-                <Ban width={16} className="mr-1" />
-                拒绝
-              </Button>
-              <Button className="h-10 w-20">
-                <HardHat width={16} className="mr-1" />
-                派工
+                {!loading ? (
+                  <>
+                    <HardHat width={16} className="mr-1" />
+                    派工
+                  </>
+                ) : (
+                  <>
+                    <Spinner width={22} />
+                  </>
+                )}
               </Button>
             </div>
-          </DialogDescription>
-        </DialogHeader>
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -43,7 +43,12 @@ function ReportTabs() {
       <div className="px-5">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="new">新的</TabsTrigger>
-          <TabsTrigger value="working">施工中</TabsTrigger>
+          <TabsTrigger
+            value="working"
+            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black/70 "
+          >
+            施工中
+          </TabsTrigger>
         </TabsList>
       </div>
       <TabsContent value="new" className="w-full p-1">
@@ -56,8 +61,8 @@ function ReportTabs() {
               location="行健7栋"
               room="7-444"
               createdBy="黄士崧"
-              phone="18078196123"
-              content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas venenatis accumsan ullamcorper."
+              phone="18088730141"
+              content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas venenatis accumsan ullamcorper.Etiam ut erat sit amet ante euismod vulputate vitae in magna. Aliquam erat volutpat. Donec scelerisque eu nisl ac viverra."
             />
           ))}
         </ScrollArea>
@@ -73,7 +78,7 @@ function ReportTabs() {
               location="行健4栋"
               room="4-203"
               createdBy="Eric"
-              phone="18078196123"
+              phone="18088730141"
               content="得"
             />
           ))}

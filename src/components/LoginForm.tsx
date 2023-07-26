@@ -221,7 +221,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                         >
-                          Login
+                          登录
                         </motion.span>
                       )}
                     </AnimatePresence>

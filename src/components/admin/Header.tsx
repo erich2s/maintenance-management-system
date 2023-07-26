@@ -55,7 +55,7 @@ export default function Header({ className }: { className?: string }) {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <Button
-            variant={"outline"}
+            variant={"secondary"}
             disabled={isLoading}
             onClick={() => {
               setIsLoading(true);
@@ -63,7 +63,7 @@ export default function Header({ className }: { className?: string }) {
                 setIsLoading(false);
               });
             }}
-            className="h-8 w-full"
+            className="h-8 w-full hover:bg-rose-100 hover:text-rose-500"
           >
             {isLoading ? (
               <Spinner />
