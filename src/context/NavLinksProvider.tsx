@@ -1,5 +1,5 @@
 "use client";
-import { Home, PlusCircle, User2 } from "lucide-react";
+import { Home, PlusCircle, User2, History } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ReactNode, createContext, useEffect, useState } from "react";
 
@@ -45,6 +45,11 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
       href: "/admin",
       label: "首页",
       icon: <Home size={20} />,
+    },
+    {
+      href: "/admin/reports",
+      label: "报修记录",
+      icon: <History size={20} />,
     },
     {
       href: "/admin/test",

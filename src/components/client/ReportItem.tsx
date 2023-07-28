@@ -8,18 +8,34 @@ import {
 import React from "react";
 import { Separator } from "@/components/ui/separator";
 
-export default function ActivityItem({
+// 报修单状态
+enum Status {
+  PENDING, // 待处理，紫色
+  ACCEPTED, // 已接受并派工，黄色
+  REJECTED, // 已拒绝，红色
+  FINISHED, // 已完成，绿色
+}
+export type ReportItemProps = {
+  value: number;
+  id: number;
+  status?: Status;
+  createdAt?: Date;
+  createdById?: number;
+  type: string;
+  phone?: string;
+  location?: string;
+  room?: string;
+  content: string;
+};
+export default function ReportItem({
   id,
   type,
   content,
-}: {
-  id: string;
-  type: string;
-  content: string;
-}) {
+  value,
+}: ReportItemProps) {
   return (
     <>
-      <AccordionItem value={id}>
+      <AccordionItem value={String(value)}>
         <Card className="my-4 overflow-hidden border shadow">
           <AccordionTrigger className="p-3">
             <div className="ml-2 flex w-full items-center justify-between text-base font-bold">
@@ -31,7 +47,7 @@ export default function ActivityItem({
           <AccordionContent className="px-4 pt-2">
             <p className="indent-[2em]">{content}</p>
           </AccordionContent>
-        </Card>{" "}
+        </Card>
       </AccordionItem>
     </>
   );

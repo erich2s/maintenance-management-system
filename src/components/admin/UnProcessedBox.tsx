@@ -1,8 +1,21 @@
 import { BellDot, Construction } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import ReportItem, { Status } from "./ReportItem";
-export default function UnreadBox() {
+import ReportItem from "./ReportItem";
+import { ReportProps } from "./ReportItem";
+import { useEffect, useState } from "react";
+import PageTransition from "../PageTransition";
+export default function UnProcessedBox() {
+  const [reports, setReports] = useState<ReportProps[]>([]);
+  async function getUnprocessedReports() {
+    const res = await fetch("/api/reports/getUnProcessed");
+    const data = await res.json();
+    console.log(data);
+    setReports(data);
+  }
+  useEffect(() => {
+    getUnprocessedReports();
+  }, []);
   return (
     <>
       <div className="flex h-full w-full flex-col  py-4 ">
@@ -30,14 +43,14 @@ export default function UnreadBox() {
           </div>
         </header>
         <main className="flex-1">
-          <ReportTabs />
+          <ReportTabs reports={reports} />
         </main>
       </div>
     </>
   );
 }
 
-function ReportTabs() {
+function ReportTabs({ reports }: { reports: ReportProps[] }) {
   return (
     <Tabs defaultValue="new" className="flex h-full  w-full flex-col">
       <div className="px-5">
@@ -45,7 +58,7 @@ function ReportTabs() {
           <TabsTrigger value="new">新的</TabsTrigger>
           <TabsTrigger
             value="working"
-            className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black/70 "
+            // className="data-[state=active]:bg-yellow-400 data-[state=active]:text-black/70 "
           >
             施工中
           </TabsTrigger>
@@ -53,35 +66,48 @@ function ReportTabs() {
       </div>
       <TabsContent value="new" className="w-full p-1">
         <ScrollArea className="h-[calc(100vh_-_17rem)] w-full px-4">
-          {Array.from({ length: 14 }).map((_, index) => (
-            <ReportItem
-              key={index}
-              type="洗衣机"
-              createdAt="07-26 12:34"
-              location="行健7栋"
-              room="7-444"
-              createdBy="黄士崧"
-              phone="18088730141"
-              content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas venenatis accumsan ullamcorper.Etiam ut erat sit amet ante euismod vulputate vitae in magna. Aliquam erat volutpat. Donec scelerisque eu nisl ac viverra."
-            />
-          ))}
+          <PageTransition>
+            {reports.map((report) => {
+              if (report.status == "PENDING")
+                return (
+                  <ReportItem
+                    key={report.id}
+                    id={report.id}
+                    status={report.status}
+                    type={report.type}
+                    createdAt={report.createdAt!}
+                    location={report.location!}
+                    room={report.room!}
+                    createdBy={report.createdBy}
+                    phone={report.phone!}
+                    content={report.content}
+                  />
+                );
+            })}
+          </PageTransition>
         </ScrollArea>
       </TabsContent>
       <TabsContent value="working" className="w-full p-1">
         <ScrollArea className="h-[calc(100vh_-_17rem)] w-full px-4">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <ReportItem
-              key={index}
-              status={Status.ACCEPTED}
-              type="洗衣机"
-              createdAt="07-26 12:34"
-              location="行健4栋"
-              room="4-203"
-              createdBy="Eric"
-              phone="18088730141"
-              content="得"
-            />
-          ))}
+          <PageTransition>
+            {reports.map((report) => {
+              if (report.status == "ACCEPTED")
+                return (
+                  <ReportItem
+                    key={report.id}
+                    id={report.id}
+                    status={report.status}
+                    type={report.type}
+                    createdAt={report.createdAt!}
+                    location={report.location!}
+                    room={report.room!}
+                    createdBy={report.createdBy}
+                    phone={report.phone!}
+                    content={report.content}
+                  />
+                );
+            })}
+          </PageTransition>
         </ScrollArea>
       </TabsContent>
     </Tabs>

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NavLinksContext } from "@/context/NavLinksProvider";
 import {
   Sheet,
@@ -15,9 +15,10 @@ import ReportForm from "./ReportForm";
 export default function NavBar({ className }: { className?: string }) {
   const path = usePathname();
   const { links, setCurrentLink } = useContext(NavLinksContext);
+  const [sheetOpen, setSheetOpen] = useState(false);
   return (
     <>
-      <Sheet>
+      <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
         <nav
           className={cn(
             "fixed  bottom-0 flex h-[5.5rem] w-full select-none items-center justify-around overflow-hidden border-t  bg-white/80 backdrop-blur backdrop-saturate-200 ",
@@ -50,13 +51,13 @@ export default function NavBar({ className }: { className?: string }) {
           })}
         </nav>
         <div className="h-[5.5rem] w-full "></div>
-        <SheetContent side={"bottom"} className="  rounded-t-3xl">
+        <SheetContent side={"bottom"} className="rounded-t-3xl">
           <SheetHeader className="mb-2">
             <SheetTitle className="text-xl tracking-wide">
               填写报修单
             </SheetTitle>
           </SheetHeader>
-          <ReportForm />
+          <ReportForm setSheetOpen={setSheetOpen} />
         </SheetContent>
       </Sheet>
     </>

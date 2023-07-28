@@ -1,13 +1,11 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
-import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,10 +21,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "react-hot-toast";
+import { Spinner } from "../Spinner";
 
 const formSchema = z.object({
   type: z.string().min(1, { message: "请选择报修类型" }),
-  address: z.string().min(1, { message: "请选择地址" }),
+  location: z.string().min(1, { message: "请选择地址" }),
   room: z.string().min(1, { message: "请填写房间号" }),
   phone: z.string().min(11, { message: "请填写手机号" }),
   content: z.string().min(1, { message: "请填写报修内容" }),
@@ -34,14 +33,19 @@ const formSchema = z.object({
 
 export default function ReportForm({
   className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
+  setSheetOpen,
+}: {
+  className?: string;
+  setSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       type: "",
-      address: "",
+      location: "",
       room: "",
       phone: "",
       content: "",
@@ -49,10 +53,18 @@ export default function ReportForm({
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    toast.success(JSON.stringify(values));
+    setIsLoading(true);
+    const res = await fetch("/api/reports", {
+      method: "POST",
+      body: JSON.stringify(values),
+    });
+
+    setIsLoading(false);
+    setSheetOpen(false);
+    toast.success(JSON.stringify(await res.json()));
   }
   return (
     <>
@@ -89,7 +101,7 @@ export default function ReportForm({
           />
           <FormField
             control={form.control}
-            name="address"
+            name="location"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
@@ -160,8 +172,12 @@ export default function ReportForm({
               </FormItem>
             )}
           />
-          <Button type="submit" className="mx-auto mb-6 mt-4 h-12 w-[90%]">
-            Submit
+          <Button
+            type="submit"
+            className="mx-auto mb-6 mt-4 h-12 w-[90%]"
+            disabled={isLoading}
+          >
+            {isLoading ? <Spinner /> : "提交"}
           </Button>
         </form>
       </Form>

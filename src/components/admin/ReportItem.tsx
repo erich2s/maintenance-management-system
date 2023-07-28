@@ -32,19 +32,20 @@ export enum Status {
   REJECTED, // 已拒绝，红色
   FINISHED, // 已完成，绿色
 }
-const statusColor = {
-  [Status.PENDING]: "bg-primary",
-  [Status.ACCEPTED]: "bg-yellow-400",
-  [Status.REJECTED]: "bg-red-400",
-  [Status.FINISHED]: "bg-green-400",
+const statusColor: Record<string, string> = {
+  PENDING: "bg-primary",
+  ACCEPTED: "bg-yellow-400",
+  REJECTED: "bg-red-400",
+  FINISHED: "bg-green-400",
 };
-interface ReportProps {
-  status?: Status;
+export interface ReportProps {
+  id: number;
+  status: "PENDING" | "ACCEPTED" | "REJECTED" | "FINISHED";
   type: string;
   createdAt: string;
   location: string;
   room: string;
-  createdBy: string;
+  createdBy: { name: string };
   phone: string;
   content: string;
 }
@@ -58,10 +59,12 @@ export default function ReportItem({
   phone,
   content,
 }: ReportProps) {
-  const color = statusColor[status || Status.PENDING];
+  const color = statusColor[status];
+  console.log(status);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   async function handleAccept() {
+    // TODO: 用Server Action
     setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setLoading(false);
@@ -88,7 +91,7 @@ export default function ReportItem({
               <Clock2 width={16} className="mr-1 " />
               时间
             </div>
-            <div className="text-md">{createdAt}</div>
+            <div className="text-md">{formatDate(createdAt).slice(5)}</div>
           </div>
           <div>
             <div className="flex items-center text-sm text-muted-foreground">
@@ -123,7 +126,7 @@ export default function ReportItem({
               </tr>
               <tr>
                 <th>报修人</th>
-                <td>{createdBy}</td>
+                <td>{createdBy.name}</td>
               </tr>
               <tr>
                 <th>联系方式</th>
@@ -131,7 +134,7 @@ export default function ReportItem({
               </tr>
               <tr>
                 <th>报修时间</th>
-                <td>{createdAt}</td>
+                <td>{formatDate(createdAt)}</td>
               </tr>
               <tr>
                 <th>报修内容</th>
@@ -183,4 +186,17 @@ export default function ReportItem({
       </DialogContent>
     </Dialog>
   );
+}
+
+function formatDate(isoDateString: string) {
+  const date = new Date(isoDateString);
+
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
