@@ -13,6 +13,9 @@ export async function GET(req: NextRequest) {
         id: Number(token?.id),
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return NextResponse.json(result);
 }

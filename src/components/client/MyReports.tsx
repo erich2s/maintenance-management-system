@@ -5,6 +5,8 @@ import { ReportItemProps } from "@/components/client/ReportItem";
 import { PackageOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import PageTransition from "../PageTransition";
+import useSWR from "swr";
+import { Spinner } from "../Spinner";
 export default function MyReports() {
   const reportsTest = [
     {
@@ -69,41 +71,55 @@ export default function MyReports() {
     },
   ];
   const [reports, setReports] = useState<ReportItemProps[]>([]);
-  async function getReports() {
-    const res = await fetch("/api/reports");
-    const data = await res.json();
-    setReports(data);
-  }
+  const { data, error, isLoading } = useSWR(
+    "/api/reports",
+    (...args) =>
+      fetch(...args, { cache: "no-store" }).then((res) => res.json()),
+    {
+      refreshInterval: 2000,
+    },
+  );
+
   useEffect(() => {
-    getReports();
-  }, []);
+    if (data) {
+      setReports(data);
+    }
+  }, [data]);
   return (
     <div className="flex w-full flex-col items-center">
       <h2 className="w-full text-[1.25rem] font-bold">我的报修</h2>
-      {reports.length !== 0 ? (
-        <PageTransition className="w-full">
-          <Accordion
-            type="single"
-            defaultValue="0"
-            className="w-full"
-            collapsible
-          >
-            {reports.map((report, index) => (
-              <ReportItem
-                key={report.id}
-                id={report.id}
-                value={index}
-                type={report.type}
-                content={report.content}
-              />
-            ))}
-          </Accordion>
-        </PageTransition>
-      ) : (
+      {isLoading ? (
         <div className="mt-36  flex flex-col items-center justify-center text-gray-400">
-          <PackageOpen size={60} strokeWidth={1} className="mb-2" />
-          暂无数据
+          <Spinner size={60} />
         </div>
+      ) : (
+        <>
+          {reports.length !== 0 ? (
+            <PageTransition className="w-full">
+              <Accordion
+                type="single"
+                defaultValue="0"
+                className="w-full"
+                collapsible
+              >
+                {reports.map((report, index) => (
+                  <ReportItem
+                    key={report.id}
+                    id={report.id}
+                    value={index}
+                    type={report.type}
+                    content={report.content}
+                  />
+                ))}
+              </Accordion>
+            </PageTransition>
+          ) : (
+            <div className="mt-36  flex flex-col items-center justify-center text-gray-400">
+              <PackageOpen size={60} strokeWidth={1} className="mb-2" />
+              暂无数据
+            </div>
+          )}
+        </>
       )}
     </div>
   );

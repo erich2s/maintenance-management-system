@@ -30,7 +30,7 @@ export enum Status {
   PENDING, // 待处理，紫色
   ACCEPTED, // 已接受并派工，黄色
   REJECTED, // 已拒绝，红色
-  FINISHED, // 已完成，绿色
+  COMPLETED, // 已完成，绿色
 }
 const statusColor: Record<string, string> = {
   PENDING: "bg-primary",
@@ -40,7 +40,7 @@ const statusColor: Record<string, string> = {
 };
 export interface ReportProps {
   id: number;
-  status: "PENDING" | "ACCEPTED" | "REJECTED" | "FINISHED";
+  status: "PENDING" | "ACCEPTED" | "REJECTED" | "COMPLETED";
   type: string;
   createdAt: string;
   location: string;
