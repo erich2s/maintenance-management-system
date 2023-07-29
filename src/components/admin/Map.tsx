@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import "./MapStyle.css";
 import { Spinner } from "../Spinner";
 import { useWindowSize } from "react-use";
+import { Card } from "../ui/card";
 interface Fn<T = any, R = T> {
   (...arg: T[]): R;
 }

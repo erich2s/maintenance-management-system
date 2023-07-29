@@ -7,8 +7,9 @@
     "build": "dotenv -e .env.production -- prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate:dev": "dotenv -e .env.development -- pnpx prisma migrate dev",
-    "migrate:prod": "dotenv -e .env.production -- pnpx prisma migrate deploy"
+    "studio": "dotenv -e .env.development -- prisma studio",
+    "migrate:dev": "dotenv -e .env.development -- prisma migrate dev",
+    "migrate:prod": "dotenv -e .env.production -- prisma migrate deploy"
   },
   "dependencies": {
     "@heycar/amap-jsapi-loader": "^1.0.1",
@@ -24,6 +25,7 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@tanstack/react-table": "^8.9.3",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "autoprefixer": "10.4.14",

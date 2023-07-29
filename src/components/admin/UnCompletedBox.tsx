@@ -9,7 +9,7 @@ import PageTransition from "../PageTransition";
 import { Spinner } from "../Spinner";
 export default function UnCompletedBox() {
   const [reports, setReports] = useState<ReportProps[]>([]);
-  const { data, error, isLoading } = useSWR(
+  const { data, isLoading } = useSWR(
     "/api/reports/getUnCompleted",
     (...args) =>
       fetch(...args, { cache: "no-store" }).then((res) => res.json()),
@@ -33,7 +33,8 @@ export default function UnCompletedBox() {
       <div className="flex h-full w-full flex-col  py-4 ">
         <header className="px-5">
           <h1 className="mt-2 text-lg font-bold">
-            未完成报修单({pendingReports.length + acceptedReports.length})
+            未完成报修单
+            {reports.length > 0 && <span>({reports.length})</span>}
           </h1>
           <div className="my-6 flex w-full justify-around">
             <div className="flex">
