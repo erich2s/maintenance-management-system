@@ -14,7 +14,7 @@ import {
 import ReportForm from "./ReportForm";
 export default function NavBar({ className }: { className?: string }) {
   const path = usePathname();
-  const { links, setCurrentLink } = useContext(NavLinksContext);
+  const { links } = useContext(NavLinksContext);
   const [sheetOpen, setSheetOpen] = useState(false);
   return (
     <>
@@ -41,7 +41,6 @@ export default function NavBar({ className }: { className?: string }) {
                 <Link
                   href={link.href}
                   key={link.label}
-                  onClick={() => setCurrentLink!(link)}
                   className="mb-9 flex flex-col items-center  rounded-xl bg-opacity-40 px-4 py-2"
                 >
                   {path === link.href ? link.iconSelected : link.icon}

@@ -94,7 +94,10 @@ function ReportTabs({
       {!isLoading ? (
         <>
           <TabsContent value="new" className="w-full p-1">
-            <ScrollArea className="h-[calc(100vh_-_17rem)] w-full px-4">
+            <ScrollArea
+              className="h-[calc(100vh_-_17rem)] w-full px-4"
+              type="always"
+            >
               <PageTransition>
                 {pendingReports.map((report) => (
                   <ReportItem
@@ -114,7 +117,10 @@ function ReportTabs({
             </ScrollArea>
           </TabsContent>
           <TabsContent value="working" className="w-full p-1">
-            <ScrollArea className="h-[calc(100vh_-_17rem)] w-full px-4">
+            <ScrollArea
+              className="h-[calc(100vh_-_17rem)] w-full px-4"
+              type="always"
+            >
               <PageTransition>
                 {acceptedReports.map((report) => (
                   <ReportItem

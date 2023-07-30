@@ -5,12 +5,13 @@ import { cn } from "@/lib/utils";
 import { useContext } from "react";
 import { NavLinksContext } from "@/context/NavLinksProvider";
 import { Yuji_Mai } from "next/font/google";
+import { usePathname } from "next/navigation";
 const yujiMai = Yuji_Mai({
   weight: "400",
   subsets: ["latin"],
 });
 export default function NavSideBar() {
-  const { links, currentLink } = useContext(NavLinksContext);
+  const { links } = useContext(NavLinksContext);
   return (
     <aside className="flex h-screen  w-64 flex-col items-center border-r px-2 py-1">
       {/* Logo */}
@@ -30,7 +31,7 @@ export default function NavSideBar() {
         {links.map((link) => {
           if (link.href.startsWith("/admin")) {
             let activeStyle = "";
-            if (link.href === currentLink!.href) {
+            if (link.href === usePathname()) {
               activeStyle =
                 "hover:bg-primary bg-primary text-primary-foreground";
             }

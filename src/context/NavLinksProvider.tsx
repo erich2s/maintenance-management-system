@@ -1,9 +1,8 @@
 "use client";
 import { Home, PlusCircle, User2, History } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext } from "react";
 
-interface Link {
+export interface Link {
   href: string;
   label: string;
   icon: ReactNode;
@@ -57,19 +56,8 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
       icon: <User2 size={20} />,
     },
   ];
-  const [currentLink, setCurrentLink] = useState<Link>(links[0]);
-  const path = usePathname();
-  let currentLinkFound = false;
-  useEffect(() => {
-    links.forEach((link) => {
-      if (link.href === path && !currentLinkFound) {
-        setCurrentLink!(link);
-        currentLinkFound = true;
-      }
-    });
-  }, [path]);
   return (
-    <NavLinksContext.Provider value={{ links, currentLink, setCurrentLink }}>
+    <NavLinksContext.Provider value={{ links }}>
       {children}
     </NavLinksContext.Provider>
   );

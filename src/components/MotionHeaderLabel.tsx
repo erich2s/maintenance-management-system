@@ -1,11 +1,22 @@
 "use client";
-
-import { NavLinksContext } from "@/context/NavLinksProvider";
+import { Link, NavLinksContext } from "@/context/NavLinksProvider";
 import { motion } from "framer-motion";
-import { useContext } from "react";
+import { usePathname } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 
 export default function MotionHeaderLabel() {
-  const { currentLink } = useContext(NavLinksContext);
+  const { links } = useContext(NavLinksContext);
+  const [currentLink, setCurrentLink] = useState<Link>(links[0]);
+  const path = usePathname();
+  useEffect(() => {
+    let currentLinkFound = false;
+    links.forEach((link) => {
+      if (link.href === path && !currentLinkFound) {
+        setCurrentLink!(link);
+        currentLinkFound = true;
+      }
+    });
+  }, [path]);
   return (
     <motion.h1
       key={currentLink?.href}

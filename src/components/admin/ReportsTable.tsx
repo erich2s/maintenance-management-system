@@ -23,6 +23,10 @@ type TableReport = {
 import { ColumnDef } from "@tanstack/react-table";
 const columns: ColumnDef<TableReport>[] = [
   {
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
     accessorKey: "type",
     header: "类型",
   },
@@ -126,67 +130,124 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useSWR from "swr";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "../ui/badge";
-
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "../ui/scroll-area";
+import { Card } from "../ui/card";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 export default function ReportsTable() {
-  const { data } = useSWR("/api/reports/getAll", (...args) =>
-    fetch(...args, { cache: "no-store" }).then((res) => res.json()),
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+  // 记录的总条数
+  const [count, setCount] = useState(0);
+
+  const tableRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // 获取tableRef的高度
+    const tbh = tableRef.current?.clientHeight;
+    // 从而动态设置page size
+    setSize(Math.floor(tbh! / 60));
+  }, [tableRef.current?.clientHeight]);
+
+  const { data } = useSWR(
+    `/api/reports/getAll?page=${page}&size=${size}`,
+    (...args) =>
+      fetch(...args, { cache: "no-store" }).then((res) => res.json()),
   );
   const [tableData, setTableData] = useState<TableReport[]>([]);
   useEffect(() => {
     if (data) {
-      setTableData(data);
+      setTableData(data.reports);
+      setCount(data.count);
     }
   }, [data]);
+
   const table = useReactTable({
     data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
   });
+
   return (
-    <div>
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+    <>
+      <Card className="h-[calc(100vh_-_8.8rem)] rounded-md" ref={tableRef}>
+        <ScrollArea className="h-full w-full" type="always">
+          <div className="h-full">
+            <Table>
+              <TableHeader className="bg-muted text-gray-700">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
                 ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+              </TableHeader>
+              <TableBody className="z-0 ">
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow key={row.id}>
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </ScrollArea>
+      </Card>
+      <div className="flex items-center justify-end space-x-2 py-2">
+        <span className="text-muted-foreground ">
+          Page: {page}/{Math.ceil(count / size)}
+        </span>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setPage(page - 1);
+          }}
+          disabled={page === 1}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setPage(page + 1);
+          }}
+          disabled={page * size >= count}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+    </>
   );
 }
