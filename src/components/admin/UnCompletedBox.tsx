@@ -2,13 +2,13 @@ import { BellDot, Construction } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ReportItem from "./ReportItem";
-import { ReportProps } from "./ReportItem";
+import { ReportItemProps } from "./ReportItem";
 import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import PageTransition from "../PageTransition";
 import { Spinner } from "../Spinner";
 export default function UnCompletedBox() {
-  const [reports, setReports] = useState<ReportProps[]>([]);
+  const [reports, setReports] = useState<ReportItemProps[]>([]);
   const { data, isLoading } = useSWR(
     "/api/reports/getUnCompleted",
     (...args) =>
@@ -74,8 +74,8 @@ function ReportTabs({
   acceptedReports,
   isLoading,
 }: {
-  pendingReports: ReportProps[];
-  acceptedReports: ReportProps[];
+  pendingReports: ReportItemProps[];
+  acceptedReports: ReportItemProps[];
   isLoading: boolean;
 }) {
   return (

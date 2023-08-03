@@ -16,6 +16,9 @@ export async function GET(req: NextRequest) {
         createdBy: {
           select: { username: true, name: true },
         },
+        worker: {
+          select: { name: true, phone: true },
+        },
       },
       orderBy: { createdAt: "desc" },
     });

@@ -10,6 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 用户角色
+enum Role {
+  USER
+  ADMIN
+}
+
 // 用户
 model User {
   id       Int      @id @default(autoincrement())
@@ -23,6 +29,22 @@ model User {
   role     Role     @default(USER)
   // 报修单
   reports  Report[]
+}
+
+// 维修工人
+model Worker {
+  id     Int      @id @default(autoincrement())
+  name   String
+  phone  String
+  Report Report[]
+}
+
+// 报修单状态
+enum Status {
+  PENDING // 待处理，紫色
+  ACCEPTED // 已接受并派工，黄色
+  REJECTED // 已拒绝，红色
+  COMPLETED // 已完成，绿色
 }
 
 // 报修单
@@ -46,18 +68,8 @@ model Report {
   room     String
   // 报修单内容
   content  String
-}
 
-// 用户角色
-enum Role {
-  USER
-  ADMIN
-}
-
-// 报修单状态
-enum Status {
-  PENDING // 待处理，紫色
-  ACCEPTED // 已接受并派工，黄色
-  REJECTED // 已拒绝，红色
-  COMPLETED // 已完成，绿色
+  // 维修工人
+  worker   Worker? @relation(fields: [workerId], references: [id])
+  workerId Int?
 }

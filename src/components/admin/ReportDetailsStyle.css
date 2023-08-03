@@ -1,6 +1,6 @@
-#report-item table th {
+#report-details table th {
   @apply w-20 border border-slate-300 bg-muted/50 p-2 text-right;
 }
-#report-item table td {
+#report-details table td {
   @apply border border-slate-300 px-4 py-2;
 }
