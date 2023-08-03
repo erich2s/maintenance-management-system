@@ -123,18 +123,21 @@ function ReportTabs({
             >
               <PageTransition>
                 {acceptedReports.map((report) => (
-                  <ReportItem
-                    key={report.id}
-                    id={report.id}
-                    status={report.status}
-                    type={report.type}
-                    createdAt={report.createdAt!}
-                    location={report.location!}
-                    room={report.room!}
-                    createdBy={report.createdBy}
-                    phone={report.phone!}
-                    content={report.content}
-                  />
+                  <>
+                    <ReportItem
+                      key={report.id}
+                      id={report.id}
+                      status={report.status}
+                      type={report.type}
+                      createdAt={report.createdAt!}
+                      location={report.location!}
+                      room={report.room!}
+                      createdBy={report.createdBy}
+                      phone={report.phone!}
+                      content={report.content}
+                      worker={report.worker}
+                    />
+                  </>
                 ))}
               </PageTransition>
             </ScrollArea>

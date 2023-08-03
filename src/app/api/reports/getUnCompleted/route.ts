@@ -19,7 +19,11 @@ export async function GET(req: NextRequest) {
       createdBy: {
         select: {
           name: true,
+          username: true,
         },
+      },
+      worker: {
+        select: { name: true, phone: true },
       },
     },
     orderBy: {

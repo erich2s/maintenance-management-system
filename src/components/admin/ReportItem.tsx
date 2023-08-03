@@ -35,6 +35,7 @@ export default function ReportItem({
   createdBy,
   phone,
   content,
+  worker,
 }: ReportItemProps) {
   const color = statusColor[status];
   return (
@@ -48,6 +49,7 @@ export default function ReportItem({
         room,
         createdBy,
         phone,
+        worker,
         content,
       }}
     >
