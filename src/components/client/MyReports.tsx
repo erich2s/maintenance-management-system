@@ -1,12 +1,13 @@
 "use client";
 import ReportItem from "@/components/client/ReportItem";
 import { Accordion } from "@/components/ui/accordion";
-import { ReportItemProps } from "@/components/client/ReportItem";
+
 import { PackageOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import PageTransition from "../PageTransition";
 import useSWR from "swr";
 import { Spinner } from "../Spinner";
+import { ReportItemProps } from "../../../types/ReportItemProps";
 export default function MyReports() {
   const reportsTest = [
     {
@@ -84,6 +85,7 @@ export default function MyReports() {
     if (data) {
       setReports(data);
     }
+    console.log(data);
   }, [data]);
   return (
     <div className="flex w-full flex-col items-center">
@@ -106,9 +108,15 @@ export default function MyReports() {
                   <ReportItem
                     key={report.id}
                     id={report.id}
-                    value={index}
+                    index={index}
                     type={report.type}
                     content={report.content}
+                    createdAt={report.createdAt}
+                    worker={report.worker}
+                    status={report.status}
+                    location={report.location}
+                    room={report.room}
+                    phone={report.phone}
                   />
                 ))}
               </Accordion>

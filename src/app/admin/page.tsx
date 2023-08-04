@@ -1,5 +1,4 @@
 "use client";
-import PageTransition from "@/components/PageTransition";
 import dynamic from "next/dynamic";
 const Map = dynamic(() => import("@/components/admin/Map"), { ssr: false });
 // import Map from "@/components/admin/Map";

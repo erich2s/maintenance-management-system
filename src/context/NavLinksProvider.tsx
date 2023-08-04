@@ -11,8 +11,6 @@ export interface Link {
 
 interface LinksContextValue {
   links: Link[];
-  currentLink?: Link;
-  setCurrentLink?: (link: Link) => void;
 }
 
 export const NavLinksContext = createContext<LinksContextValue>(

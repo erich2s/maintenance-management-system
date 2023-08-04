@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/db";
-import { isAdmin } from "@/utils";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/authOptions";
@@ -11,6 +10,11 @@ export async function GET(req: NextRequest) {
     where: {
       createdBy: {
         id: Number(token?.id),
+      },
+    },
+    include: {
+      worker: {
+        select: { name: true, phone: true },
       },
     },
     orderBy: {
@@ -36,9 +40,3 @@ export async function POST(req: NextRequest) {
   });
   return NextResponse.json(result);
 }
-
-// 管理员更新一个报告的状态
-export async function PUT(req: NextRequest) {}
-
-// 管理员删除一个报告
-export async function DELETE(req: NextRequest) {}

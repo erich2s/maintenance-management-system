@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { NavLinksProvider } from "@/context/NavLinksProvider";
 import { Inter } from "next/font/google";
+import ReportDetailsProvider from "@/context/ReportDetailsProvider";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 

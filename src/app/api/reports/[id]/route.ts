@@ -13,7 +13,28 @@ export async function GET(
       createdBy: {
         select: { username: true, name: true },
       },
+      worker: {
+        select: { name: true, phone: true },
+      },
     },
   });
   return NextResponse.json(result);
 }
+
+// 管理员更新一个报告的状态
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  const reqData = await req.json();
+  const id = Number(params.id);
+  console.log({ ...reqData });
+  const result = await prisma.report.update({
+    where: { id },
+    data: { ...reqData },
+  });
+  return NextResponse.json(result);
+}
+
+// 管理员删除一个报告
+// export async function DELETE(req: NextRequest) {}

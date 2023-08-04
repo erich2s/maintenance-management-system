@@ -27,7 +27,10 @@ const formSchema = z.object({
   type: z.string().min(1, { message: "请选择报修类型" }),
   location: z.string().min(1, { message: "请选择地址" }),
   room: z.string().min(1, { message: "请填写房间号" }),
-  phone: z.string().min(11, { message: "请填写手机号" }),
+  phone: z
+    .string()
+    .min(11, { message: "请填写手机号" })
+    .max(11, { message: "手机号格式不正确" }),
   content: z.string().min(1, { message: "请填写报修内容" }),
 });
 

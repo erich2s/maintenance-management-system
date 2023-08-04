@@ -39,31 +39,7 @@ const columns: ColumnDef<TableReport>[] = [
     header: "状态",
     cell: ({ row }) => {
       const status = row.original.status;
-      return (
-        <Badge
-          className={`inline-flex w-[3.4rem] rounded-full px-2 text-xs font-semibold leading-5 ${
-            status === "PENDING"
-              ? "bg-purple-100 text-purple-800 hover:bg-purple-200"
-              : status === "ACCEPTED"
-              ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
-              : status === "REJECTED"
-              ? "bg-red-100 text-red-800 hover:bg-red-200"
-              : status === "COMPLETED"
-              ? "bg-green-100 text-green-800 hover:bg-green-200"
-              : ""
-          }`}
-        >
-          {status === "PENDING"
-            ? "待处理"
-            : status === "ACCEPTED"
-            ? "已派工"
-            : status === "REJECTED"
-            ? "已拒绝"
-            : status === "COMPLETED"
-            ? "已完成"
-            : ""}
-        </Badge>
-      );
+      return <StatusBadge status={status} />;
     },
   },
   {
@@ -120,43 +96,43 @@ const columns: ColumnDef<TableReport>[] = [
           {row.original.worker ? (
             <div className="max-w-[5rem] overflow-hidden text-ellipsis">
               {row.original.worker.name}
-              <span className="text-muted-foreground ">
+              {/* <span className="text-muted-foreground ">
                 ({row.original.worker.phone})
-              </span>
+              </span> */}
             </div>
           ) : (
-            "未派工"
+            <span className="text-muted-foreground ">未派工</span>
           )}
         </>
       );
     },
   },
-  {
-    id: "detail",
-    header: "详情",
-    cell: ({ row }) => {
-      return (
-        <ReportDetails
-          data={{
-            id: row.original.id,
-            status: row.original.status,
-            type: row.original.type,
-            createdAt: row.original.createdAt,
-            location: row.original.location,
-            room: row.original.room,
-            createdBy: row.original.createdBy,
-            phone: row.original.phone,
-            content: row.original.content,
-            worker: row.original.worker,
-          }}
-        >
-          <div className="flex cursor-pointer items-center justify-center  p-1 transition-all duration-150 hover:scale-110 hover:text-muted-foreground ">
-            <Info width={18} />
-          </div>
-        </ReportDetails>
-      );
-    },
-  },
+  // {
+  //   id: "detail",
+  //   header: "详情",
+  //   cell: ({ row }) => {
+  //     return (
+  //       <ReportDetails
+  //         data={{
+  //           id: row.original.id,
+  //           status: row.original.status,
+  //           type: row.original.type,
+  //           createdAt: row.original.createdAt,
+  //           location: row.original.location,
+  //           room: row.original.room,
+  //           createdBy: row.original.createdBy,
+  //           phone: row.original.phone,
+  //           content: row.original.content,
+  //           worker: row.original.worker,
+  //         }}
+  //       >
+  //         <div className="flex cursor-pointer items-center justify-center  p-1 transition-all duration-150 hover:scale-110 hover:text-muted-foreground ">
+  //           <Info width={18} />
+  //         </div>
+  //       </ReportDetails>
+  //     );
+  //   },
+  // },
 ];
 
 // 定义table
@@ -174,14 +150,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useSWR from "swr";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { formatDate } from "@/lib/utils";
-import { Badge } from "../ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 import { Card } from "../ui/card";
 import { ChevronLeft, ChevronRight, Info } from "lucide-react";
-import ReportDetails from "./ReportDetails";
+import StatusBadge from "../StatusBadge";
+import { ReportDetailsContext } from "@/context/ReportDetailsProvider";
 export default function ReportsTable() {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
@@ -193,7 +169,7 @@ export default function ReportsTable() {
     // 获取tableRef的高度
     const tbh = tableRef.current?.clientHeight;
     // 从而动态设置page size
-    setSize(Math.floor(tbh! / 70));
+    setSize(Math.floor(tbh! / 60));
   }, [tableRef.current?.clientHeight]);
 
   const { data } = useSWR(
@@ -214,7 +190,7 @@ export default function ReportsTable() {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
+  const reportDetailsContext = useContext(ReportDetailsContext);
   return (
     <>
       <Card className="h-[calc(100vh_-_8.8rem)] rounded-md" ref={tableRef}>
@@ -245,7 +221,26 @@ export default function ReportsTable() {
               <TableBody className="w-full">
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id}>
+                    <TableRow
+                      key={row.id}
+                      className="cursor-pointer "
+                      onClick={() => {
+                        console.log(row.original);
+                        reportDetailsContext.setData({
+                          id: row.original.id,
+                          status: row.original.status,
+                          type: row.original.type,
+                          createdAt: row.original.createdAt,
+                          location: row.original.location,
+                          room: row.original.room,
+                          createdBy: row.original.createdBy,
+                          phone: row.original.phone,
+                          content: row.original.content,
+                          worker: row.original.worker,
+                        });
+                        reportDetailsContext.setDialogOpen(true);
+                      }}
+                    >
                       {row.getVisibleCells().map((cell) => (
                         <TableCell
                           key={cell.id}
