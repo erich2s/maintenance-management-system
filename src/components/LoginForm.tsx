@@ -72,6 +72,7 @@ export default function LoginForm() {
                 <h1
                   className={cn(
                     "mb-2 text-3xl font-semibold tracking-tight",
+                    // "yuji-mai",
                     yujiMai.className,
                   )}
                 >

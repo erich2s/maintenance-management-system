@@ -1,22 +1,5 @@
 // 数据类型
-type TableReport = {
-  id: number;
-  status: "PENDING" | "ACCEPTED" | "REJECTED" | "COMPLETED";
-  createdAt: string;
-  createdBy: {
-    name: string;
-    username: string;
-  };
-  worker?: {
-    name: string;
-    phone: string;
-  };
-  type: string;
-  phone: string;
-  location: string;
-  room: string;
-  content: string;
-};
+type TableReport = ReportItemType;
 /**
   PENDING // 待处理，紫色
   ACCEPTED // 已接受并派工，黄色
@@ -33,6 +16,13 @@ const columns: ColumnDef<TableReport>[] = [
   {
     accessorKey: "type",
     header: "类型",
+    cell: ({ row }) => {
+      return (
+        <div className="max-w-[6rem] overflow-hidden text-ellipsis">
+          {row.original.type.name}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "status",
@@ -55,9 +45,9 @@ const columns: ColumnDef<TableReport>[] = [
     cell: ({ row }) => {
       return (
         <>
-          {row.original.createdBy.name}
+          {row.original.createdBy?.name}
           <span className="text-muted-foreground">
-            ({row.original.createdBy.username})
+            ({row.original.createdBy?.username})
           </span>
         </>
       );
@@ -71,6 +61,13 @@ const columns: ColumnDef<TableReport>[] = [
   {
     accessorKey: "location",
     header: "位置",
+    cell: ({ row }) => {
+      return (
+        <div className="max-w-[6rem] overflow-hidden text-ellipsis">
+          {row.original.location.name}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "room",
@@ -96,9 +93,6 @@ const columns: ColumnDef<TableReport>[] = [
           {row.original.worker ? (
             <div className="max-w-[5rem] overflow-hidden text-ellipsis">
               {row.original.worker.name}
-              {/* <span className="text-muted-foreground ">
-                ({row.original.worker.phone})
-              </span> */}
             </div>
           ) : (
             <span className="text-muted-foreground ">未派工</span>
@@ -107,32 +101,6 @@ const columns: ColumnDef<TableReport>[] = [
       );
     },
   },
-  // {
-  //   id: "detail",
-  //   header: "详情",
-  //   cell: ({ row }) => {
-  //     return (
-  //       <ReportDetails
-  //         data={{
-  //           id: row.original.id,
-  //           status: row.original.status,
-  //           type: row.original.type,
-  //           createdAt: row.original.createdAt,
-  //           location: row.original.location,
-  //           room: row.original.room,
-  //           createdBy: row.original.createdBy,
-  //           phone: row.original.phone,
-  //           content: row.original.content,
-  //           worker: row.original.worker,
-  //         }}
-  //       >
-  //         <div className="flex cursor-pointer items-center justify-center  p-1 transition-all duration-150 hover:scale-110 hover:text-muted-foreground ">
-  //           <Info width={18} />
-  //         </div>
-  //       </ReportDetails>
-  //     );
-  //   },
-  // },
 ];
 
 // 定义table
@@ -158,6 +126,7 @@ import { Card } from "../ui/card";
 import { ChevronLeft, ChevronRight, Info } from "lucide-react";
 import StatusBadge from "../StatusBadge";
 import { ReportDetailsContext } from "@/context/ReportDetailsProvider";
+import { ReportItemType } from "../../../types/reportItemType";
 export default function ReportsTable() {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);

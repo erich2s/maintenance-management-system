@@ -13,16 +13,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { formatDate } from "@/lib/utils";
-import { ReportItemProps } from "@/../types/ReportItemProps";
+import { ReportItemType } from "../../types/reportItemType";
 import { Button } from "@/components/ui/button";
-import { Ban, HardHat } from "lucide-react";
+import { Ban, Check, CheckCheck, ClipboardCheck, HardHat } from "lucide-react";
 import toast from "react-hot-toast";
 import { Spinner } from "@/components/Spinner";
 import "./ReportDetailsStyle.css";
 import StatusBadge from "@/components/StatusBadge";
 
 export const ReportDetailsContext = createContext<{
-  setData: React.Dispatch<React.SetStateAction<ReportItemProps | undefined>>;
+  setData: React.Dispatch<React.SetStateAction<ReportItemType | undefined>>;
   setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   setData: () => {},
@@ -47,7 +47,7 @@ export default function ReportDetailsProvider({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rejectLoading, setRejectLoading] = useState(false);
-  const [data, setData] = useState<ReportItemProps>();
+  const [data, setData] = useState<ReportItemType>();
 
   const [workers, setWorkers] = useState<worker[]>([]);
   const [selectedWorker, setSelectedWorker] = useState<string>("");
@@ -138,11 +138,11 @@ export default function ReportDetailsProvider({
               </tr>
               <tr>
                 <th>报修类型</th>
-                <td>{data?.type}</td>
+                <td>{data?.type.name}</td>
               </tr>
               <tr>
                 <th>报修地点</th>
-                <td>{data?.location}</td>
+                <td>{data?.location.name}</td>
               </tr>
               <tr>
                 <th>房号</th>
@@ -249,9 +249,10 @@ export default function ReportDetailsProvider({
                 {loading ? (
                   <Spinner width={22} />
                 ) : (
-                  <>
-                    <span>确认完成</span>
-                  </>
+                  <div className="flex items-center gap-1">
+                    <ClipboardCheck width={18} />
+                    <span>完工</span>
+                  </div>
                 )}
               </Button>
             </div>

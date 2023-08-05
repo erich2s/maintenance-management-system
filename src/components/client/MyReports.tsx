@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import PageTransition from "../PageTransition";
 import useSWR from "swr";
 import { Spinner } from "../Spinner";
-import { ReportItemProps } from "../../../types/ReportItemProps";
+import { ReportItemProps } from "../../../types/reportItemType";
 export default function MyReports() {
   const reportsTest = [
     {

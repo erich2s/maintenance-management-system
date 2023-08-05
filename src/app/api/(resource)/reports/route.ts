@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/db";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/authOptions";
+import { authOptions } from "../../auth/[...nextauth]/authOptions";
 
 // 用户获取自己所有报修单
 export async function GET(req: NextRequest) {
@@ -15,6 +15,10 @@ export async function GET(req: NextRequest) {
     include: {
       worker: {
         select: { name: true, phone: true },
+      },
+      location: { select: { name: true, id: true } },
+      type: {
+        select: { id: true, name: true },
       },
     },
     orderBy: {
@@ -30,10 +34,22 @@ export async function POST(req: NextRequest) {
   const token = await getToken({ req, secret: authOptions.secret });
   const result = await prisma.report.create({
     data: {
-      ...reqData,
+      phone: reqData.phone,
+      content: reqData.content,
+      room: reqData.room,
+      location: {
+        connect: {
+          id: Number(reqData.locationId),
+        },
+      },
       createdBy: {
         connect: {
-          id: token?.id,
+          id: token?.id as number,
+        },
+      },
+      type: {
+        connect: {
+          id: Number(reqData.typeId),
         },
       },
     },

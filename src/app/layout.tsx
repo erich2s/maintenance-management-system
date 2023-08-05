@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { NavLinksProvider } from "@/context/NavLinksProvider";
 import { Inter } from "next/font/google";
-import ReportDetailsProvider from "@/context/ReportDetailsProvider";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -35,6 +34,10 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json"></link>
         <script src="/serviceWorkerRegister.js" defer></script>
+        {/* <style>
+          @import
+          url('https://fonts.googleapis.com/css2?family=Yuji+Mai&display=swap');
+        </style> */}
       </head>
       <AuthProvider>
         <NavLinksProvider>

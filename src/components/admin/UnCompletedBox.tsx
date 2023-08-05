@@ -2,14 +2,14 @@ import { BellDot, Construction } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ReportItem from "./ReportItem";
-import { ReportItemProps } from "../../../types/ReportItemProps";
+import { ReportItemType } from "../../../types/reportItemType";
 import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import PageTransition from "../PageTransition";
 import { Spinner } from "../Spinner";
 import ReportDetailsProvider from "@/context/ReportDetailsProvider";
 export default function UnCompletedBox() {
-  const [reports, setReports] = useState<ReportItemProps[]>([]);
+  const [reports, setReports] = useState<ReportItemType[]>([]);
   const { data, isLoading } = useSWR(
     "/api/reports/getUnCompleted",
     (...args) =>
@@ -35,7 +35,7 @@ export default function UnCompletedBox() {
     action: "ACCEPTED" | "REJECTED" | "COMPLETED",
   ) {
     console.log("report action on", reportId, "action", action);
-    (data as ReportItemProps[]).forEach((report) => {
+    (data as ReportItemType[]).forEach((report) => {
       if (report.id == reportId) {
         report.status = action;
       }
@@ -48,7 +48,7 @@ export default function UnCompletedBox() {
           <header className="px-5">
             <h1 className="mt-2 text-lg font-bold">
               {reports.length > 0 ? (
-                <span>未完成报修单({reports.length})</span>
+                <span>未完工报修单({reports.length})</span>
               ) : (
                 <span>今天没有任何报修！🎉</span>
               )}
@@ -92,8 +92,8 @@ function ReportTabs({
   acceptedReports,
   isLoading,
 }: {
-  pendingReports: ReportItemProps[];
-  acceptedReports: ReportItemProps[];
+  pendingReports: ReportItemType[];
+  acceptedReports: ReportItemType[];
   isLoading: boolean;
 }) {
   return (

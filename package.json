@@ -12,6 +12,9 @@
     "migrate:dev": "dotenv -e .env.development -- prisma migrate dev",
     "migrate:prod": "dotenv -e .env.production -- prisma migrate deploy"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
     "@heycar/amap-jsapi-loader": "^1.0.1",
     "@hookform/resolvers": "^3.1.1",

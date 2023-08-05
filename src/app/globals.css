@@ -7,6 +7,12 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* .yuji-mai {
+  font-family: "Yuji Mai", serif;
+  font-weight: 400;
+} */
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -2,7 +2,7 @@ import { cn, formatDate } from "@/lib/utils";
 import { ChevronRight, Clock2, MapPin, Package } from "lucide-react";
 import { useContext } from "react";
 import { ReportDetailsContext } from "@/context/ReportDetailsProvider";
-import { ReportItemProps } from "../../../types/ReportItemProps";
+import { ReportItemType } from "../../../types/reportItemType";
 const statusColor: Record<string, string> = {
   PENDING: "bg-primary",
   ACCEPTED: "bg-yellow-400",
@@ -20,7 +20,7 @@ export default function ReportItem({
   phone,
   content,
   worker,
-}: ReportItemProps) {
+}: ReportItemType) {
   const color = statusColor[status];
   const reportDetailsContext = useContext(ReportDetailsContext);
   return (
@@ -50,7 +50,7 @@ export default function ReportItem({
           <Package width={16} className="mr-1 " />
           类型
         </div>
-        <div className="text-md">{type}</div>
+        <div className="text-md">{type.name}</div>
       </div>
       <div>
         <div className="flex items-center text-sm text-muted-foreground">
@@ -64,7 +64,7 @@ export default function ReportItem({
           <MapPin width={16} className="mr-1 " />
           地点
         </div>
-        <div className="text-md">{location}</div>
+        <div className="text-md">{location.name}</div>
       </div>
       <div className="absolute right-[4px]">
         <ChevronRight color="#677489" strokeWidth={1.5} />

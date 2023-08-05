@@ -22,10 +22,11 @@ import {
 } from "@/components/ui/select";
 import { toast } from "react-hot-toast";
 import { Spinner } from "../Spinner";
+import { useEffect, useState } from "react";
 
 const formSchema = z.object({
-  type: z.string().min(1, { message: "请选择报修类型" }),
-  location: z.string().min(1, { message: "请选择地址" }),
+  typeId: z.string().min(1, { message: "请选择报修类型" }),
+  locationId: z.string().min(1, { message: "请选择地址" }),
   room: z.string().min(1, { message: "请填写房间号" }),
   phone: z
     .string()
@@ -41,14 +42,30 @@ export default function ReportForm({
   className?: string;
   setSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [types, setTypes] = useState<{ id: number; name: string }[]>([]);
+  const [locations, setLocations] = useState<
+    { id: number; name: string; latitude: number; longitude: number }[]
+  >([]);
+  useEffect(() => {
+    fetch("/api/types")
+      .then((res) => res.json())
+      .then((data) => {
+        setTypes(data);
+      });
+    fetch("/api/locations")
+      .then((res) => res.json())
+      .then((data) => {
+        setLocations(data);
+      });
+  }, []);
 
+  const [isLoading, setIsLoading] = React.useState(false);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      type: "",
-      location: "",
+      typeId: "",
+      locationId: "",
       room: "",
       phone: "",
       content: "",
@@ -67,7 +84,9 @@ export default function ReportForm({
 
     setIsLoading(false);
     setSheetOpen(false);
-    toast.success(JSON.stringify(await res.json()));
+    console.log(await res);
+    toast.success("提交成功");
+    // toast.success(JSON.stringify(await res.json()));
   }
   return (
     <>
@@ -78,7 +97,7 @@ export default function ReportForm({
         >
           <FormField
             control={form.control}
-            name="type"
+            name="typeId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
@@ -93,9 +112,11 @@ export default function ReportForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="空调">空调</SelectItem>
-                    <SelectItem value="水电">水电</SelectItem>
-                    <SelectItem value="门窗">门窗</SelectItem>
+                    {types.map((type) => (
+                      <SelectItem key={type.id} value={String(type.id)}>
+                        {type.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -104,7 +125,7 @@ export default function ReportForm({
           />
           <FormField
             control={form.control}
-            name="location"
+            name="locationId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
@@ -117,9 +138,11 @@ export default function ReportForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1栋">1栋</SelectItem>
-                    <SelectItem value="2栋">2栋</SelectItem>
-                    <SelectItem value="3栋">3栋</SelectItem>
+                    {locations.map((location) => (
+                      <SelectItem key={location.id} value={String(location.id)}>
+                        {location.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />

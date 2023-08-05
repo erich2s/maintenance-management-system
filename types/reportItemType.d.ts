@@ -1,9 +1,17 @@
-export interface ReportItemProps {
+export interface ReportItemType {
   id: number;
   status: "PENDING" | "ACCEPTED" | "REJECTED" | "COMPLETED";
-  type: string;
+  type: {
+    name: string;
+    id: number;
+  };
   createdAt: string;
-  location: string;
+  location: {
+    name: string;
+    id: number;
+    latitude: number;
+    longitude: number;
+  };
   room: string;
   createdBy?: {
     name: string;

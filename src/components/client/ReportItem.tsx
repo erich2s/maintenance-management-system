@@ -16,7 +16,7 @@ enum Status {
   REJECTED, // 已拒绝，红色
   COMPLETED, // 已完成，绿色
 }
-import { ReportItemProps } from "../../../types/ReportItemProps";
+import { ReportItemType } from "../../../types/reportItemType";
 import { formatDate } from "@/lib/utils";
 import {
   Clock2,
@@ -38,14 +38,14 @@ export default function ReportItem({
   worker,
   phone,
   content,
-}: ReportItemProps & { index: number }) {
+}: ReportItemType & { index: number }) {
   return (
     <>
       <AccordionItem value={String(index)}>
         <Card className="mt-4 overflow-hidden border shadow">
           <AccordionTrigger className="p-3">
             <div className="ml-2 flex w-full items-center justify-between text-base font-bold">
-              <div>{type}</div>
+              <div>{type.name}</div>
               {/* <div className="text-sm">{formatDate(createdAt)}</div> */}
               <StatusBadge status={status} />
             </div>
@@ -58,7 +58,7 @@ export default function ReportItem({
                 <div className="flex items-center ">
                   <MapPin width={16} className="mr-1" />
                   <span className="mr-1">报修地点:</span>
-                  <span> {location}</span>
+                  <span> {location.name}</span>
                 </div>
                 <div className="flex items-center ">
                   <DoorOpen width={16} className="mr-1" />

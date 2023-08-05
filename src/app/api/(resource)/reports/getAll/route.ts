@@ -19,6 +19,12 @@ export async function GET(req: NextRequest) {
         worker: {
           select: { name: true, phone: true },
         },
+        type: {
+          select: { id: true, name: true },
+        },
+        location: {
+          select: { id: true, name: true, latitude: true, longitude: true },
+        },
       },
       orderBy: { createdAt: "desc" },
     });

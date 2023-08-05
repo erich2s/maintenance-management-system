@@ -39,6 +39,22 @@ model Worker {
   Report Report[]
 }
 
+// 报修类型
+model Type {
+  id     Int      @id @default(autoincrement())
+  name   String
+  Report Report[]
+}
+
+// 地址
+model Location {
+  id        Int      @id @default(autoincrement())
+  name      String
+  latitude  Float
+  longitude Float
+  Report    Report[]
+}
+
 // 报修单状态
 enum Status {
   PENDING // 待处理，紫色
@@ -59,15 +75,18 @@ model Report {
   createdById Int
 
   // 报修类型
-  type     String
+  type       Type     @relation(fields: [typeId], references: [id])
+  typeId     Int
   // 所留电话
-  phone    String
+  phone      String
   // 报修地点
-  location String
+  location   Location @relation(fields: [locationId], references: [id])
+  locationId Int
+
   // 报修单房间号
-  room     String
+  room    String
   // 报修单内容
-  content  String
+  content String
 
   // 维修工人
   worker   Worker? @relation(fields: [workerId], references: [id])
