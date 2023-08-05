@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import PageTransition from "../PageTransition";
 import useSWR from "swr";
 import { Spinner } from "../Spinner";
-import { ReportItemProps } from "../../../types/reportItemType";
+import { ReportItemType } from "../../../types/reportItemType";
 export default function MyReports() {
   const reportsTest = [
     {
@@ -71,7 +71,7 @@ export default function MyReports() {
         "我们宿舍的水龙头水流已经很细, 关闭后还会持续漏水,担心会浪费很多水资源。请检查下水龙头,看看是不是需要更换新的垫片或整体更换下水龙头,以解决漏水问题,谢谢!",
     },
   ];
-  const [reports, setReports] = useState<ReportItemProps[]>([]);
+  const [reports, setReports] = useState<ReportItemType[]>([]);
   const { data, error, isLoading } = useSWR(
     "/api/reports",
     (...args) =>
