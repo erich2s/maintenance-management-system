@@ -39,6 +39,7 @@ export default async function page() {
           <div className="relative z-20 flex h-full w-full  items-center text-lg">
             <Image
               src={illustration}
+              priority={true}
               alt="宿舍报修系统"
               className="-scale-x-100"
             />
@@ -46,7 +47,7 @@ export default async function page() {
           <Image
             src={bg}
             alt="背景"
-            // className="fixed -z-10  h-full left-0 bottom-0 opacity-95 inset-0"
+            priority={true}
             className="absolute inset-0 bottom-0  left-0 -z-10 h-full w-full opacity-95"
           />
         </div>

@@ -1,10 +1,9 @@
 "use client";
 import dynamic from "next/dynamic";
 const Map = dynamic(() => import("@/components/admin/Map"), { ssr: false });
-// import Map from "@/components/admin/Map";
 import UnCompletedBox from "@/components/admin/UnCompletedBox";
 
-export default function page() {
+export default async function page() {
   return (
     <>
       <div className="flex h-full w-full bg-white">

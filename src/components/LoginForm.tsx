@@ -24,7 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "react-hot-toast";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { Eye, EyeOff } from "lucide-react";
 
 import { Yuji_Mai } from "next/font/google";
@@ -109,7 +109,18 @@ export default function LoginForm() {
     </motion.div>
   );
 }
-
+// 向服务器注册消息推送
+async function registerPush() {
+  // 发送订阅信息
+  const res = await fetch("/api/subscribe", {
+    method: "POST",
+    body: JSON.stringify((window as any).sub),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  console.log("Push sent, res:", res);
+}
 // 表单验证
 const formSchema = z.object({
   username: z.string().min(2, { message: "学号/邮箱长度不足" }),
@@ -128,6 +139,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       password: "123456",
     },
   });
+
   //   登录提交
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -140,8 +152,9 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         toast.error(res.error);
         setIsLoading(false);
       } else {
+        //登录成功后注册push
+        registerPush();
         setIsLoading(false);
-        // router.push("/");
         router.refresh();
       }
     });

@@ -12,10 +12,39 @@ self.addEventListener("install", function (event) {
   );
 });
 
-// self.addEventListener("fetch", function (event) {
-//   event.respondWith(
-//     caches.match(event.request).then(function (response) {
-//       return response || fetch(event.request);
-//     }),
-//   );
-// });
+self.addEventListener("push", function (event) {
+  console.log("Push received: ", event);
+  if (event.data) {
+    // 判断event.data的类型
+    const data = event.data.json();
+
+    console.log("收到推送数据:", data);
+    event.waitUntil(
+      self.registration.showNotification(data.title, {
+        body: data.body,
+        icon: data.icon,
+      }),
+    );
+  }
+});
+self.addEventListener("notificationclick", function (event) {
+  let url = "https://app.erichuang.art";
+  event.waitUntil(
+    clients
+      .matchAll({
+        type: "window",
+      })
+      .then(function (windowClients) {
+        console.log(windowClients);
+        for (let i = 0; i < windowClients.length; i++) {
+          let client = windowClients[i];
+          if (client.url.includes(url) && "focus" in client) {
+            return client.focus();
+          }
+        }
+        if (clients.openWindow) {
+          return clients.openWindow(url);
+        }
+      }),
+  );
+});

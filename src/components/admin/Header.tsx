@@ -4,7 +4,6 @@ import avatar from "@/assets/avatar.jpg";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -22,7 +21,7 @@ export default function Header({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex h-16  w-full items-center justify-between border-b bg-white px-5",
+        "flex h-16  w-full items-center justify-between border-b border-t bg-white px-5",
         className,
       )}
     >

@@ -13,7 +13,7 @@ const yujiMai = Yuji_Mai({
 export default function NavSideBar() {
   const { links } = useContext(NavLinksContext);
   return (
-    <aside className="flex h-screen  min-w-[13rem]  flex-col items-center border-r px-2 py-1">
+    <aside className="flex h-screen  min-w-[13rem]  flex-col items-center border-r border-t px-2 py-1">
       {/* Logo */}
       <div className="flex h-14  w-[100%]  select-none items-center justify-center text-xl font-bold">
         <div>

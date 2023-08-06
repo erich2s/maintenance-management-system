@@ -123,7 +123,7 @@ export default function Map() {
       });
     } catch (e) {
       // 装作看不见
-      console.log(e);
+      // console.log(e);
     }
   }, [locations, mapLoaded]);
   return (
