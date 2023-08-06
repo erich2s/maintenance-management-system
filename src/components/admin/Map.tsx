@@ -5,6 +5,7 @@ import { useWindowSize } from "react-use";
 import useUncompletedReports from "@/hooks/useUncompletedReports";
 import { ReportItemType } from "../../../types/reportItemType";
 import pin from "@/assets/pin.png";
+import mapPin from "@/assets/map-pin.png";
 import { Spinner } from "../Spinner";
 interface Fn<T = any, R = T> {
   (...arg: T[]): R;
@@ -103,7 +104,7 @@ export default function Map() {
         const marker = new (window as any).AMap.Marker({
           position: [loc.lon, loc.lat],
           anchor: "bottom-center",
-          icon: pin.src,
+          icon: mapPin.src,
         });
         marker.setLabel({
           offset: new (window as any).AMap.Pixel(5, 0),
