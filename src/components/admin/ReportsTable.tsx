@@ -86,7 +86,7 @@ const columns: ColumnDef<TableReport>[] = [
   },
   {
     accessorKey: "worker",
-    header: "工人",
+    header: "维修工",
     cell: ({ row }) => {
       return (
         <>

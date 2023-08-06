@@ -3,47 +3,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ReportItem from "./ReportItem";
 import { ReportItemType } from "../../../types/reportItemType";
-import { useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
+import { useMemo } from "react";
 import PageTransition from "../PageTransition";
 import { Spinner } from "../Spinner";
 import ReportDetailsProvider from "@/context/ReportDetailsProvider";
+import useUncompletedReports from "@/hooks/useUncompletedReports";
 export default function UnCompletedBox() {
-  const [reports, setReports] = useState<ReportItemType[]>([]);
-  const { data, isLoading } = useSWR(
-    "/api/reports/getUnCompleted",
-    (...args) =>
-      fetch(...args, { cache: "no-store" }).then((res) => res.json()),
-    {
-      refreshInterval: 2000,
-    },
-  );
-  useEffect(() => {
-    if (data) {
-      setReports(data);
-    }
-  }, [data]);
+  const { reports, isLoading } = useUncompletedReports();
   const pendingReports = useMemo(() => {
     return reports.filter((report) => report.status == "PENDING");
   }, [reports]);
   const acceptedReports = useMemo(() => {
     return reports.filter((report) => report.status == "ACCEPTED");
   }, [reports]);
-
-  function handleReportAction(
-    reportId: number,
-    action: "ACCEPTED" | "REJECTED" | "COMPLETED",
-  ) {
-    console.log("report action on", reportId, "action", action);
-    (data as ReportItemType[]).forEach((report) => {
-      if (report.id == reportId) {
-        report.status = action;
-      }
-    });
-  }
   return (
     <>
-      <ReportDetailsProvider onReportAction={handleReportAction}>
+      <ReportDetailsProvider>
         <div className="flex h-full w-full flex-col  py-4 ">
           <header className="px-5">
             <h1 className="mt-2 text-lg font-bold">

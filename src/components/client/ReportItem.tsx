@@ -9,24 +9,9 @@ import React from "react";
 import { Separator } from "@/components/ui/separator";
 import StatusBadge from "../StatusBadge";
 
-// 报修单状态
-enum Status {
-  PENDING, // 待处理，紫色
-  ACCEPTED, // 已接受并派工，黄色
-  REJECTED, // 已拒绝，红色
-  COMPLETED, // 已完成，绿色
-}
 import { ReportItemType } from "../../../types/reportItemType";
 import { formatDate } from "@/lib/utils";
-import {
-  Clock2,
-  DoorOpen,
-  HardHat,
-  MapPin,
-  Phone,
-  PinIcon,
-  Smartphone,
-} from "lucide-react";
+import { Clock2, DoorOpen, HardHat, MapPin, Smartphone } from "lucide-react";
 export default function ReportItem({
   index,
   id,

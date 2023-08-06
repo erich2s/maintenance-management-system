@@ -13,8 +13,7 @@ export const authOptions: AuthOptions = {
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
         const username = credentials?.username;
-        // const password = await bcrypt.hashSync(credentials?.password as string, 10);
-        const password = credentials?.password;
+        const plainPassword = credentials?.password;
 
         const user = await prisma.user.findUnique({
           where: {
@@ -25,7 +24,10 @@ export const authOptions: AuthOptions = {
         if (!user) {
           throw new Error("用户不存在");
         } else {
-          const match = password === user.password;
+          const match = bcrypt.compareSync(
+            plainPassword as string,
+            user.password,
+          );
           // 密码错误
           if (!match) {
             throw new Error("密码错误");

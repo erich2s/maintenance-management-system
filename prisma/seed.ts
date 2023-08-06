@@ -1,27 +1,28 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 async function main() {
   const locations = await prisma.location.createMany({
     data: [
       {
         name: "行健7栋",
-        latitude: 22.856264,
-        longitude: 108.2824,
+        latitude: 22.853598,
+        longitude: 108.286593,
       },
       {
         name: "行健6栋",
-        latitude: 22.856571,
-        longitude: 108.282428,
+        latitude: 22.853857,
+        longitude: 108.28655,
       },
       {
         name: "行健5栋",
-        latitude: 22.856889,
-        longitude: 108.28246,
+        latitude: 22.854129,
+        longitude: 108.286556,
       },
       {
         name: "行健4栋",
-        latitude: 22.85623,
-        longitude: 108.283372,
+        latitude: 22.853467,
+        longitude: 108.287333,
       },
     ],
   });
@@ -32,51 +33,51 @@ async function main() {
         username: "admin",
         role: "ADMIN",
         email: "tarot1754443943@gmail.com",
-        password: "123456",
+        password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "黄士崧",
         username: "2038940333",
         email: "erich2s@qq.com",
-        password: "123456",
+        password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "张三",
         username: "2038940301",
         email: "zhangsan@qq.com",
-        password: "123456",
+        password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "李四",
         username: "2038940302",
         email: "lisi@example.com",
-        password: "123456",
+        password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "王五",
 
         username: "2038940303",
         email: "wangwu@example.com",
-        password: "123456",
+        password: bcrypt.hashSync("123456", 10),
       },
 
       {
         name: "赵六",
         username: "2038940304",
         email: "zhaoliu@example.com",
-        password: "123456",
+        password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "孙七",
         username: "2038940305",
         email: "sunqi@example.com",
-        password: "123456",
+        password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "周八",
         username: "2038940306",
         email: "zhouba@example.com",
-        password: "123456",
+        password: bcrypt.hashSync("123456", 10),
       },
     ],
   });

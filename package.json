@@ -10,7 +10,9 @@
     "studio:dev": "dotenv -e .env.development -- prisma studio",
     "studio:prod": "dotenv -e .env.production -- prisma studio",
     "migrate:dev": "dotenv -e .env.development -- prisma migrate dev",
-    "migrate:prod": "dotenv -e .env.production -- prisma migrate deploy"
+    "migrate:prod": "dotenv -e .env.production -- prisma migrate deploy",
+    "resetDB:dev": "dotenv -e .env.development -- prisma migrate reset",
+    "resetDB:prod": "dotenv -e .env.production -- prisma migrate reset"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"

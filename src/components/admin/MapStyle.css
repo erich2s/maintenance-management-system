@@ -1,4 +1,4 @@
-/*  去掉高德logo */
+/* 去掉高德logo */
 .BMap_cpyCtrl {
   display: none;
 }
@@ -23,4 +23,12 @@
 }
 .amap-controlbar {
   scale: 0.8;
+}
+.amap-icon img,
+.amap-marker-content img {
+  @apply h-auto w-6 cursor-pointer drop-shadow-2xl;
+}
+
+.amap-marker-label {
+  @apply border-none bg-transparent;
 }
