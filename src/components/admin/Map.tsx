@@ -57,8 +57,8 @@ export default function Map() {
       viewMode: "3D",
       pitch: 45,
     });
-    (window as any).map.setCenter([108.2892, 22.85242]);
-    (window as any).map.setZoom(17);
+    (window as any).map.setCenter([108.292, 22.8436]);
+    (window as any).map.setZoom(15.5);
     (window as any).map.plugin(["AMap.ToolBar", "AMap.ControlBar"], () => {
       // 添加 工具条 和 缩放控件
       (window as any).map.addControl(
@@ -116,6 +116,10 @@ export default function Map() {
           loc.acceptedCount || 0
         }</span></div>
         </div>`,
+        });
+        marker.on("click", () => {
+          (window as any).map.setCenter([loc.lon, loc.lat]);
+          (window as any).map.setZoom(19.5);
         });
         (window as any).map.add(marker);
       });
