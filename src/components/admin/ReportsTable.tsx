@@ -1,5 +1,3 @@
-// 数据类型
-type TableReport = ReportItemType;
 /**
   PENDING // 待处理，紫色
   ACCEPTED // 已接受并派工，黄色
@@ -8,7 +6,7 @@ type TableReport = ReportItemType;
  */
 // 定义col
 import { ColumnDef } from "@tanstack/react-table";
-const columns: ColumnDef<TableReport>[] = [
+const columns: ColumnDef<ReportItemType>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -123,7 +121,7 @@ import { formatDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 import { Card } from "../ui/card";
-import { ChevronLeft, ChevronRight, Info } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import StatusBadge from "../StatusBadge";
 import { ReportDetailsContext } from "@/context/ReportDetailsProvider";
 import { ReportItemType } from "../../../types/reportItemType";
@@ -146,7 +144,7 @@ export default function ReportsTable() {
     (...args) =>
       fetch(...args, { cache: "no-store" }).then((res) => res.json()),
   );
-  const [tableData, setTableData] = useState<TableReport[]>([]);
+  const [tableData, setTableData] = useState<ReportItemType[]>([]);
   useEffect(() => {
     if (data) {
       setTableData(data.reports);

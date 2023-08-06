@@ -1,5 +1,13 @@
 "use client";
-import { Home, PlusCircle, User2, History } from "lucide-react";
+import {
+  Home,
+  PlusCircle,
+  User2,
+  History,
+  Users2,
+  HardHat,
+  TableProperties,
+} from "lucide-react";
 import { ReactNode, createContext } from "react";
 
 export interface Link {
@@ -47,6 +55,21 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
       href: "/admin/reports",
       label: "报修记录",
       icon: <History size={20} />,
+    },
+    {
+      href: "/admin/users",
+      label: "用户管理",
+      icon: <Users2 size={20} />,
+    },
+    {
+      href: "/admin/workers",
+      label: "工人管理",
+      icon: <HardHat size={20} />,
+    },
+    {
+      href: "/admin/resource",
+      label: "资源管理",
+      icon: <TableProperties size={20} />,
     },
     {
       href: "/admin/test",

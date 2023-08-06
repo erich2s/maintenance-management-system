@@ -84,9 +84,16 @@ export default function ReportForm({
 
     setIsLoading(false);
     setSheetOpen(false);
-    console.log(await res);
-    toast.success("提交成功");
-    // toast.success(JSON.stringify(await res.json()));
+    try {
+      const data = await res.json();
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        toast.success("提交成功");
+      }
+    } catch (error) {
+      toast.error("提交失败");
+    }
   }
   return (
     <>

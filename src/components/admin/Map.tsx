@@ -105,17 +105,14 @@ export default function Map() {
           position: [loc.lon, loc.lat],
           anchor: "bottom-center",
           icon: mapPin.src,
+          key: loc.id,
         });
         marker.setLabel({
           offset: new (window as any).AMap.Pixel(5, 0),
           direction: "right",
           content: `<div class="text-center  text-xs bg-white border rounded-md shadow-xl">
         <div class="w-full border-b py-[4px] font-bold">${loc.name}</div>
-        <div class="p-1.5"><span class="text-primary ">新的:${
-          loc.pendingCount || 0
-        }</span> / <span class="text-yellow-700 ">施工中:${
-          loc.acceptedCount || 0
-        }</span></div>
+        <div class="p-1.5"><span class="text-primary">新的:${loc.pendingCount}</span> / <span class="text-yellow-700 ">施工中:${loc.acceptedCount}</span></div>
         </div>`,
         });
         marker.on("click", () => {
