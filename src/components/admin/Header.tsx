@@ -15,9 +15,12 @@ import MotionHeaderLabel from "@/components/MotionHeaderLabel";
 import { useState } from "react";
 import { Spinner } from "../Spinner";
 import { LogOut } from "lucide-react";
+import { useLocalStorage } from "react-use";
 export default function Header({ className }: { className?: string }) {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [subscribtion, setSubscribtion, remove] =
+    useLocalStorage("subscribtion");
   return (
     <div
       className={cn(
@@ -59,6 +62,8 @@ export default function Header({ className }: { className?: string }) {
             onClick={() => {
               setIsLoading(true);
               signOut().then(() => {
+                // 从localstorage中移除订阅
+                (remove as () => void)();
                 setIsLoading(false);
               });
             }}

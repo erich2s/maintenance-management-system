@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import { pushNotificationTo } from "@/utils";
 
 // 用户获取自己所有报修单
 export async function GET(req: NextRequest) {
@@ -53,6 +54,25 @@ export async function POST(req: NextRequest) {
         },
       },
     },
+  });
+
+  // 发消息给管理员
+  const admin = await prisma.user.findUnique({
+    where: {
+      username: "admin",
+    },
+    select: {
+      subscription: true,
+    },
+  });
+  const count = await prisma.report.count({
+    where: {
+      status: "PENDING",
+    },
+  });
+  await pushNotificationTo(admin?.subscription as any, {
+    title: "有新的报修单",
+    body: `当前尚有${count}条未处理`,
   });
   return NextResponse.json(result);
 }

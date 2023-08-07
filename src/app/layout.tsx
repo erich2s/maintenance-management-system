@@ -34,11 +34,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json"></link>
-        <script src="/serviceWorkerRegister.js" defer></script>
-        {/* <style>
-          @import
-          url('https://fonts.googleapis.com/css2?family=Yuji+Mai&display=swap');
-        </style> */}
       </head>
       <AuthProvider>
         <NavLinksProvider>

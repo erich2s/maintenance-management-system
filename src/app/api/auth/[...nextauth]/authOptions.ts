@@ -71,4 +71,17 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30天过期
   },
+  events: {
+    async signOut(message) {
+      // 注销时，删除subscription
+      await prisma.user.update({
+        where: {
+          id: Number(message.token.id),
+        },
+        data: {
+          subscription: {},
+        },
+      });
+    },
+  },
 };

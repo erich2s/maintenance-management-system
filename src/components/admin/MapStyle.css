@@ -30,5 +30,5 @@
 }
 
 .amap-marker-label {
-  @apply border-none bg-transparent;
+  @apply cursor-pointer border-none bg-transparent;
 }

@@ -109,18 +109,6 @@ export default function LoginForm() {
     </motion.div>
   );
 }
-// 向服务器注册消息推送
-async function registerPush() {
-  // 发送订阅信息
-  const res = await fetch("/api/subscribe", {
-    method: "POST",
-    body: JSON.stringify((window as any).sub),
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-  console.log("Push sent, res:", res);
-}
 // 表单验证
 const formSchema = z.object({
   username: z.string().min(2, { message: "学号/邮箱长度不足" }),
@@ -152,8 +140,6 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         toast.error(res.error);
         setIsLoading(false);
       } else {
-        //登录成功后注册push
-        registerPush();
         setIsLoading(false);
         router.refresh();
       }

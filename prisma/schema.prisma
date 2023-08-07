@@ -23,7 +23,6 @@ model User {
   username String   @unique
   // 姓名
   name     String
-  email    String
   // hashed密码
   password String
   role     Role     @default(USER)
