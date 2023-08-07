@@ -1,3 +1,4 @@
+// serviceWorker只能在https和localhost下使用
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     // alert("serviceWorker");
