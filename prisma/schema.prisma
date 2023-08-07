@@ -29,6 +29,9 @@ model User {
   role     Role     @default(USER)
   // 报修单
   reports  Report[]
+
+  //通知订阅
+  subscription Json?
 }
 
 // 维修工人
