@@ -18,6 +18,7 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/Spinner";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 export default function page() {
   const { data: session } = useSession();
 
@@ -29,7 +30,6 @@ export default function page() {
   useEffect(() => {
     if (subscription?.endpoint) {
       setIsSubscribed(true);
-      toast.success("已订阅通知");
       console.log(subscription);
     } else {
       setIsSubscribed(false);
@@ -218,11 +218,10 @@ export default function page() {
           disabled={isLoading}
           onClick={() => {
             setIsLoading(true);
+            // 取消通知订阅
+            unsubscribe({ showToast: false });
             signOut()
-              .then(() => {
-                // 取消通知订阅
-                unsubscribe({ showToast: false });
-              })
+              .then(() => {})
               .finally(() => {
                 setIsLoading(false);
               });

@@ -98,9 +98,9 @@ export default function Header({ className }: { className?: string }) {
             disabled={isLoading}
             onClick={() => {
               setIsLoading(true);
+              // 取消通知订阅
+              unsubscribe();
               signOut().then(() => {
-                // 取消通知订阅
-                unsubscribe();
                 setIsLoading(false);
               });
             }}
