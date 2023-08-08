@@ -41,7 +41,7 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
       icon: <PlusCircle size={30} strokeWidth={1.8} />,
     },
     {
-      href: "/client/info",
+      href: "/client/profile",
       label: "个人信息",
       icon: <User2 size={26} />,
       iconSelected: <User2 size={26} strokeWidth={2.5} />,

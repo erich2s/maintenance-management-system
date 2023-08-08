@@ -5,7 +5,6 @@ import MotionHeaderLabel from "@/components/MotionHeaderLabel";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 export default function Header() {
   const path = usePathname();
   return (
@@ -17,20 +16,22 @@ export default function Header() {
         <div className="flex w-full max-w-[75rem] items-center justify-between">
           <MotionHeaderLabel />
           <AnimatePresence>
-            {path !== "/client/info" && (
+            {path !== "/client/profile" && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{
                   opacity: 1,
                   y: 0,
                 }}
+                transition={{ duration: 0.15 }}
                 exit={{ opacity: 0, y: -5 }}
               >
-                <Link href="/client/info">
+                <Link href="/client/profile">
                   <Image
                     src={avatar}
                     alt="avatar"
                     width={50}
+                    priority
                     className="rounded-full p-[1px] saturate-150"
                   />
                 </Link>

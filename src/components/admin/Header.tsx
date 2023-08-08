@@ -19,8 +19,45 @@ import { useLocalStorage } from "react-use";
 export default function Header({ className }: { className?: string }) {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const [subscribtion, setSubscribtion, remove] =
-    useLocalStorage("subscribtion");
+  const [subscribtion, setSubscribtion, removeSubscription] =
+    useLocalStorage<PushSubscriptionJSON>("subscribtion");
+  async function unsubscribe() {
+    if ("serviceWorker" in navigator) {
+      console.log("开始取消订阅");
+      // 注册service worker
+      const register = await navigator.serviceWorker.register(
+        "/serviceWorker.js",
+      );
+      // 取消订阅
+      register.pushManager.getSubscription().then((sub) => {
+        console.log(sub);
+        sub
+          ?.unsubscribe()
+          .then(() => {
+            console.log("取消订阅成功");
+          })
+          .catch((err) => {
+            console.log(err);
+
+            return;
+          });
+      });
+      // 将订阅发送到服务器
+      const res = await fetch("/api/unsubscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        console.log("取消订阅成功");
+      }
+      // 清除localStorage
+      removeSubscription();
+    } else {
+      console.log("serviceWorker不可用");
+    }
+  }
   return (
     <div
       className={cn(
@@ -62,8 +99,8 @@ export default function Header({ className }: { className?: string }) {
             onClick={() => {
               setIsLoading(true);
               signOut().then(() => {
-                // 从localstorage中移除订阅
-                remove();
+                // 取消通知订阅
+                unsubscribe();
                 setIsLoading(false);
               });
             }}

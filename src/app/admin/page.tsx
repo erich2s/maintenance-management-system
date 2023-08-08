@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import { urlBase64ToUint8Array } from "@/lib/utils";
 
 export default function page() {
-  const [subscription, setSubscription] = useLocalStorage("subscribtion");
+  const [subscription, setSubscription] =
+    useLocalStorage<PushSubscriptionJSON>("subscribtion");
   // 生成pushSubscription，并将其保存到localStorage中后发送到服务器
   async function subscribe() {
     // serviceWorker只能在https和localhost下使用
