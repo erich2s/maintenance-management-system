@@ -32,51 +32,43 @@ async function main() {
         name: "Eric Huang",
         username: "admin",
         role: "ADMIN",
-        email: "tarot1754443943@gmail.com",
         password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "黄士崧",
         username: "2038940333",
-        email: "erich2s@qq.com",
         password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "张三",
         username: "2038940301",
-        email: "zhangsan@qq.com",
         password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "李四",
         username: "2038940302",
-        email: "lisi@example.com",
         password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "王五",
 
         username: "2038940303",
-        email: "wangwu@example.com",
         password: bcrypt.hashSync("123456", 10),
       },
 
       {
         name: "赵六",
         username: "2038940304",
-        email: "zhaoliu@example.com",
         password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "孙七",
         username: "2038940305",
-        email: "sunqi@example.com",
         password: bcrypt.hashSync("123456", 10),
       },
       {
         name: "周八",
         username: "2038940306",
-        email: "zhouba@example.com",
         password: bcrypt.hashSync("123456", 10),
       },
     ],
