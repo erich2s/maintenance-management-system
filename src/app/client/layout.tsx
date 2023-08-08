@@ -1,3 +1,4 @@
+import PageTransition from "@/components/PageTransition";
 import Header from "@/components/client/Header";
 import NavBar from "@/components/client/NavBar";
 

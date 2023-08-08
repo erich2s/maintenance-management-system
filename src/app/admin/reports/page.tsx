@@ -5,7 +5,7 @@ import ReportDetailsProvider from "@/context/ReportDetailsProvider";
 
 export default function page() {
   return (
-    <PageTransition>
+    <PageTransition variant="scale">
       <div className="h-full w-full px-7 py-3">
         <ReportDetailsProvider>
           <ReportsTable />

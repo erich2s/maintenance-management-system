@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -31,6 +30,7 @@ export default function InfoCard({ name, username }: props) {
         </CardContent>
         <CardFooter className="flex justify-end  pb-3 ">
           <Image
+            priority
             src="/school-logo-fill.png"
             width={50}
             height={50}

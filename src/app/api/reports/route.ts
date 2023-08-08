@@ -70,9 +70,15 @@ export async function POST(req: NextRequest) {
       status: "PENDING",
     },
   });
-  await pushNotificationTo(admin?.subscription as any, {
-    title: "有新的报修单",
-    body: `当前尚有${count}条未处理`,
-  });
+  try {
+    //empty obj
+    if (!admin?.subscription) throw new Error("管理员未订阅通知");
+    await pushNotificationTo(admin?.subscription as any, {
+      title: "有新的报修单",
+      body: `当前尚有${count}条未处理`,
+    });
+  } catch (e) {
+    console.log(e);
+  }
   return NextResponse.json(result);
 }

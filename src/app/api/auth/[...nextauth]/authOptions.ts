@@ -79,7 +79,7 @@ export const authOptions: AuthOptions = {
           id: Number(message.token.id),
         },
         data: {
-          subscription: {},
+          subscription: null as any,
         },
       });
     },

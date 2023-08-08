@@ -100,8 +100,8 @@ export default function LoginForm() {
         >
           <CardFooter>
             <p className="px-8 text-center text-sm text-muted-foreground">
-              By clicking continue, you agree to our{" "}
-              <span>Terms of Service</span> and <span>Privacy Policy .</span>
+              By clicking login, you agree to our <span>Terms of Service</span>{" "}
+              and <span>Privacy Policy .</span>
             </p>
           </CardFooter>
         </motion.div>
@@ -232,7 +232,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </form>
         </Form>
         {/* SSO区域 */}
-        <motion.li variants={item}>
+        {/* <motion.li variants={item}>
           <div className="relative flex justify-evenly">
             <div className="absolute  inset-0 flex items-center">
               <span className="w-full border-t" />
@@ -243,7 +243,7 @@ function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               </span>
             </div>
           </div>
-        </motion.li>
+        </motion.li> */}
       </motion.ul>
     </div>
   );

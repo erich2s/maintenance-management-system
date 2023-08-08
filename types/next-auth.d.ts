@@ -25,7 +25,6 @@ declare module "next-auth" {
     username: string;
     name: string;
     role: string;
-    email: string;
   }
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context

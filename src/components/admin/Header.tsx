@@ -63,7 +63,7 @@ export default function Header({ className }: { className?: string }) {
               setIsLoading(true);
               signOut().then(() => {
                 // 从localstorage中移除订阅
-                (remove as () => void)();
+                remove();
                 setIsLoading(false);
               });
             }}

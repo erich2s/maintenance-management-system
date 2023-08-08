@@ -11,11 +11,13 @@ import { usePathname } from "next/navigation";
 export default function PageWrapper({
   children,
   className,
-  direction = "bottom",
+  variant = "bottom",
+  mode = undefined,
 }: {
   children: ReactNode;
   className?: string;
-  direction?: "bottom" | "top" | "left" | "right";
+  variant?: "bottom" | "top" | "left" | "right" | "scale";
+  mode?: "wait" | "sync" | "popLayout" | undefined;
 }) {
   const pathname = usePathname();
   const variants = {
@@ -23,6 +25,11 @@ export default function PageWrapper({
       initial: { opacity: 0, y: 20 },
       animate: { opacity: 1, y: 0 },
       exit: { opacity: 0, y: 20 },
+    },
+    scale: {
+      initial: { opacity: 0, scale: 0.98 },
+      animate: { opacity: 1, scale: 1 },
+      transition: { duration: 0.1 },
     },
     top: {
       initial: { opacity: 0, y: -20 },
@@ -43,8 +50,8 @@ export default function PageWrapper({
 
   // Next.js 13 app router 的bug，exit效果无效
   return (
-    <AnimatePresence mode="wait">
-      <motion.div key={pathname} {...variants[direction]} className={className}>
+    <AnimatePresence mode={mode}>
+      <motion.div key={pathname} {...variants[variant]} className={className}>
         {children}
       </motion.div>
     </AnimatePresence>
