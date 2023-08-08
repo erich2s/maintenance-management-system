@@ -29,6 +29,7 @@ export default function page() {
   useEffect(() => {
     if (subscription?.endpoint) {
       setIsSubscribed(true);
+      toast.success("已订阅通知");
       console.log(subscription);
     } else {
       setIsSubscribed(false);
