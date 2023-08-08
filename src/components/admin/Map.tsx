@@ -3,8 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import "./MapStyle.css";
 import { useWindowSize } from "react-use";
 import useUncompletedReports from "@/hooks/useUncompletedReports";
-import { ReportItemType } from "../../../types/reportItemType";
-import pin from "@/assets/pin.png";
 import mapPin from "@/assets/map-pin.png";
 import { Spinner } from "../Spinner";
 interface Fn<T = any, R = T> {

@@ -10,6 +10,7 @@ export default function Loading() {
           height={80}
           alt="school logo"
           className="mb-4"
+          priority
         />
         <div className="lds-ellipsis">
           <div></div>

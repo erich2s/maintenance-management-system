@@ -61,6 +61,7 @@ export default function LoginForm() {
         <CardHeader>
           <div className="flex flex-col items-center space-y-2 text-center">
             <Image
+              priority
               src="/school-logo-purple.png"
               alt="广西大学行健文理学院logo"
               width={100}

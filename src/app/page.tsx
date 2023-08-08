@@ -1,11 +1,7 @@
 import Image from "next/image";
 import illustration from "@/assets/Admin-Control-Panel.svg";
 import bg from "@/assets/bg.png";
-// import LoginForm from "@/components/LoginForm";
-import dynamic from "next/dynamic";
-const LoginForm = dynamic(() => import("@/components/LoginForm"), {
-  ssr: false,
-});
+import LoginForm from "@/components/LoginForm";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/authOptions";
 import { redirect } from "next/navigation";
