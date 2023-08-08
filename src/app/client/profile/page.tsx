@@ -163,23 +163,6 @@ export default function page() {
         <Separator />
         <button
           onClick={() => {
-            toast.remove();
-            toast.success("🙏🏻");
-          }}
-        >
-          <div className="flex items-center justify-between py-3">
-            <div className="flex items-center ">
-              <div className="mr-3 w-fit  rounded-lg bg-green-500    p-1.5 ">
-                <BadgeHelp size={22} color="white" strokeWidth={2} />
-              </div>
-              <span>联系帮助</span>
-            </div>
-            <ChevronRight color="#677489" strokeWidth={1.5} />
-          </div>
-        </button>
-        <Separator />
-        <button
-          onClick={() => {
             toast.success("不给");
           }}
         >
@@ -194,6 +177,24 @@ export default function page() {
             <ChevronRight color="#677489" strokeWidth={1.5} />
           </div>
         </button>
+
+        <Separator />
+        <button
+          onClick={() => {
+            toast.remove();
+            toast.success("🙏🏻");
+          }}
+        >
+          <div className="flex items-center justify-between py-3">
+            <div className="flex items-center ">
+              <div className="mr-3 w-fit  rounded-lg bg-blue-500 p-1.5 ">
+                <BadgeHelp size={22} color="white" strokeWidth={2} />
+              </div>
+              <span>联系帮助</span>
+            </div>
+            <ChevronRight color="#677489" strokeWidth={1.5} />
+          </div>
+        </button>
         <Separator />
         <button
           onClick={() => {
@@ -202,8 +203,8 @@ export default function page() {
         >
           <div className="flex items-center justify-between py-3">
             <div className="flex items-center ">
-              <div className="mr-3 w-fit  rounded-lg bg-black  p-1.5 ">
-                <Github size={22} color="white" />
+              <div className="mr-3 w-fit  rounded-lg bg-gray-400  p-1.5 ">
+                <Github size={22} color="white" strokeWidth={2} />
               </div>
               <span>关于作者</span>
             </div>
