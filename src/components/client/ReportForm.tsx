@@ -50,12 +50,12 @@ export default function ReportForm({
     fetch("/api/types")
       .then((res) => res.json())
       .then((data) => {
-        setTypes(data);
+        setTypes(data.data);
       });
     fetch("/api/locations")
       .then((res) => res.json())
       .then((data) => {
-        setLocations(data);
+        setLocations(data.data);
       });
   }, []);
 

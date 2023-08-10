@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { ReportItemType } from "../../types/reportItemType";
 
 export default function useUncompletedReports() {
-  const { data, isLoading } = useSWR(
+  const { data, isLoading, mutate } = useSWR(
     "/api/reports/getUnCompleted",
     (...args) =>
       fetch(...args, { cache: "no-store" }).then((res) => res.json()),
@@ -59,5 +59,6 @@ export default function useUncompletedReports() {
     reports,
     locations,
     isLoading,
+    mutate,
   };
 }

@@ -3,7 +3,7 @@ import DataTable from "@/components/admin/DataTable";
 import { Button } from "@/components/ui/button";
 import { Location } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { Check, Locate } from "lucide-react";
+import { Check, Locate, Trash2 } from "lucide-react";
 import mapPin from "@/assets/map-pin.png";
 import {
   Dialog,
@@ -17,21 +17,52 @@ import "@amap/amap-jsapi-types";
 import AMapLoader from "@heycar/amap-jsapi-loader";
 import { useEffect, useRef, useState } from "react";
 import { Spinner } from "@/components/Spinner";
-const columns: ColumnDef<Location>[] = [
-  { accessorKey: "id", header: "ID" },
-  { accessorKey: "name", header: "地点" },
-  {
-    accessorFn: (row) => `${row.latitude} , ${row.longitude}`,
-    header: "地址(经纬度)",
-  },
-];
 let map: AMap.Map;
 import "./style.css";
 import { toast } from "react-hot-toast";
-
 // exclude id
 type loc = Omit<Location, "id">;
 export default function page() {
+  const [refresh, setRefresh] = useState(false);
+
+  const columns: ColumnDef<Location>[] = [
+    { accessorKey: "id", header: "ID" },
+    { accessorKey: "name", header: "地点" },
+    {
+      accessorFn: (row) => `${row.latitude} , ${row.longitude}`,
+      header: "地址(经纬度)",
+    },
+    {
+      id: "actions",
+      header: "操作",
+      cell: ({ row }) => {
+        return (
+          <button
+            onClick={() => {
+              toast.promise(
+                fetch(`/api/locations/${row.original.id}`, {
+                  method: "DELETE",
+                }).then(() => {
+                  setRefresh((refresh) => !refresh);
+                }),
+                {
+                  loading: "删除中...",
+                  success: "删除成功",
+                  error: "删除失败",
+                },
+              );
+            }}
+          >
+            <Trash2
+              size={16}
+              className="scale-110 cursor-pointer hover:text-red-500 "
+            />
+          </button>
+        );
+      },
+    },
+  ];
+
   const mapRef = useRef<HTMLDivElement>(null);
   const [isOpened, setIsOpened] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -53,7 +84,7 @@ export default function page() {
         fetch("/api/locations")
           .then((res) => res.json())
           .then((res) => {
-            res.forEach((loc: loc) => {
+            res.data.forEach((loc: loc) => {
               let marker = new window.AMap.Marker({
                 position: [loc.longitude, loc.latitude],
                 map: map,
@@ -114,7 +145,7 @@ export default function page() {
   }, [isOpened]);
   return (
     <div>
-      <DataTable url="/api/locations" columns={columns}>
+      <DataTable url="/api/locations" columns={columns} mutateFlag={refresh}>
         <Dialog onOpenChange={setIsOpened} open={isOpened}>
           <DialogTrigger asChild>
             <Button className="flex items-center gap-1 pl-2 pr-2.5">
@@ -158,6 +189,7 @@ export default function page() {
                         toast.success("创建成功");
                         setIsOpened(false);
                         setLocations([]);
+                        setRefresh((refresh) => !refresh);
                       } else {
                         toast.error("创建失败");
                       }

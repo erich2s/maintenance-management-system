@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 import { Spinner } from "@/components/Spinner";
 import "./ReportDetailsStyle.css";
 import StatusBadge from "@/components/StatusBadge";
+import useUncompletedReports from "@/hooks/useUncompletedReports";
 
 export const ReportDetailsContext = createContext<{
   setData: React.Dispatch<React.SetStateAction<ReportItemType | undefined>>;
@@ -48,14 +49,14 @@ export default function ReportDetailsProvider({
   const [loading, setLoading] = useState(false);
   const [rejectLoading, setRejectLoading] = useState(false);
   const [data, setData] = useState<ReportItemType>();
-
+  const { mutate } = useUncompletedReports();
   const [workers, setWorkers] = useState<worker[]>([]);
   const [selectedWorker, setSelectedWorker] = useState<string>("");
   useEffect(() => {
     fetch("/api/workers")
       .then((res) => res.json())
       .then((res) => {
-        setWorkers(res);
+        setWorkers(res.data);
       });
   }, []);
   useEffect(() => {
@@ -78,6 +79,7 @@ export default function ReportDetailsProvider({
     setLoading(false);
     setOpen(false);
     toast.success("派工成功");
+    mutate();
     onReportAction?.(data?.id as number, "ACCEPTED");
   }
   async function handleComplete() {
@@ -94,6 +96,7 @@ export default function ReportDetailsProvider({
     setLoading(false);
     setOpen(false);
     toast.success("确认完工");
+    mutate();
     onReportAction?.(data?.id as number, "COMPLETED");
   }
   async function handleReject() {
@@ -110,6 +113,7 @@ export default function ReportDetailsProvider({
     setRejectLoading(false);
     setOpen(false);
     toast.success("已拒绝");
+    mutate();
     onReportAction?.(data?.id as number, "REJECTED");
   }
   return (

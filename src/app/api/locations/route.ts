@@ -2,8 +2,16 @@ import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const result = await prisma.location.findMany();
-  return NextResponse.json(result);
+  // 分页，每页10条
+  const { searchParams } = new URL(req.url);
+  const page = (Number(searchParams.get("page")) || 1) - 1;
+  const size = Number(searchParams.get("size")) || 10;
+  const data = await prisma.location.findMany({
+    skip: page * size,
+    take: size,
+  });
+  const total = await prisma.location.count();
+  return NextResponse.json({ data, total });
 }
 
 export async function POST(req: NextRequest) {

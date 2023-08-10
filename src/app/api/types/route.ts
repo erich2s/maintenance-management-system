@@ -2,8 +2,9 @@ import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const result = await prisma.type.findMany();
-  return NextResponse.json(result);
+  const data = await prisma.type.findMany();
+  const total = await prisma.type.count();
+  return NextResponse.json({ data, total });
 }
 
 export async function POST(req: NextRequest) {

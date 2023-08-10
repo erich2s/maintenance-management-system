@@ -35,17 +35,17 @@ model User {
 
 // 维修工人
 model Worker {
-  id     Int      @id @default(autoincrement())
-  name   String
-  phone  String
-  Report Report[]
+  id      Int      @id @default(autoincrement())
+  name    String
+  phone   String
+  reports Report[]
 }
 
 // 报修类型
 model Type {
-  id     Int      @id @default(autoincrement())
-  name   String
-  Report Report[]
+  id      Int      @id @default(autoincrement())
+  name    String
+  reports Report[]
 }
 
 // 地址
@@ -54,7 +54,7 @@ model Location {
   name      String
   latitude  Float
   longitude Float
-  Report    Report[]
+  reports   Report[]
 }
 
 // 报修单状态

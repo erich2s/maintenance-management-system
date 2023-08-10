@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Card } from "../ui/card";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import PageTransition from "../PageTransition";
@@ -27,30 +27,45 @@ interface props {
   columns: ColumnDef<any>[];
   // 对表的增加操作组件，每个页面的都不一样
   children?: React.ReactNode;
+  mutateFlag?: boolean;
 }
 
-export default function DataTable({ url, columns, children }: props) {
-  // 获取数据
-  const fetcher = (url: string) =>
-    fetch(url, { cache: "no-store" }).then((res) => res.json());
-  const { data, isLoading, error } = useSWR<[]>(url, fetcher, {
-    refreshInterval: 2000,
-  });
-
+export default function DataTable({
+  url,
+  columns,
+  children,
+  mutateFlag,
+}: props) {
   // 分页
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   // 记录的总条数
   const [total, setTotal] = useState(0);
+  // 获取数据
+  const fetcher = (url: string) =>
+    fetch(url, { cache: "no-store" }).then((res) => res.json());
+  const [dynamicUrl, setDynamicUrl] = useState<string>(url);
+  useEffect(() => {
+    setDynamicUrl(`${url}?page=${page}&size=${size}`);
+  }, [page, size]);
+  const { data, isLoading, error, mutate } = useSWR<{
+    data: [];
+    total: number;
+  }>(dynamicUrl, fetcher, {
+    refreshInterval: 2000,
+  });
   useEffect(() => {
     if (data) {
-      setTotal(data.length);
+      setTotal(data.total);
     }
   }, [data]);
-
+  useEffect(() => {
+    mutate();
+    console.log("mutate");
+  }, [mutateFlag]);
   // 定义table
   const table = useReactTable({
-    data: data || [],
+    data: data?.data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -65,7 +80,7 @@ export default function DataTable({ url, columns, children }: props) {
     <>
       <PageTransition variant="scale">
         <div className="h-full w-full px-7 py-3">
-          <Card className=" min-h-fit rounded-md" ref={tableRef}>
+          <Card className="h-[calc(100vh_-_9rem)] rounded-md" ref={tableRef}>
             <ScrollArea className="h-full w-full" type="always">
               <div className="h-full">
                 <Table className="relative">
@@ -129,6 +144,7 @@ export default function DataTable({ url, columns, children }: props) {
             </ScrollArea>
           </Card>
           <div className="flex items-center justify-between py-2">
+            {/* 左下角的自定义功能区 */}
             <div>{children}</div>
             <div className="flex items-center space-x-2">
               <span className="text-muted-foreground ">
