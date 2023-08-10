@@ -139,7 +139,7 @@ export default function ReportsTable() {
     setSize(Math.floor(tbh! / 60));
   }, [tableRef.current?.clientHeight]);
 
-  const { data } = useSWR(
+  const { data, isLoading, error } = useSWR(
     `/api/reports/getAll?page=${page}&size=${size}`,
     (...args) =>
       fetch(...args, { cache: "no-store" }).then((res) => res.json()),
@@ -227,7 +227,17 @@ export default function ReportsTable() {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {isLoading ? (
+                        <span className="text-muted-foreground">
+                          Loading...
+                        </span>
+                      ) : error ? (
+                        <span className="text-muted-foreground">
+                          {error.message}
+                        </span>
+                      ) : (
+                        <span className="text-muted-foreground">No data</span>
+                      )}
                     </TableCell>
                   </TableRow>
                 )}

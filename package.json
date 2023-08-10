@@ -18,6 +18,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@amap/amap-jsapi-types": "^0.0.13",
     "@heycar/amap-jsapi-loader": "^1.0.1",
     "@hookform/resolvers": "^3.2.0",
     "@prisma/client": "5.1.1",

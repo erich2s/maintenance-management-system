@@ -11,18 +11,8 @@
 .amap-copyright {
   opacity: 0;
 }
-#main-map .amap-maps {
-  cursor: grab;
-}
-#main-map .amap-maps:active {
-  cursor: grabbing;
-}
-.amap-toolbar {
-  background-color: rgba(255, 255, 255, 0.676);
-  @apply overflow-hidden rounded-2xl;
-}
-.amap-controlbar {
-  scale: 0.8;
+.amap-maps {
+  cursor: crosshair;
 }
 .amap-icon img,
 .amap-marker-content img {
@@ -30,5 +20,5 @@
 }
 
 .amap-marker-label {
-  @apply cursor-pointer border-none bg-transparent;
+  @apply border-none bg-transparent;
 }

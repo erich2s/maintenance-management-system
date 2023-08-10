@@ -20,27 +20,37 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import PageTransition from "../PageTransition";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import useSWR from "swr";
 
-interface props<T> {
-  data: T;
-  columns: ColumnDef<T>[];
+interface props {
+  url: string;
+  columns: ColumnDef<any>[];
+  // 对表的增加操作组件，每个页面的都不一样
+  children?: React.ReactNode;
 }
 
-export default function DataTable({ data, columns }: props<any>) {
+export default function DataTable({ url, columns, children }: props) {
+  // 获取数据
+  const fetcher = (url: string) =>
+    fetch(url, { cache: "no-store" }).then((res) => res.json());
+  const { data, isLoading, error } = useSWR<[]>(url, fetcher, {
+    refreshInterval: 2000,
+  });
+
   // 分页
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   // 记录的总条数
-  const [count, setCount] = useState(0);
+  const [total, setTotal] = useState(0);
   useEffect(() => {
     if (data) {
-      setCount(data.length);
+      setTotal(data.length);
     }
   }, [data]);
 
   // 定义table
   const table = useReactTable({
-    data: data,
+    data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -103,7 +113,13 @@ export default function DataTable({ data, columns }: props<any>) {
                           colSpan={columns.length}
                           className="h-24 text-center"
                         >
-                          No results.
+                          {isLoading ? (
+                            <span>Loading...</span>
+                          ) : error ? (
+                            <span>Error</span>
+                          ) : (
+                            <span>No data</span>
+                          )}
                         </TableCell>
                       </TableRow>
                     )}
@@ -112,30 +128,33 @@ export default function DataTable({ data, columns }: props<any>) {
               </div>
             </ScrollArea>
           </Card>
-          <div className="flex items-center justify-end space-x-2 py-2">
-            <span className="text-muted-foreground ">
-              Page: {page}/{Math.ceil(count / size)}
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setPage(page - 1);
-              }}
-              disabled={page === 1}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setPage(page + 1);
-              }}
-              disabled={page * size >= count}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+          <div className="flex items-center justify-between py-2">
+            <div>{children}</div>
+            <div className="flex items-center space-x-2">
+              <span className="text-muted-foreground ">
+                Page: {page}/{Math.ceil(total / size)}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setPage(page - 1);
+                }}
+                disabled={page === 1}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setPage(page + 1);
+                }}
+                disabled={page * size >= total}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </PageTransition>

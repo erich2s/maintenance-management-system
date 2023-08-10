@@ -8,12 +8,8 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const reqData = await req.json();
-  const result = await prisma.location.create({
-    data: {
-      name: reqData.name,
-      latitude: reqData.latitude,
-      longitude: reqData.longitude,
-    },
+  const result = await prisma.location.createMany({
+    data: reqData,
   });
   return NextResponse.json(result);
 }

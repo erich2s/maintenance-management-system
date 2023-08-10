@@ -12,6 +12,7 @@ import {
 import { prettyPrintJson } from "pretty-print-json";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import useSWR from "swr";
 const columns: ColumnDef<User>[] = [
   {
     accessorKey: "id",
@@ -30,8 +31,8 @@ const columns: ColumnDef<User>[] = [
           <Badge
             className={cn(
               row.original.role === "ADMIN"
-                ? "bg-red-600 hover:bg-red-500"
-                : "bg-indigo-600",
+                ? "bg-red-100 text-red-800 hover:bg-red-200"
+                : "bg-purple-100 text-purple-800 hover:bg-purple-200",
               "select-none",
             )}
           >
@@ -59,7 +60,7 @@ const columns: ColumnDef<User>[] = [
 
   {
     accessorKey: "subscription",
-    header: "订阅",
+    header: "通知订阅",
     cell: ({ row }) => {
       if (row.original.subscription) {
         const jsonHtml = prettyPrintJson.toHtml(row.original.subscription);
@@ -83,7 +84,7 @@ const columns: ColumnDef<User>[] = [
       } else {
         return (
           <div className="max-w-[7rem] overflow-hidden text-ellipsis">
-            <code> {JSON.stringify(row.original.subscription)}</code>
+            <p>未订阅</p>
           </div>
         );
       }
@@ -92,18 +93,9 @@ const columns: ColumnDef<User>[] = [
 ];
 
 export default function page() {
-  const [users, setUsers] = useState<User[]>([]);
-  useEffect(() => {
-    fetch("/api/users", { cache: "no-store" })
-      .then((res) => res.json())
-      .then((res) => {
-        setUsers(res);
-      });
-  }, []);
-
   return (
     <>
-      <DataTable data={users} columns={columns} />
+      <DataTable url="/api/users" columns={columns} />{" "}
     </>
   );
 }

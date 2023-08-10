@@ -1,3 +1,4 @@
+import "@amap/amap-jsapi-types";
 import AMapLoader from "@heycar/amap-jsapi-loader";
 import { useEffect, useRef, useState } from "react";
 import "./MapStyle.css";
@@ -5,29 +6,8 @@ import { useWindowSize } from "react-use";
 import useUncompletedReports from "@/hooks/useUncompletedReports";
 import mapPin from "@/assets/map-pin.png";
 import { Spinner } from "../Spinner";
-interface Fn<T = any, R = T> {
-  (...arg: T[]): R;
-}
-export interface MapConfigureInter {
-  setViewMode: any;
-  setMapStyle: any;
-  clearMap: Fn;
-  on: Fn;
-  destroy?: Fn;
-  clearEvents?: Fn;
-  addControl?: Fn;
-  setCenter?: Fn;
-  getCenter?: Fn;
-  setZoom?: Fn;
-  getZoom?: Fn;
-  setPitch?: Fn;
-  getPitch?: Fn;
-  plugin?: Fn;
-  add?: Fn;
-  addLayer?: Fn;
-  getAMapManager?: Fn;
-}
 
+let isFirstLoad = true;
 export default function Map() {
   (window as any)._AMapSecurityConfig = {
     securityJsCode: "3741a106252939f5dbc7076539dc79fb",
@@ -46,21 +26,23 @@ export default function Map() {
   const { locations } = useUncompletedReports();
   // 加载地图函数，在这里可以设置地图
   async function loadMap() {
-    (window as any).AMap = await AMapLoader.load({
+    window.AMap = await AMapLoader.load({
       key: "4f77082b3a2e028ff3c03d0fe2742b78",
       version: "2.0",
     });
-    (window as any).map = new (window as any).AMap.Map(mapRef.current, {
-      resizeEnable: true,
+    const mapOptions: AMap.MapOptions = {
       skyColor: "#f9f6ee",
       viewMode: "3D",
       pitch: 45,
-    });
-    (window as any).map.setCenter([108.292, 22.8436]);
-    (window as any).map.setZoom(15.5);
+    };
+
+    window.map = new (window as any).AMap.Map(mapRef.current, mapOptions);
+    window.map.setCenter([108.292, 22.8436]);
+    window.map.setZoom(15.5, !isFirstLoad);
+    isFirstLoad = false;
     (window as any).map.plugin(["AMap.ToolBar", "AMap.ControlBar"], () => {
       // 添加 工具条 和 缩放控件
-      (window as any).map.addControl(
+      window.map.addControl(
         new (window as any).AMap.ToolBar({
           liteStyle: true,
           position: {
@@ -69,13 +51,12 @@ export default function Map() {
           },
         }),
       );
-      (window as any).map.addControl(
+      window.map.addControl(
         new (window as any).AMap.ControlBar({ position: "RB" }),
       );
     });
-    (window as any).map.setMapStyle(
-      "amap://styles/520502358523cd64bd082a98087e4c10",
-    );
+    window.map.setMapStyle("amap://styles/520502358523cd64bd082a98087e4c10");
+
     setMapLoaded(true);
     console.log("地图加载完成");
   }
@@ -86,7 +67,7 @@ export default function Map() {
     return () => {
       // 销毁地图实例
       try {
-        (window as any).map && (window as any).map.destroy();
+        window.map && window.map.destroy();
         console.log("销毁地图实例");
       } catch (e) {
         console.log(e);
@@ -97,16 +78,15 @@ export default function Map() {
   // 加载点
   useEffect(() => {
     try {
-      (window as any).map.clearMap();
+      window.map.clearMap();
       locations.forEach((loc) => {
-        const marker = new (window as any).AMap.Marker({
+        const marker: AMap.Marker = new window.AMap.Marker({
           position: [loc.lon, loc.lat],
           anchor: "bottom-center",
           icon: mapPin.src,
-          key: loc.id,
         });
         marker.setLabel({
-          offset: new (window as any).AMap.Pixel(5, 0),
+          offset: new window.AMap.Pixel(5, 0),
           direction: "right",
           content: `<div class="text-center  text-xs bg-white border rounded-md shadow-xl">
         <div class="w-full border-b py-[4px] font-bold">${loc.name}</div>
@@ -114,10 +94,10 @@ export default function Map() {
         </div>`,
         });
         marker.on("click", () => {
-          (window as any).map.setCenter([loc.lon, loc.lat]);
-          (window as any).map.setZoom(19.5);
+          window.map.setCenter([loc.lon, loc.lat]);
+          window.map.setZoom(19.5);
         });
-        (window as any).map.add(marker);
+        window.map.add(marker);
       });
     } catch (e) {
       // 装作看不见
@@ -125,7 +105,7 @@ export default function Map() {
     }
   }, [locations, mapLoaded]);
   return (
-    <div ref={mapRef}>
+    <div ref={mapRef} id="main-map">
       <div className="flex h-full w-full items-center justify-center">
         <Spinner />
       </div>

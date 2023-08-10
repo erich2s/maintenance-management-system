@@ -7,6 +7,7 @@ import {
   Users2,
   HardHat,
   TableProperties,
+  MapPin,
 } from "lucide-react";
 import { ReactNode, createContext } from "react";
 
@@ -67,14 +68,14 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
       icon: <HardHat size={20} />,
     },
     {
-      href: "/admin/resource",
-      label: "资源管理",
-      icon: <TableProperties size={20} />,
+      href: "/admin/locations",
+      label: "地点管理",
+      icon: <MapPin size={20} />,
     },
     {
-      href: "/admin/test",
-      label: "测试",
-      icon: <User2 size={20} />,
+      href: "/admin/types",
+      label: "类型管理",
+      icon: <TableProperties size={20} />,
     },
   ];
   return (
