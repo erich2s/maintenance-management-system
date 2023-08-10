@@ -63,14 +63,14 @@ export const NavLinksProvider = ({ children }: { children: ReactNode }) => {
       icon: <Users2 size={20} />,
     },
     {
-      href: "/admin/workers",
-      label: "工人管理",
-      icon: <HardHat size={20} />,
-    },
-    {
       href: "/admin/locations",
       label: "地点管理",
       icon: <MapPin size={20} />,
+    },
+    {
+      href: "/admin/workers",
+      label: "工人管理",
+      icon: <HardHat size={20} />,
     },
     {
       href: "/admin/types",

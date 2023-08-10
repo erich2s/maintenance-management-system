@@ -71,6 +71,11 @@ async function main() {
         username: "2038940306",
         password: bcrypt.hashSync("123456", 10),
       },
+      {
+        name: "吴九",
+        username: "2038940307",
+        password: bcrypt.hashSync("123456", 10),
+      },
     ],
   });
   const types = await prisma.type.createMany({

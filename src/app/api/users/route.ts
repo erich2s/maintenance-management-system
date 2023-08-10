@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // 管理员获取所有users
 export async function GET(req: NextRequest) {
-  const result = await prisma.user.findMany();
+  const result = await prisma.user.findMany({ orderBy: { id: "asc" } });
+  console.log(result);
   return NextResponse.json(result);
 }

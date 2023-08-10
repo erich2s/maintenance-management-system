@@ -2,7 +2,6 @@
 import DataTable from "@/components/admin/DataTable";
 import { User } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -12,7 +11,6 @@ import {
 import { prettyPrintJson } from "pretty-print-json";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import useSWR from "swr";
 const columns: ColumnDef<User>[] = [
   {
     accessorKey: "id",
@@ -57,7 +55,6 @@ const columns: ColumnDef<User>[] = [
       );
     },
   },
-
   {
     accessorKey: "subscription",
     header: "通知订阅",
