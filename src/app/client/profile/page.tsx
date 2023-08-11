@@ -168,6 +168,7 @@ export default function page() {
       toast.error("两次输入的密码不一致");
       return;
     }
+    toast.loading("正在修改");
     fetch("/api/users", {
       method: "PUT",
       headers: {
@@ -178,10 +179,12 @@ export default function page() {
       let res = await resopnse.json();
       if (res.ok) {
         setIsOpened(false);
+        toast.remove();
         toast.success("修改成功,请重新登录");
         unsubscribe({ showToast: false });
         signOut();
       } else {
+        toast.remove();
         toast.error("密码错误");
       }
     });

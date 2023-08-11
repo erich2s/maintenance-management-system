@@ -23,6 +23,7 @@ import {
 import { toast } from "react-hot-toast";
 import { Spinner } from "../Spinner";
 import { useEffect, useState } from "react";
+import { ScrollArea } from "../ui/scroll-area";
 
 const formSchema = z.object({
   typeId: z.string().min(1, { message: "请选择报修类型" }),
@@ -118,12 +119,14 @@ export default function ReportForm({
                       <SelectValue placeholder="" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
-                    {types.map((type) => (
-                      <SelectItem key={type.id} value={String(type.id)}>
-                        {type.name}
-                      </SelectItem>
-                    ))}
+                  <SelectContent className="h-36  max-h-40">
+                    <ScrollArea className="h-full w-full" type="always">
+                      {types.map((type) => (
+                        <SelectItem key={type.id} value={String(type.id)}>
+                          {type.name}
+                        </SelectItem>
+                      ))}
+                    </ScrollArea>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -144,12 +147,17 @@ export default function ReportForm({
                       <SelectValue placeholder="" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
-                    {locations.map((location) => (
-                      <SelectItem key={location.id} value={String(location.id)}>
-                        {location.name}
-                      </SelectItem>
-                    ))}
+                  <SelectContent className="h-36  max-h-40">
+                    <ScrollArea className="h-full w-full" type="always">
+                      {locations.map((location) => (
+                        <SelectItem
+                          key={location.id}
+                          value={String(location.id)}
+                        >
+                          {location.name}
+                        </SelectItem>
+                      ))}
+                    </ScrollArea>
                   </SelectContent>
                 </Select>
                 <FormMessage />
