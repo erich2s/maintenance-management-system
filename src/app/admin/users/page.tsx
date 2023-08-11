@@ -10,11 +10,13 @@ import {
 } from "@/components/ui/tooltip";
 import { prettyPrintJson } from "pretty-print-json";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, xlsx2Json } from "@/lib/utils";
 
-import { Check, Copy } from "lucide-react";
+import { Copy, Plus, Trash2 } from "lucide-react";
 import { useCopyToClipboard } from "react-use";
 import { toast } from "react-hot-toast";
+import { Button } from "@/components/ui/button";
+import { useRef, useState } from "react";
 
 export default function page() {
   const [state, copyToClipboard] = useCopyToClipboard();
@@ -115,10 +117,92 @@ export default function page() {
         }
       },
     },
+    {
+      id: "actions",
+      header: "操作",
+      cell: ({ row }) => {
+        return (
+          <button
+            onClick={() => {
+              toast.promise(
+                fetch(`/api/users/${row.original.id}`, {
+                  method: "DELETE",
+                }).then(() => {
+                  setRefresh((refresh) => !refresh);
+                }),
+                {
+                  loading: "删除中...",
+                  success: "删除成功",
+                  error: "删除失败",
+                },
+              );
+            }}
+          >
+            <Trash2
+              size={16}
+              className="scale-110 cursor-pointer hover:text-red-500 "
+            />
+          </button>
+        );
+      },
+    },
   ];
+  const [refresh, setRefresh] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      console.log("No file");
+      return;
+    }
+    xlsx2Json(file)
+      .then((json) => {
+        fetch("/api/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(json),
+        })
+          .then((res) => {
+            if (res.ok) {
+              toast.success("导入成功");
+              setRefresh(!refresh);
+              fileInputRef.current!.value = "";
+            } else {
+              fileInputRef.current!.value = "";
+              toast.error("导入失败");
+            }
+          })
+          .catch((err) => {
+            toast.error("导入失败");
+            console.error(err);
+          });
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
   return (
     <div>
-      <DataTable url="/api/users" columns={columns} />
+      <DataTable url="/api/users" columns={columns} mutateFlag={refresh}>
+        <Button
+          className="flex items-center gap-1 pl-2 pr-2.5"
+          onClick={() => {
+            fileInputRef.current?.click();
+          }}
+        >
+          <Plus size={18} />
+          批量导入
+          <input
+            type="file"
+            accept=".xlsx"
+            className="hidden"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+          />
+        </Button>
+      </DataTable>
     </div>
   );
 }

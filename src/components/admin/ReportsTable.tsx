@@ -247,6 +247,7 @@ export default function ReportsTable() {
         </ScrollArea>
       </Card>
       <div className="flex items-center justify-end space-x-2 py-2">
+        <span className="text-muted-foreground ">Total: {count}</span>,
         <span className="text-muted-foreground ">
           Page: {page}/{Math.ceil(count / size)}
         </span>

@@ -18,6 +18,27 @@ import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/Spinner";
 import { Separator } from "@/components/ui/separator";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 export default function page() {
   const { data: session } = useSession();
 
@@ -120,6 +141,51 @@ export default function page() {
 
   // 注销部分
   const [isLoading, setIsLoading] = useState(false);
+
+  // 修改密码表单
+  const formSchema = z.object({
+    currentPassword: z.string().min(6, {
+      message: "请输入当前密码(6位)",
+    }),
+    newPassword: z.string().min(6, {
+      message: "密码最少6位",
+    }),
+    confirmPassword: z.string().min(6, {
+      message: "请确认新密码",
+    }),
+  });
+  const [isOpened, setIsOpened] = useState(false);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    if (values.newPassword !== values.confirmPassword) {
+      toast.error("两次输入的密码不一致");
+      return;
+    }
+    fetch("/api/users", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    }).then(async (resopnse) => {
+      let res = await resopnse.json();
+      if (res.ok) {
+        setIsOpened(false);
+        toast.success("修改成功,请重新登录");
+        unsubscribe({ showToast: false });
+        signOut();
+      } else {
+        toast.error("密码错误");
+      }
+    });
+  }
   return (
     <>
       <div className="mt-6 flex w-full flex-col items-center">
@@ -161,23 +227,76 @@ export default function page() {
           />
         </div>
         <Separator />
-        <button
-          onClick={() => {
-            toast.success("不给");
-          }}
-        >
-          <div className="flex items-center justify-between py-3">
-            <div className="flex items-center ">
-              <div className="mr-3 w-fit  rounded-lg bg-green-500    p-1.5 ">
-                <KeyRound size={22} color="white" strokeWidth={2} />
+        {/* 修改密码表单 */}
+        <Dialog onOpenChange={setIsOpened} open={isOpened}>
+          <DialogTrigger asChild>
+            <button>
+              <div className="flex items-center justify-between py-3">
+                <div className="flex items-center ">
+                  <div className="mr-3 w-fit  rounded-lg bg-green-500    p-1.5 ">
+                    <KeyRound size={22} color="white" strokeWidth={2} />
+                  </div>
+                  <span>修改密码</span>
+                </div>
+                <ChevronRight color="#677489" strokeWidth={1.5} />
               </div>
-              <span>修改密码</span>
-            </div>
-
-            <ChevronRight color="#677489" strokeWidth={1.5} />
-          </div>
-        </button>
-
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>修改密码</DialogTitle>
+            </DialogHeader>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="currentPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>原始密码</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="newPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>新密码</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>确认新密码</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="float-right">
+                  确认修改
+                </Button>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
         <Separator />
         <button
           onClick={() => {
@@ -219,11 +338,9 @@ export default function page() {
             setIsLoading(true);
             // 取消通知订阅
             unsubscribe({ showToast: false });
-            signOut()
-              .then(() => {})
-              .finally(() => {
-                setIsLoading(false);
-              });
+            signOut().finally(() => {
+              setIsLoading(false);
+            });
           }}
         >
           <div className="flex items-center py-3">

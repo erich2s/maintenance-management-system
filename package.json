@@ -58,6 +58,7 @@
     "tailwindcss": "3.3.2",
     "tailwindcss-animate": "^1.0.6",
     "web-push": "^3.6.4",
+    "xlsx": "^0.18.5",
     "zod": "^3.21.4"
   },
   "devDependencies": {

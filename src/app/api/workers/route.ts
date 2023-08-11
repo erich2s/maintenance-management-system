@@ -3,7 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 // 管理员获取所有维修工
 export async function GET(req: NextRequest) {
-  const data = await prisma.worker.findMany();
+  // 分页，每页10条
+  const { searchParams } = new URL(req.url);
+  const page = (Number(searchParams.get("page")) || 1) - 1;
+  const size = Number(searchParams.get("size")) || 10;
+  const data = await prisma.worker.findMany({
+    skip: page * size,
+    take: size,
+  });
   const total = await prisma.worker.count();
   return NextResponse.json({ data, total });
 }

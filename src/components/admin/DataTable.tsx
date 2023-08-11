@@ -80,7 +80,10 @@ export default function DataTable({
     <>
       <PageTransition variant="scale">
         <div className="h-full w-full px-7 py-3">
-          <Card className="h-[calc(100vh_-_9rem)] rounded-md" ref={tableRef}>
+          <Card
+            className="h-[calc(100vh_-_9rem)] w-full overflow-hidden rounded-md"
+            ref={tableRef}
+          >
             <ScrollArea className="h-full w-full" type="always">
               <div className="h-full">
                 <Table className="relative">
@@ -108,7 +111,7 @@ export default function DataTable({
                   <TableBody className="w-full">
                     {table.getRowModel().rows?.length ? (
                       table.getRowModel().rows.map((row) => (
-                        <TableRow key={row.id}>
+                        <TableRow key={row.id} className="max-h-[55px]">
                           {row.getVisibleCells().map((cell) => (
                             <TableCell
                               key={cell.id}
@@ -147,6 +150,9 @@ export default function DataTable({
             {/* 左下角的自定义功能区 */}
             <div>{children}</div>
             <div className="flex items-center space-x-2">
+              <span className="text-muted-foreground ">
+                Total: {data?.total || 0},
+              </span>
               <span className="text-muted-foreground ">
                 Page: {page}/{Math.ceil(total / size)}
               </span>

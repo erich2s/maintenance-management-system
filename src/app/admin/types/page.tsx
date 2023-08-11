@@ -14,6 +14,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+const formSchema = z.object({
+  name: z.string().min(1, {
+    message: "请输入名字",
+  }),
+});
 export default function page() {
   const [refresh, setRefresh] = useState(false);
   const columns: ColumnDef<Type>[] = [
@@ -55,8 +73,31 @@ export default function page() {
       },
     },
   ];
-
   const [isOpened, setIsOpened] = useState(false);
+
+  // 定义表单
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+    },
+  });
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    toast.promise(
+      fetch("/api/types", {
+        method: "POST",
+        body: JSON.stringify(values),
+      }).then(() => {
+        setRefresh((refresh) => !refresh);
+        setIsOpened(false);
+      }),
+      {
+        loading: "添加中...",
+        success: "添加成功",
+        error: "添加失败",
+      },
+    );
+  }
   return (
     <>
       <DataTable url="/api/types" columns={columns} mutateFlag={refresh}>
@@ -72,6 +113,30 @@ export default function page() {
               <DialogTitle>添加报修类型</DialogTitle>
               <DialogDescription>请填写报修类型的名称</DialogDescription>
             </DialogHeader>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>类型名字</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit" className="float-right w-20 ">
+                  创建
+                </Button>
+              </form>
+            </Form>
           </DialogContent>
         </Dialog>
       </DataTable>
