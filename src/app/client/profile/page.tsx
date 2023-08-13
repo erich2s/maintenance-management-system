@@ -69,7 +69,7 @@ export default function page() {
       const sub = await register.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
-          "BDeQByhHcxy084_JFou3rHlqiSpFvPZhUWjQKb1QlU6TjXL8mJd3usKDsQDzEeZ1HJOuultQgtPRlGOqgrrLnQA",
+          process.env.NEXT_PUBLIC_VAPID_KEY as string,
         ),
       });
       // 保存订阅到localStorage

@@ -14,9 +14,9 @@ export async function isAdmin(req: NextRequest) {
 
 // 设置 VAPID 详情
 webpush.setVapidDetails(
-  "mailto:erich2s@qq.com",
-  "BDeQByhHcxy084_JFou3rHlqiSpFvPZhUWjQKb1QlU6TjXL8mJd3usKDsQDzEeZ1HJOuultQgtPRlGOqgrrLnQA",
-  "rZpj98WVatLMqzgWkC_mQgAbzG3WAZAtiw9hiMW3taY",
+  process.env.WEB_PUSH_CONTACT as string,
+  process.env.NEXT_PUBLIC_VAPID_KEY as string,
+  process.env.PRIVATE_VAPID_KEY as string,
 );
 // 发送web push通知
 export function pushNotificationTo(
