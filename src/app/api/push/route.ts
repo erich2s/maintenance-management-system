@@ -1,9 +1,12 @@
 import { prisma } from "@/lib/db";
-import { pushNotificationTo } from "@/utils";
+import { isAdmin, pushNotificationTo } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 // 发送通知
 export async function POST(req: NextRequest) {
+  if (!(await isAdmin(req))) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
   const msg = await req.json();
   const { searchParams } = new URL(req.url);
   const id = Number(searchParams.get("id"));

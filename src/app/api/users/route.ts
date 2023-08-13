@@ -2,8 +2,12 @@ import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { getToken } from "next-auth/jwt";
+import { isAdmin } from "@/utils";
 // 管理员获取所有users
 export async function GET(req: NextRequest) {
+  if (!(await isAdmin(req))) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
   // 分页，每页10条
   const { searchParams } = new URL(req.url);
   const page = (Number(searchParams.get("page")) || 1) - 1;
@@ -18,8 +22,12 @@ export async function GET(req: NextRequest) {
 
 // 管理员创建user(s)
 export async function POST(req: NextRequest) {
+  if (!(await isAdmin(req))) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
   const reqData: { name: string; username: string; password: string }[] =
     await req.json();
+
   async function hashPassword(password: string) {
     return await bcrypt.hash(password, 10);
   }

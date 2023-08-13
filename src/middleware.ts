@@ -3,10 +3,15 @@ import { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
-  const token = await getToken({ req, secret: process.env.SECRET });
+  const path = req.nextUrl.pathname;
+  // 如果是/api/auth的请求，直接通过
+  if (path.startsWith("/api/auth")) {
+    return NextResponse.next();
+  }
+
   // 登录了才能进去，不然跳转到登录页面
+  const token = await getToken({ req, secret: process.env.SECRET });
   if (token) {
-    const path = req.nextUrl.pathname;
     if (path.startsWith("/admin")) {
       if (token.role !== "ADMIN") {
         // 非管理员跳转到404页面
@@ -31,5 +36,6 @@ function isMobile(req: NextRequest) {
 }
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/admin/:path*", "/client/:path*"],
+  // /api/auth除外
+  matcher: ["/admin/:path*", "/client/:path*", "/api/:path*"],
 };

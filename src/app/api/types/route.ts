@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { isAdmin } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -22,6 +23,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  if (!(await isAdmin(req))) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
   const reqData = await req.json();
   const result = await prisma.type.create({
     data: {

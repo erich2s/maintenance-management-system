@@ -1,11 +1,14 @@
 import { prisma } from "@/lib/db";
-import { pushNotificationTo } from "@/utils";
+import { isAdmin, pushNotificationTo } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } },
 ) {
+  if (!(await isAdmin(req))) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
   // 获取动态路由参数从而从数据库中获取报修单
   const id = Number(params.id);
   const result = await prisma.report.findUnique({
@@ -27,6 +30,9 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } },
 ) {
+  if (!(await isAdmin(req))) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
   const reqData = await req.json();
   const id = Number(params.id);
   console.log({ ...reqData });

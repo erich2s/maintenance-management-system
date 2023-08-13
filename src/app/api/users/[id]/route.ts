@@ -1,10 +1,14 @@
 import { prisma } from "@/lib/db";
+import { isAdmin } from "@/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } },
 ) {
+  if (!(await isAdmin(req))) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
   // 获取动态路由参数从而从数据库中获取报修单
   const id = Number(params.id);
   const result = await prisma.user.findUnique({
@@ -17,6 +21,9 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } },
 ) {
+  if (!(await isAdmin(req))) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
   const id = Number(params.id);
   console.log("delete worker:", id);
   const deleteReports = prisma.report.deleteMany({
