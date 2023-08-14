@@ -13,7 +13,7 @@ export default function page() {
     if (!subscription) {
       subscribe({ showToast: false });
     }
-  }, [subscription]);
+  }, []);
   return (
     <>
       <div className="flex h-full w-full bg-white">
