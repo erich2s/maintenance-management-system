@@ -12,16 +12,14 @@ import {
   LogOut,
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-import { useLocalStorage } from "react-use";
-import { urlBase64ToUint8Array } from "@/lib/utils";
 import { toast } from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Spinner } from "@/components/Spinner";
 import { Separator } from "@/components/ui/separator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-
+import { useSubscriptionStore } from "@/stores/subscriptionStore";
 import {
   Dialog,
   DialogContent,
@@ -41,103 +39,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 export default function page() {
   const { data: session } = useSession();
-
   //通知订阅部分
-  const [subscription, setSubscription, removeSubscription] =
-    useLocalStorage<PushSubscriptionJSON>("subscription");
-  const [isSubscribed, setIsSubscribed] = useState(false);
   const [isSubscribing, setIsSubscribing] = useState(false);
-  useEffect(() => {
-    if (subscription?.endpoint) {
-      setIsSubscribed(true);
-      console.log(subscription);
-    } else {
-      setIsSubscribed(false);
-    }
-  }, [subscription]);
-  async function subscribe() {
-    // serviceWorker只能在https和localhost下使用
-    if ("serviceWorker" in navigator) {
-      console.log("开始订阅");
-      toast.loading("正在请求订阅");
-      setIsSubscribing(true);
-      // 注册service worker
-      const register = await navigator.serviceWorker.register(
-        "/serviceWorker.js",
-      );
-      // 注册订阅
-      const sub = await register.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          process.env.NEXT_PUBLIC_VAPID_KEY as string,
-        ),
-      });
-      // 保存订阅到localStorage
-      setSubscription(sub);
-      // 将订阅发送到服务器
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sub),
-      });
-      if (res.ok) {
-        toast.remove();
-        toast.success("订阅成功");
-      }
-      setIsSubscribing(false);
-    } else {
-      console.log("serviceWorker不可用");
-      toast.error("serviceWorker不可用");
-    }
-  }
-  async function unsubscribe(
-    { showToast }: { showToast?: boolean } = { showToast: true },
-  ) {
-    if ("serviceWorker" in navigator) {
-      console.log("开始取消订阅");
-      if (showToast) {
-        toast.remove();
-        toast.loading("正在取消订阅");
-      }
-      // 注册service worker
-      const register = await navigator.serviceWorker.register(
-        "/serviceWorker.js",
-      );
-      // 取消订阅
-      register.pushManager.getSubscription().then((sub) => {
-        console.log(sub);
-        sub
-          ?.unsubscribe()
-          .then(() => {
-            console.log("取消订阅成功");
-          })
-          .catch((err) => {
-            console.log(err);
-            toast.remove();
-            toast.error("取消订阅失败");
-            return;
-          });
-      });
-      // 将订阅发送到服务器
-      const res = await fetch("/api/unsubscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (res.ok && showToast) {
-        toast.remove();
-        toast.success("取消订阅成功");
-      }
-      // 清除localStorage
-      removeSubscription();
-    } else {
-      console.log("serviceWorker不可用");
-      if (showToast) toast.error("serviceWorker不可用");
-    }
-  }
+  const { subscription, subscribe, unsubscribe } = useSubscriptionStore();
 
   // 注销部分
   const [isLoading, setIsLoading] = useState(false);
@@ -181,7 +85,6 @@ export default function page() {
         setIsOpened(false);
         toast.remove();
         toast.success("修改成功,请重新登录");
-        unsubscribe({ showToast: false });
         signOut();
       } else {
         toast.remove();
@@ -217,15 +120,17 @@ export default function page() {
           </div>
           <Switch
             disabled={isSubscribing}
-            checked={isSubscribed}
+            checked={subscription ? true : false}
             onCheckedChange={(checked) => {
+              setIsSubscribing(true);
               if (checked) {
                 console.log("开始订阅");
-                subscribe();
+                subscribe({ showToast: true });
               } else {
                 console.log("取消订阅");
-                unsubscribe();
+                unsubscribe({ showToast: true });
               }
+              setIsSubscribing(false);
             }}
           />
         </div>

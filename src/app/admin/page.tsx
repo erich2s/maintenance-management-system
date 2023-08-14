@@ -2,48 +2,18 @@
 import dynamic from "next/dynamic";
 const Map = dynamic(() => import("@/components/admin/Map"), { ssr: false });
 import UnCompletedBox from "@/components/admin/UnCompletedBox";
-import { useLocalStorage } from "react-use";
 import { useEffect } from "react";
-import { urlBase64ToUint8Array } from "@/lib/utils";
+import { useSubscriptionStore } from "@/stores/subscriptionStore";
 
 export default function page() {
-  const [subscription, setSubscription] =
-    useLocalStorage<PushSubscriptionJSON>("subscribtion");
-  // 生成pushSubscription，并将其保存到localStorage中后发送到服务器
-  async function subscribe() {
-    // serviceWorker只能在https和localhost下使用
-    if ("serviceWorker" in navigator) {
-      console.log("开始订阅");
-      // 注册service worker
-      const register = await navigator.serviceWorker.register(
-        "/serviceWorker.js",
-      );
-      // 注册订阅
-      const sub = await register.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          process.env.NEXT_PUBLIC_VAPID_KEY as string,
-        ),
-      });
-      setSubscription(sub);
-      // 将订阅发送到服务器
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sub),
-      });
-      console.log(res);
-    } else {
-      console.log("serviceWorker不可用");
-    }
-  }
+  //通知订阅部分
+  const { subscription, subscribe, unsubscribe } = useSubscriptionStore();
   useEffect(() => {
+    //  进入主页时，如果没有订阅，就立即订阅
     if (!subscription) {
-      subscribe();
+      subscribe({ showToast: false });
     }
-  }, []);
+  }, [subscription]);
   return (
     <>
       <div className="flex h-full w-full bg-white">
