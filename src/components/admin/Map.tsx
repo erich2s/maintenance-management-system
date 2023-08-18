@@ -34,10 +34,10 @@ export default function Map() {
       skyColor: "#f9f6ee",
       viewMode: "3D",
       pitch: 45,
+      center: [108.292, 22.8436],
     };
 
     window.map = new (window as any).AMap.Map(mapRef.current, mapOptions);
-    window.map.setCenter([108.292, 22.8436]);
     window.map.setZoom(15.5, !isFirstLoad);
     isFirstLoad = false;
     (window as any).map.plugin(["AMap.ToolBar", "AMap.ControlBar"], () => {
