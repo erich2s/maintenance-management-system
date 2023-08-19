@@ -1,9 +1,20 @@
 # docker-compose.yml
-
 version: "3.8"
 services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx_container
+    ports:
+      - 80:80
+    depends_on:
+      - postgres
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    # 让nginx容器可以访问宿主机的localhost
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   postgres:
-    image: postgres:13.5
+    image: postgres:15.4
     restart: always
     environment:
       - POSTGRES_USER=admin
