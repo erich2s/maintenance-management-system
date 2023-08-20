@@ -13,7 +13,8 @@ services:
     environment:
       # web-push 设置
       - WEB_PUSH_CONTACT=mailto:erich2s@qq.com
-      # - NEXT_PUBLIC_VAPID_KEY=BDeQByhHcxy084_JFou3rHlqiSpFvPZhUWjQKb1QlU6TjXL8mJd3usKDsQDzEeZ1HJOuultQgtPRlGOqgrrLnQA
+      # 在这同时也要写
+      - NEXT_PUBLIC_VAPID_KEY=BDeQByhHcxy084_JFou3rHlqiSpFvPZhUWjQKb1QlU6TjXL8mJd3usKDsQDzEeZ1HJOuultQgtPRlGOqgrrLnQA
       - PRIVATE_VAPID_KEY=rZpj98WVatLMqzgWkC_mQgAbzG3WAZAtiw9hiMW3taY
       # JWT secret
       - SECRET=mysecret123
@@ -38,7 +39,7 @@ services:
     ports:
       - 80:80
     depends_on:
-      - postgres
+      - web
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     networks:
