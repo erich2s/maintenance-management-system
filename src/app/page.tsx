@@ -17,7 +17,8 @@ export default async function page() {
   return (
     <>
       <div className="container relative  flex h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
-        {/* <button className="absolute right-8 top-5 z-20 w-7">
+        <>
+          {/* <button className="absolute right-8 top-5 z-20 w-7">
           <a href="https://github.com/erich2s/maintenance-management-system">
             <svg
               role="img"
@@ -30,6 +31,7 @@ export default async function page() {
             </svg>
           </a>
         </button> */}
+        </>
         {/* 左边的装饰栏目 */}
         <div className="relative hidden h-full select-none flex-col justify-center p-0 text-black dark:border-r lg:flex ">
           <div className="relative z-20 flex h-full w-full  items-center text-lg">

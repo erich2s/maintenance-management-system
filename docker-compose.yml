@@ -1,8 +1,34 @@
 # docker-compose.yml
 version: "3.8"
 services:
+  web:
+    build: .
+    restart: always
+    container_name: nextjs_container
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    # 用于在容器内部访问宿主机的localhost
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    #环境变量不要加双引号
+    environment:
+      # JWT secret
+      - SECRET=mysecret123
+      # web-push 设置
+      - WEB_PUSH_CONTACT=mailto:erich2s@qq.com
+      # 打包到前端的环境变量要加上NEXT_PUBLIC_前缀
+      - NEXT_PUBLIC_VAPID_KEY=BDeQByhHcxy084_JFou3rHlqiSpFvPZhUWjQKb1QlU6TjXL8mJd3usKDsQDzEeZ1HJOuultQgtPRlGOqgrrLnQA
+      - PRIVATE_VAPID_KEY=rZpj98WVatLMqzgWkC_mQgAbzG3WAZAtiw9hiMW3taY
+      # DB
+      - DATABASE_URL=postgresql://admin:123456@host.docker.internal:5432/maintenance_sys?schema=public
+      # ！！生产环境中这里要手动设置NEXTAUTH_URL成宿主机的地址
+      - NEXTAUTH_URL=http://localhost
+
   nginx:
     image: nginx:latest
+    restart: always
     container_name: nginx_container
     ports:
       - 80:80
@@ -16,6 +42,7 @@ services:
   postgres:
     image: postgres:15.4
     restart: always
+    container_name: postgres_container
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=123456

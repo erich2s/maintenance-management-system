@@ -40,7 +40,6 @@ export const authOptions: AuthOptions = {
   // 自定义登录页等，一旦定义了这个，就会覆盖默认的登录页
   pages: {
     signIn: "/",
-    signOut: "/",
   },
   secret: process.env.SECRET,
   callbacks: {
