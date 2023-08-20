@@ -12,17 +12,17 @@ export async function isAdmin(req: NextRequest) {
   return false;
 }
 
-// 设置 VAPID 详情
-webpush.setVapidDetails(
-  process.env.WEB_PUSH_CONTACT as string,
-  process.env.NEXT_PUBLIC_VAPID_KEY as string,
-  process.env.PRIVATE_VAPID_KEY as string,
-);
 // 发送web push通知
 export function pushNotificationTo(
   subscription: { endpoint: string; keys: { p256dh: string; auth: string } },
   payload: { title: string; body: string },
 ) {
+  // 设置 VAPID 详情
+  webpush.setVapidDetails(
+    process.env.WEB_PUSH_CONTACT as string,
+    process.env.NEXT_PUBLIC_VAPID_KEY as string,
+    process.env.PRIVATE_VAPID_KEY as string,
+  );
   return new Promise((resolve, reject) => {
     webpush
       .sendNotification(

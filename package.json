@@ -11,7 +11,7 @@
     "studio:prod": "dotenv -e .env.production -- prisma studio",
     "migrate:dev": "dotenv -e .env.development -- prisma migrate dev",
     "migrate:prod": "dotenv -e .env.production -- prisma migrate deploy",
-    "resetDB": "prisma migrate reset",
+    "resetDB": "prisma migrate reset --force ",
     "resetDB:dev": "dotenv -e .env.development -- prisma migrate reset",
     "resetDB:prod": "dotenv -e .env.production -- prisma migrate reset"
   },

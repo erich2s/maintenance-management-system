@@ -9,8 +9,8 @@ RUN pnpm install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM node:20-alpine AS builder
-ARG DATABASE_URL
-ENV DATABASE_URL=$DATABASE_URL
+ARG NEXT_PUBLIC_VAPID_KEY
+ENV NEXT_PUBLIC_VAPID_KEY=$NEXT_PUBLIC_VAPID_KEY
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
@@ -30,7 +30,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
-
 USER nextjs
 
 EXPOSE 3000
@@ -39,5 +38,5 @@ EXPOSE 3000
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry.
 ENV NEXT_TELEMETRY_DISABLED 1
-# reset/seed the database, and start app
-CMD ["sh", "-c", "node_modules/.bin/next start"]
+# reset/seed the database every "docker compose up", and start app
+CMD ["sh", "-c", "npm run resetDB && node_modules/.bin/next start"]
