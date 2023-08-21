@@ -1,27 +1,25 @@
 # docker-compose.yml
 version: "3.8"
-networks:
-  app-network:
-    driver: bridge
 services:
   web:
     build:
       context: .
       args:
         # 需要在构建镜像时传入NEXT_PUBLIC_VAPID_KEY，因为他是在构建前端静态文件时被需要的
-        NEXT_PUBLIC_VAPID_KEY: BDeQByhHcxy084_JFou3rHlqiSpFvPZhUWjQKb1QlU6TjXL8mJd3usKDsQDzEeZ1HJOuultQgtPRlGOqgrrLnQA
+        NEXT_PUBLIC_VAPID_KEY: ${NEXT_PUBLIC_VAPID_KEY}
+    #环境变量不要加双引号
     environment:
       # web-push 设置
-      - WEB_PUSH_CONTACT=mailto:erich2s@qq.com
+      WEB_PUSH_CONTACT: ${WEB_PUSH_CONTACT}
       # 在这同时也要写
-      - NEXT_PUBLIC_VAPID_KEY=BDeQByhHcxy084_JFou3rHlqiSpFvPZhUWjQKb1QlU6TjXL8mJd3usKDsQDzEeZ1HJOuultQgtPRlGOqgrrLnQA
-      - PRIVATE_VAPID_KEY=rZpj98WVatLMqzgWkC_mQgAbzG3WAZAtiw9hiMW3taY
+      NEXT_PUBLIC_VAPID_KEY: ${NEXT_PUBLIC_VAPID_KEY}
+      PRIVATE_VAPID_KEY: ${PRIVATE_VAPID_KEY}
       # JWT secret
-      - SECRET=mysecret123
+      SECRET: ${SECRET}
       # DB
-      - DATABASE_URL=postgresql://admin:123456@postgres:5432/maintenance_sys?schema=public
+      DATABASE_URL: postgres://admin:123456@postgres:5432/nextjs
       # ！！生产环境中这里要手动设置NEXTAUTH_URL成宿主机的地址
-      - NEXTAUTH_URL=http://localhost
+      NEXTAUTH_URL: http://localhost
     restart: always
     container_name: nextjs_container
     # 注释掉ports，因为nginx会代理到80端口，只通过nginx暴露80端口让外部访问不到3000端口
@@ -29,9 +27,6 @@ services:
     #   - 3000:3000
     depends_on:
       - postgres
-    #环境变量不要加双引号
-    networks:
-      - app-network
   nginx:
     image: nginx:latest
     restart: always
@@ -42,8 +37,6 @@ services:
       - web
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-    networks:
-      - app-network
   postgres:
     image: postgres:15.4
     restart: always
@@ -55,8 +48,6 @@ services:
       - postgres:/var/lib/postgresql/data
     # ports:
     #   - 5432:5432
-    networks:
-      - app-network
 
 volumes:
   postgres:
