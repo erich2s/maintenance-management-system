@@ -6,6 +6,8 @@ import { useWindowSize } from "react-use";
 import useUncompletedReports from "@/hooks/useUncompletedReports";
 import mapPin from "@/assets/map-pin.png";
 import { Spinner } from "../Spinner";
+import { Button } from "../ui/button";
+import { Navigation, RotateCw } from "lucide-react";
 
 let isFirstLoad = true;
 export default function Map() {
@@ -24,6 +26,7 @@ export default function Map() {
 
   const [mapLoaded, setMapLoaded] = useState(false);
   const { locations } = useUncompletedReports();
+
   // 加载地图函数，在这里可以设置地图
   async function loadMap() {
     window.AMap = await AMapLoader.load({
@@ -56,7 +59,6 @@ export default function Map() {
       );
     });
     window.map.setMapStyle("amap://styles/520502358523cd64bd082a98087e4c10");
-
     setMapLoaded(true);
     console.log("地图加载完成");
   }
@@ -96,6 +98,8 @@ export default function Map() {
         marker.on("click", () => {
           window.map.setCenter([loc.lon, loc.lat]);
           window.map.setZoom(19.5);
+          window.map.setPitch(55);
+          window.map.setRotation(45);
         });
         window.map.add(marker);
       });
@@ -105,10 +109,23 @@ export default function Map() {
     }
   }, [locations, mapLoaded]);
   return (
-    <div ref={mapRef} id="main-map">
-      <div className="flex h-full w-full items-center justify-center">
-        <Spinner />
+    <>
+      <Button
+        className="absolute bottom-44  right-[32px] z-50 flex h-fit w-fit flex-col rounded-lg bg-white/90 p-1.5 text-black shadow hover:bg-gray-100 hover:text-black"
+        onClick={() => {
+          window.map.setZoom(15.5);
+          window.map.setCenter([108.292, 22.8436]);
+          window.map.setPitch(30);
+          window.map.setRotation(0);
+        }}
+      >
+        <Navigation size={18} />
+      </Button>
+      <div ref={mapRef} id="main-map">
+        <div className="flex h-full w-full items-center justify-center">
+          <Spinner />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

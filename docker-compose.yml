@@ -2,16 +2,11 @@
 version: "3.8"
 services:
   web:
-    build:
-      context: .
-      args:
-        # 需要在构建镜像时传入NEXT_PUBLIC_VAPID_KEY，因为他是在构建前端静态文件时被需要的
-        NEXT_PUBLIC_VAPID_KEY: ${NEXT_PUBLIC_VAPID_KEY}
+    build: .
     #环境变量不要加双引号
     environment:
       # web-push 设置
       WEB_PUSH_CONTACT: ${WEB_PUSH_CONTACT}
-      # 在这同时也要写
       NEXT_PUBLIC_VAPID_KEY: ${NEXT_PUBLIC_VAPID_KEY}
       PRIVATE_VAPID_KEY: ${PRIVATE_VAPID_KEY}
       # JWT secret

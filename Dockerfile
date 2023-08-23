@@ -1,41 +1,40 @@
-# Install dependencies only when needed
+# 安装依赖阶段
 FROM node:20-alpine AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
 
-# Rebuild the source code only when needed
+# 构建阶段
 FROM node:20-alpine AS builder
 WORKDIR /app
+# 这里的复制会包含.env文件用于前端打包需要
+# 因为是分阶段构建，只有当前阶段包含.env文件
 COPY . .
+# 从依赖阶段复制node_modules
 COPY --from=deps /app/node_modules ./node_modules
-COPY .env .env
+# 执行构建
 RUN npm install -g pnpm
 RUN pnpm build && pnpm install
 
-# Production image, copy all the files and run next
+# 生产环境阶段
 FROM node:20-alpine AS runner
 WORKDIR /app
-# add user
+# 创建用户和组
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
-# You only need to copy next.config.js if you are NOT using the default configuration
-# COPY --from=builder /app/next.config.js ./
+# 复制构建输出
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+# 复制依赖
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
+
 USER nextjs
-
 EXPOSE 3000
-
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry.
 ENV NEXT_TELEMETRY_DISABLED 1
-# Start app
+
+# 启动应用
 CMD ["npm", "start"]
