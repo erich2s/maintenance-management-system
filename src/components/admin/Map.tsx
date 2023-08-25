@@ -104,7 +104,9 @@ export default function Map() {
           window.map.setCenter([loc.lon, loc.lat]);
           window.map.setZoom(19.5);
           window.map.setPitch(55);
-          window.map.setRotation(45);
+          window.map.setRotation(
+            window.map.getRotation() - (window.map.getRotation() % 360) + 45,
+          );
         });
         window.map.add(marker);
       });
@@ -126,7 +128,10 @@ export default function Map() {
                   window.map.setZoom(15.5);
                   window.map.setCenter([108.292, 22.8436]);
                   window.map.setPitch(45);
-                  window.map.setRotation(0);
+
+                  window.map.setRotation(
+                    window.map.getRotation() - (window.map.getRotation() % 360),
+                  );
                 }}
               >
                 <Home size={18} />
@@ -149,7 +154,9 @@ export default function Map() {
             window.map.setZoom(15.5);
             window.map.setCenter([108.292, 22.8436]);
             window.map.setPitch(45);
-            window.map.setRotation(0);
+            window.map.setRotation(
+              window.map.getRotation() - (window.map.getRotation() % 360),
+            );
           }
           if (e.key === "q") {
             window.map.setRotation(window.map.getRotation() - 45);
