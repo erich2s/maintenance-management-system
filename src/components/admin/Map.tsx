@@ -7,8 +7,13 @@ import useUncompletedReports from "@/hooks/useUncompletedReports";
 import mapPin from "@/assets/map-pin.png";
 import { Spinner } from "../Spinner";
 import { Button } from "../ui/button";
-import { Navigation, RotateCw } from "lucide-react";
-
+import { Home } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 let isFirstLoad = true;
 export default function Map() {
   (window as any)._AMapSecurityConfig = {
@@ -108,20 +113,52 @@ export default function Map() {
       // console.log(e);
     }
   }, [locations, mapLoaded]);
+
   return (
     <>
-      <Button
-        className="absolute bottom-44  right-[32px] z-50 flex h-fit w-fit flex-col rounded-lg bg-white/90 p-1.5 text-black shadow hover:bg-gray-100 hover:text-black"
-        onClick={() => {
-          window.map.setZoom(15.5);
-          window.map.setCenter([108.292, 22.8436]);
-          window.map.setPitch(30);
-          window.map.setRotation(0);
+      {mapLoaded && (
+        <TooltipProvider delayDuration={350}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                className="absolute bottom-44  right-[32px] z-50 flex h-fit w-fit flex-col rounded-lg bg-white/90 p-1.5 text-black shadow hover:bg-gray-100 hover:text-black"
+                onClick={() => {
+                  window.map.setZoom(15.5);
+                  window.map.setCenter([108.292, 22.8436]);
+                  window.map.setPitch(45);
+                  window.map.setRotation(0);
+                }}
+              >
+                <Home size={18} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="text-xs">
+              回到初始位置
+              <Button variant={"outline"} size={"sm"} className="scale-[70%] ">
+                H
+              </Button>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+      <div
+        ref={mapRef}
+        id="main-map"
+        onKeyDown={(e) => {
+          if (e.key === "h") {
+            window.map.setZoom(15.5);
+            window.map.setCenter([108.292, 22.8436]);
+            window.map.setPitch(45);
+            window.map.setRotation(0);
+          }
+          if (e.key === "q") {
+            window.map.setRotation(window.map.getRotation() - 45);
+          }
+          if (e.key === "e") {
+            window.map.setRotation(window.map.getRotation() + 45);
+          }
         }}
       >
-        <Navigation size={18} />
-      </Button>
-      <div ref={mapRef} id="main-map">
         <div className="flex h-full w-full items-center justify-center">
           <Spinner />
         </div>

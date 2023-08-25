@@ -12,19 +12,20 @@ datasource db {
 
 // 用户角色
 enum Role {
-  USER
-  ADMIN
+  USER // 普通用户
+  ADMIN // 管理员
 }
 
 // 用户
 model User {
   id       Int      @id @default(autoincrement())
-  // 学号
+  // 用户名/学号
   username String   @unique
   // 姓名
   name     String
   // hashed密码
   password String
+  // 用户角色（默认为普通用户）
   role     Role     @default(USER)
   // 报修单
   reports  Report[]
@@ -36,24 +37,33 @@ model User {
 // 维修工人
 model Worker {
   id      Int      @id @default(autoincrement())
+  // 工人姓名
   name    String
+  // 工人电话
   phone   String
+  // 工人负责的报修单
   reports Report[]
 }
 
 // 报修类型
 model Type {
   id      Int      @id @default(autoincrement())
+  // 报修类型名称
   name    String
+  // 报修类型对应的报修单
   reports Report[]
 }
 
 // 地址
 model Location {
   id        Int      @id @default(autoincrement())
+  // 地址名称
   name      String
+  // 经度
   latitude  Float
+  // 纬度
   longitude Float
+  // 地址对应的报修单
   reports   Report[]
 }
 
