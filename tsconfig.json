@@ -22,16 +22,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "typeRoots": ["./node_modules/@types/", "./types"]
+    "typeRoots": ["./node_modules/@types/", "./node_modules/@amap/", "./types"]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/app/api/auth/[...nextauth]/route.ts",
-    "src/app/api/auth/[...nextauth]/authOptions.ts",
-    "src/components/PageTransition.tsx"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

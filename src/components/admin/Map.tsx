@@ -45,22 +45,19 @@ export default function Map() {
       center: [108.292, 22.8436],
     };
 
-    window.map = new (window as any).AMap.Map(mapRef.current, mapOptions);
+    window.map = new window.AMap.Map(mapRef.current!, mapOptions);
     window.map.setZoom(15.5, !isFirstLoad);
     isFirstLoad = false;
-    (window as any).map.plugin(["AMap.ToolBar", "AMap.ControlBar"], () => {
+    (window as any).map.plugin(["AMap.ToolBar"], () => {
       // 添加 工具条 和 缩放控件
       window.map.addControl(
         new (window as any).AMap.ToolBar({
           liteStyle: true,
           position: {
-            bottom: "100px",
+            bottom: "20px",
             right: "32px",
           },
         }),
-      );
-      window.map.addControl(
-        new (window as any).AMap.ControlBar({ position: "RB" }),
       );
     });
     window.map.setMapStyle("amap://styles/520502358523cd64bd082a98087e4c10");
@@ -123,12 +120,11 @@ export default function Map() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                className="absolute bottom-44  right-[32px] z-50 flex h-fit w-fit flex-col rounded-lg bg-white/90 p-1.5 text-black shadow hover:bg-gray-100 hover:text-black"
+                className="absolute bottom-24    right-[32px] z-50 flex h-fit w-fit flex-col rounded-lg bg-white/90 p-1.5 text-black shadow hover:bg-gray-100 hover:text-black"
                 onClick={() => {
                   window.map.setZoom(15.5);
                   window.map.setCenter([108.292, 22.8436]);
                   window.map.setPitch(45);
-
                   window.map.setRotation(
                     window.map.getRotation() - (window.map.getRotation() % 360),
                   );
