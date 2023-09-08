@@ -225,7 +225,7 @@ export default function page() {
         <Separator />
         <button
           onClick={() => {
-            window.open("https://github.com/erich2s");
+            window.open("https://erichuang.art");
           }}
         >
           <div className="flex items-center justify-between py-3">
