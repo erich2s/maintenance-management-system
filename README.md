@@ -1,34 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 👷🏻 后勤报修管理系统
 
-## Getting Started
+## 📝 简介
 
-First, run the development server:
+本项目是一个基于`TypeScript + Nextjs 13(App Router)` 开发的后勤报修管理系统，由管理员端（Web端）和用户端（以PWA形式的移动设备）组成，管理员端可对用户、维修单、维修工人进行管理，用户端可进行报修单的提交、查看等功能；通过Web Worker技术，实现了两端只要开启通知权限，都可以接收到维修单状态的最新动态推送通知。
+
+![screenshot](./screenshot.png)
+
+## 🚀 技术栈
+
+- `Nextjs 13(App Router)`
+- `Tailwindcss`
+- `shadcn/ui`
+- `高德地图SDK`
+- `PWA + Web Worker`
+- `useSWR`
+- `Next-Auth`
+- `Prisma ORM`
+- `PostgreSQL`
+
+## 🛠️ 功能
+
+### 👨🏻‍💼 管理员端
+
+- 登录/登出
+- 数据面板
+- 用户管理
+- 维修单管理
+- 报修工人管理
+- 报修类型管理
+- 报修位置管理（通过高德地图进行可视化操作）
+
+## 📱 用户端
+
+- 登录/登出
+- 查看历史维修单列表
+- 创建报修单
+- 可安装（PWA），并接收到维修单状态的最新动态推送通知
+
+## 🛠️ 本地开发
+
+首先 `git clone` 本仓库，然后进入项目目录，执行以下命令：
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+之后在浏览器打开 [http://localhost:3000](http://localhost:3000) 即可。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 部署
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Vercel部署
 
-## Learn More
+只需要将本仓库fork到自己的GitHub Repo下，再将项目对应的`.env`文件配置好然后在Vercel中导入即可。
 
-To learn more about Next.js, take a look at the following resources:
+### Docker部署
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+首先将本仓库clone到本地，然后进入项目目录，配置好`.env`与`docker-compose.yml`对应的环境变量之后后执行以下命令即可完成部署：
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+docker-compose up -d
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+之后在浏览器打开 [http://localhost](http://localhost) 即可（已由nginx进行反向代理到80端口）。
