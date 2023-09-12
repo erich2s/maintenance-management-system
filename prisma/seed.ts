@@ -35,11 +35,6 @@ async function main() {
         password: bcrypt.hashSync("123456", 10),
       },
       {
-        name: "黄士崧",
-        username: "2038940333",
-        password: bcrypt.hashSync("123456", 10),
-      },
-      {
         name: "张三",
         username: "2038940301",
         password: bcrypt.hashSync("123456", 10),
