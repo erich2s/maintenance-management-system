@@ -4,7 +4,7 @@
 
 本项目是一个基于`TypeScript + Nextjs 13(App Router)` 开发的后勤报修管理系统，由管理员端（Web端）和用户端（以PWA形式的移动设备）组成，管理员端可对用户、维修单、维修工人进行管理，用户端可进行报修单的提交、查看等功能；通过Web Worker技术，实现了两端只要开启通知权限，都可以接收到维修单状态的最新动态推送通知。
 
-![screenshot](./screenshot.png)
+![screenshot](./screenshot.jpg)
 
 ## 🚀 技术栈
 
