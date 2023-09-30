@@ -21,20 +21,18 @@ RUN pnpm build && pnpm install
 # 生产环境阶段
 FROM node:20-alpine AS runner
 WORKDIR /app
-# 创建用户和组
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
 # 复制构建输出
 COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder /app/.next ./.next
 # 复制依赖
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
 
-USER nextjs
 EXPOSE 3000
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# 启动应用
-CMD ["npm", "start"]
+# 通过entrypoint执行脚本来启动应用
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]

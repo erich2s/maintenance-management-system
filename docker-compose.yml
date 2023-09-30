@@ -2,8 +2,7 @@
 version: "3.8"
 services:
   web:
-    build: .
-    #环境变量不要加双引号
+    image: erich2s/maintenance-management-system:latest
     environment:
       # web-push 设置
       WEB_PUSH_CONTACT: ${WEB_PUSH_CONTACT}
@@ -17,11 +16,9 @@ services:
       NEXTAUTH_URL: http://localhost
     restart: always
     container_name: nextjs_container
-    # 注释掉ports，因为nginx会代理到80端口，只通过nginx暴露80端口让外部访问不到3000端口
-    # ports:
-    #   - 3000:3000
     depends_on:
       - postgres
+
   nginx:
     image: nginx:latest
     restart: always
@@ -41,8 +38,6 @@ services:
       - POSTGRES_PASSWORD=123456
     volumes:
       - postgres:/var/lib/postgresql/data
-    # ports:
-    #   - 5432:5432
 
 volumes:
   postgres:
