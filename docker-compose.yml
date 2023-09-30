@@ -2,7 +2,7 @@
 version: "3.8"
 services:
   web:
-    build: .
+    image: erich2s/maintenance-management-system:latest
     environment:
       # web-push 设置
       WEB_PUSH_CONTACT: ${WEB_PUSH_CONTACT}
