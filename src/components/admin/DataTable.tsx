@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Card } from "../ui/card";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import PageTransition from "../PageTransition";
@@ -51,15 +51,14 @@ export default function DataTable({
   const { data, isLoading, error, mutate } = useSWR<{
     data: [];
     total: number;
-  }>(dynamicUrl, fetcher, {
-    refreshInterval: 2000,
-  });
+  }>(dynamicUrl, fetcher);
   useEffect(() => {
     if (data) {
       setTotal(data.total);
     }
   }, [data]);
   useEffect(() => {
+    // 监听从父组件的传来的表格左下角的功能区的动态mutateFlag，从而refetch数据
     mutate();
     console.log("mutate");
   }, [mutateFlag]);
