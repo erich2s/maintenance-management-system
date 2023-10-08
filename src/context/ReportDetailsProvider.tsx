@@ -52,6 +52,7 @@ export default function ReportDetailsProvider({
   const { mutate } = useUncompletedReports();
   const [workers, setWorkers] = useState<worker[]>([]);
   const [selectedWorker, setSelectedWorker] = useState<string>("");
+  // 加载维修工人菜单
   useEffect(() => {
     fetch("/api/workers")
       .then((res) => res.json())
