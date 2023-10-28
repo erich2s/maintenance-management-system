@@ -141,6 +141,7 @@ export default function Map() {
           </Tooltip>
         </TooltipProvider>
       )}
+
       <div
         ref={mapRef}
         id="main-map"
@@ -160,11 +161,12 @@ export default function Map() {
             window.map.setRotation(window.map.getRotation() + 45);
           }
         }}
-      >
+      ></div>
+      {mapLoaded ? null : (
         <div className="flex h-full w-full items-center justify-center">
           <Spinner />
         </div>
-      </div>
+      )}
     </>
   );
 }
