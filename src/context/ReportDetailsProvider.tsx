@@ -219,9 +219,9 @@ export default function ReportDetailsProvider({
                       <SelectItem
                         key={worker.id}
                         value={String(worker.id)}
-                        className="hover:bg-rose-100 hover:text-rose-500"
+                        className="cursor-pointer hover:bg-gray-100 hover:text-gray-900"
                       >
-                        {worker.name}{" "}
+                        {worker.name}
                         <span className="text-muted-foreground">
                           ({worker.phone})
                         </span>
