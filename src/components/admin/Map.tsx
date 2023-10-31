@@ -15,10 +15,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 let isFirstLoad = true;
-let count = 0;
 
 export default function Map() {
-  console.log("渲染map次数：", count++);
   const mapRef = useRef<HTMLDivElement>(null);
   // NOTE:窗口大小从父组件传下来的时候，会有延迟，导致地图高度计算错误从而有离奇的bug，所以需要在子组件中获取窗口大小
   const { width, height } = useWindowSize();

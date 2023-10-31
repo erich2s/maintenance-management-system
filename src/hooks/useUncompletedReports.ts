@@ -33,6 +33,9 @@ export default function useUncompletedReports() {
       ) => {
         const { location, status } = report;
         const index = acc.findIndex((l) => l.id === location.id);
+        // 对于已经存在acc里的地点，
+        // 如果是PENDING，pendingCount+1，
+        // 如果是ACCEPTED，acceptedCount+1
         if (index !== -1) {
           if (status === "PENDING") {
             acc[index].pendingCount++;
@@ -40,6 +43,7 @@ export default function useUncompletedReports() {
             acc[index].acceptedCount++;
           }
         } else {
+          // 对于不存在的地点，新建一个地点对象
           acc.push({
             id: location.id,
             name: location.name,
