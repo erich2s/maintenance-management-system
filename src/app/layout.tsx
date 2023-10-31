@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { NavLinksProvider } from "@/context/NavLinksProvider";
 import { Inter } from "next/font/google";
+import { Viewport } from "next";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -20,11 +21,15 @@ export const metadata: Metadata = {
       url: "https://instagram.com/eric.h2s?igshid=OGQ5ZDc2ODk2ZA==",
     },
   ],
-  viewport:
-    "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
-  themeColor: "#ffffff",
 };
 
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+  width: "device-width",
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  userScalable: false,
+};
 export default function RootLayout({
   children,
 }: {

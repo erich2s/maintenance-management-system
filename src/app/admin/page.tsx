@@ -1,9 +1,10 @@
 "use client";
-import dynamic from "next/dynamic";
 const Map = dynamic(() => import("@/components/admin/Map"), { ssr: false });
+// import Map from "@/components/admin/Map";
 import UnCompletedBox from "@/components/admin/UnCompletedBox";
 import { useEffect } from "react";
 import { useSubscriptionStore } from "@/stores/subscriptionStore";
+import dynamic from "next/dynamic";
 
 export default function page() {
   //通知订阅部分

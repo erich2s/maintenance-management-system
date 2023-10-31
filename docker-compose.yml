@@ -2,7 +2,8 @@
 version: "3.8"
 services:
   web:
-    image: erich2s/maintenance-management-system:latest
+    # image: erich2s/maintenance-management-system:latest
+    build: .
     environment:
       # web-push 设置
       WEB_PUSH_CONTACT: ${WEB_PUSH_CONTACT}
@@ -29,6 +30,8 @@ services:
       - web
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+    expose:
+      - 80
   postgres:
     image: postgres:15.4
     restart: always
