@@ -12,7 +12,7 @@
     "migrate:dev": "dotenv -e .env.development -- prisma migrate dev",
     "migrate:prod": "dotenv -e .env.production -- prisma migrate deploy",
     "resetDB": "prisma migrate reset --force ",
-    "resetDB:dev": "dotenv -e .env.development -- prisma migrate reset",
+    "resetDB:dev": "dotenv -e .env.development -- pnpx prisma migrate reset",
     "resetDB:prod": "dotenv -e .env.production -- prisma migrate reset"
   },
   "prisma": {
@@ -22,7 +22,6 @@
     "@amap/amap-jsapi-types": "^0.0.13",
     "@heycar/amap-jsapi-loader": "^1.0.1",
     "@hookform/resolvers": "^3.3.2",
-    "@prisma/client": "5.5.2",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -65,12 +64,13 @@
     "zustand": "^4.4.4"
   },
   "devDependencies": {
+    "@prisma/client": "5.6.0",
     "@types/bcrypt": "^5.0.1",
     "@types/node": "20.4.1",
     "@types/web-push": "^3.6.2",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.4.1",
-    "prisma": "^5.5.2",
+    "prisma": "^5.6.0",
     "ts-node": "^10.9.1",
     "typescript": "5.1.6"
   }
