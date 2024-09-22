@@ -32,10 +32,10 @@ export default function Map() {
   // 加载地图函数，在这里可以设置地图
   async function loadMap() {
     (window as any)._AMapSecurityConfig = {
-      securityJsCode: "3741a106252939f5dbc7076539dc79fb",
+      securityJsCode: process.env.NEXT_PUBLIC_AMAP_JSCODE,
     };
     window.AMap = await AMapLoader.load({
-      key: "4f77082b3a2e028ff3c03d0fe2742b78",
+      key: process.env.NEXT_PUBLIC_AMAP_KEY,
       version: "2.0",
     });
     const mapOptions: AMap.MapOptions = {

@@ -71,7 +71,7 @@ export default function page() {
 
   function loadMap() {
     AMapLoader.load({
-      key: "4f77082b3a2e028ff3c03d0fe2742b78",
+      key: process.env.NEXT_PUBLIC_AMAP_KEY,
       version: "2.0",
     })
       .then((AMap) => {
