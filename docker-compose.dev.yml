@@ -1,0 +1,16 @@
+# 开发环境的启动准备
+services:
+  postgres:
+    image: postgres:15.4
+    restart: always
+    container_name: postgres_container
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+    volumes:
+      - mms-postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  mms-postgres:

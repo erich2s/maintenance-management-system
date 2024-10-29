@@ -1,5 +1,4 @@
-# docker-compose.yml
-version: "3.8"
+# 生产环境的启动
 services:
   web:
     # image: erich2s/maintenance-management-system:latest
@@ -37,10 +36,10 @@ services:
     restart: always
     container_name: postgres_container
     environment:
-      - POSTGRES_USER=admin
+      - POSTGRES_USER=root
       - POSTGRES_PASSWORD=123456
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - mms-postgres:/var/lib/postgresql/data
 
 volumes:
-  postgres:
+  mms-postgres:

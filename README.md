@@ -46,7 +46,11 @@
    pnpm dev
    ```
 
-2. 将项目根目录下的`.env.`和`.env.development`中的环境变量配置好，尤其是`.env.development`中的`DATABASE_URL`(即你的数据库url)，并启动好数据库。
+2. 将项目根目录下的`.env.`和`.env.development`中的环境变量配置好，尤其是`.env.development`中的`DATABASE_URL`(即你的数据库url)，并使用`docker compose`启动开发环境的数据库。
+
+   ```bash
+   docker compose -f docker-compose.dev.yml up -d
+   ```
 
 3. 初始化并seeding数据库(将一些模拟数据和管理员账号写进数据库)：
 
